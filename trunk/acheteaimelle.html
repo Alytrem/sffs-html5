@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.timers.js"></script>
+		
+	<link rel="stylesheet" href="style.css" type="text/css">
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : SURF</title>
+    </head>
+    <body>
+        <canvas id="screen" width="420" height="640">
+		  Affichage d'un texte pour les navigateurs qui ne supportent pas canvas.
+		</canvas>
+		
+		<script type="text/javascript" src="js/game.js"></script>
+		<script type="text/javascript" src="js/engine.js"></script>
+		<script>
+                    var canvas = $("#screen")[0];
+                    console.log(canvas);
+                    var game = new Game(canvas);
+                    game.start();
+                </script>
+    </body>
+</html>
