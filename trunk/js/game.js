@@ -1,33 +1,42 @@
 // *** CLASSE GAME **//
 {
+        /*
+         * PARAMETRES :
+         * canvas (oubjet sur lequel on dessine)
+         * parametres (objets) :
+         *      - fps
+         *      - shipSpeed
+         *      - rocksSpeed
+         */
 	function Game(canvas, parameters) {
-                parameters = parameters || new Object();
-                
-		// Score
-		this.distance = 0;
-		
-		// Status : stopped, running, paused
-		this.status = "stopped";
-		
-		// Param�tres
-		this.fps = parameters.fps || 100;	// Images par secondes
-                
-                this.speed = new Object();
-		this.speed.ship = parameters.shipSpeed || 3;	// Vitesse en pixel par frame
-                this.speed.rock = parameters.rocksSpeed || 3;	// Vitesse en pixel par frame
-                
-		this.width = canvas.width;
-		this.height = canvas.height;
-		
-		// Objets du jeu
-		this.ship;
-		this.rocks = [];
-                
-		// Moteur de dessin
-		this.engine = new Engine(this, canvas);
+            // Ensemble de paramètres
+            parameters = parameters || new Object();
+
+            // Score
+            this.distance = 0;
+
+            // Status : stopped, running, paused
+            this.status = "stopped";
+
+            // Param�tres
+            this.fps = parameters.fps || 100;	// Images par secondes
+
+            this.speed = new Object();
+            this.speed.ship = parameters.shipSpeed || 3;	// Vitesse en pixel par frame
+            this.speed.rock = parameters.rocksSpeed || 3;	// Vitesse en pixel par frame
+
+            this.width = canvas.width;
+            this.height = canvas.height;
+
+            // Objets du jeu
+            this.ship;
+            this.rocks = [];
+
+            // Moteur de dessin
+            this.engine = new Engine(this, canvas);
 	}
 
-	Game.prototype = {	
+	Game.prototype = {
 		start: function(){			
 			// Initialise les objets du jeu
 			this.distance = 0;
