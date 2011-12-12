@@ -1,0 +1,57 @@
+
+			<script type="text/javascript">
+				function valider(){
+					memo = $("#memo").val();
+					date = $("#date").val();
+					heure = $("#heure").val();
+				
+					// on vérifie que le stockage local est supporté
+					if(!Modernizr.localstorage){
+						ecrire("Impossible d'enregistrer le mémo, votre navigateur ne supporte pas le stockage local");
+					}else{
+						localStorage["memo.memo"] = memo;
+						localStorage["memo.date"] = date;
+						localStorage["memo.heure"] = heure;
+						ecrire("memo enregistré !");
+					}
+					
+					$.nmTop().close();
+				}
+				
+			</script>
+			
+					<form>
+			<table>
+			<tr>
+				<td>Mémo : </td>
+				<td><input type="text" id="memo" placeholder="Todo"/></td>
+			</tr>
+			</tr>
+			<tr>
+				<td>Date</td>
+				<td><input type="date" id="date"/></td>
+			</tr>
+			<tr>
+				<td>Heure</td>
+				<td><input type="time" id="heure"/></td>
+			</tr>
+			<tr>
+				<td>Valider  :</td>
+				<td><input type="button" value="Envoyer" onclick="javascript:valider()"/></td>
+			</tr>
+			</table>
+		</form>
+		<script type="text/javascript">
+					memo = localStorage["memo.memo"];
+					date = localStorage["memo.date"];
+					heure = localStorage["memo.heure"];
+				
+					// on vérifie que le stockage local est supporté
+					if(!Modernizr.localstorage){
+						ecrire("Impossible de restaurer le mémo. Votre navigateur ne supporte pas local storage.");
+					}else{
+						$("#memo").val((memo) ? memo : "");
+						$("#date").val((date) ? date : "");
+						$("#heure").val((heure) ? heure : "");
+					}				
+			</script>

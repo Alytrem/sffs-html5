@@ -1,0 +1,870 @@
+﻿<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html manifest="/cache.manifest">
+    <head>
+        <title>Présentation</title>
+        <meta charset="UTF-8">
+        <script
+        src='../js/slides.js'></script>
+        <!-- Mise en forme du code -->
+        <link id="prettify-link" href="js/prettify/prettify.css" rel="stylesheet" />
+    </head>
+
+    <style>
+        .slides.template-default > article:not(.nobackground):not(.biglogo){
+            background: url(../img/logo_small.png) 710px 625px no-repeat !important;
+            background-color: white !important;
+        }
+
+        .slides.template-default article.biglogo {
+            background: white url(../img/logo_big.png) 50% 50% no-repeat !important;
+        }
+
+        h3{
+            font-size: 34pt !important;
+            line-height: 120% !important;
+        }
+
+        h6{
+            font-size: 16pt !important;
+            line-height: 120% !important;
+            color: #666666;
+            margin: 0px;
+            padding: 0px;
+            font-style: italic;
+        }
+
+        ul{
+            margin-top: 15px !important;
+        }
+
+        p, li{
+            text-align: justify !important;
+            font-size: 21pt !important;
+        }
+
+        .pageno{
+            position: absolute;
+            font-size: 13pt !important;
+            color: #666666;
+            margin: 0px;
+            padding: 0px;
+            bottom: 20px;
+            left: 30px;
+        }
+
+        pre {
+            text-align: left;
+            font-family: 'Droid Sans Mono', Courier;
+            padding: 5px 10px;
+            background: rgba(255, 0, 0, 0.05);
+            -webkit-border-radius: 8px;
+            -khtml-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+    </style>
+
+    <body style='display: none'>
+        <section class='slides layout-regular template-default'>
+            <article class="biglogo">
+            </article>
+
+            <article>
+                <h1>
+                    WEBGL
+                    <br>
+                    Caractéristiques, Intérêts...
+                </h1>
+                <p>
+                    Quentin Decré
+                    <br>
+                    Juin-Août 2011
+                </p>
+            </article>
+
+            <article>
+                <h3>Plan</h3>
+                <ul>
+                    <li>Présentation de WEBGL</li>
+                    <li>Les frameworks WEBGL</li>
+                    <li>Comparaison des frameworks</li>
+                    <li>Le projet démonstration</li>
+                    <li>Conclusion</li>
+                </ul>
+            </article>
+
+            <article>
+                <h1>
+                    Présentation de WEBGL
+                </h1>
+            </article>
+
+            <article>
+                <h6>Présentation de WEBGL</h6>
+                <h3>
+                    WEBGL
+                </h3>
+                <p>HTML5 apporte une balise <strong>canvas</strong> (entre autre).</p>
+                <p>Un canvas est un espace de dessin, permettant de générer des images à partir de code javascript. C'est le <strong>contexte 2D</strong> du canvas.</p>
+                <p>Il existe aussi un <strong>contexte 3D</strong>. Le WebGL permet d’accéder à la librairie OpenGL ES 2.0 depuis le code JavaScript, et d'afficher le rendu sur le canvas.</p>
+            </article>
+
+            <article>
+                <h6>Présentation de WEBGL</h6>
+                <h3>
+                    WEBGL
+                </h3>
+                <p>WEBGL est donc piloté par du code javascript. La performance du moteur javascript a donc une incidence importante sur la qualité du rendu.</p>
+                <p>Bien entendu, la machine affichant l'animation 3D doit supporter OpenGL ES. En effet, WEBGL est issu d'OpenGL ES (pour Systèmes embarqués).</p>
+                <p>
+                    A l'heure actuelle, WEBGL est une technologie émergente, et il y a énormément de travail réalisé sur les navigateurs internet pour améliorer la performance de leur moteur javascript.</p>
+                <p>Il y a également beaucoup de frameworks différents.</p>
+            </article>
+
+            <article>
+                <h1>
+                    Les framework WEBGL :
+                    <br />
+                    Three.js
+                </h1>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js</h6>
+                <h3>
+                    Plan
+                </h3>
+                <ol>
+                    <li>Introduction</li>
+                    <li>Avantages/Inconvénients</li>
+                    <li>Tutoriaux</li>
+                    <li>Documentation</li>
+                </ol>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js</h6>
+                <h3>
+                    Introduction
+                </h3>
+                <p>Three.js est le premier framework testé.</p>
+                <p>une démonstration avec une caméra à la première personne, une gestion des collisions a été réalisée, ainsi que l'importation d'objets issus de logiciels 3D.</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Avantages/Inconvénients</h6>
+                <h3>
+                    Avantages
+                </h3>
+                <ul>
+                    <li>Gratuit</li>
+                    <li>Code source disponible</li>
+                    <li>Récupération simple des intersections (points, faces, objets) entre une demi-droite et la scène</li>
+                    <li>3 moteurs de rendu différents: Canvas, SVG et WEBGL. WEBGL étant le plus performant, et Canvas le plus répandu</li>
+                </ul>
+            </article>
+
+
+            <article>
+                <h6>Frameworks > Three.js > Avantages/Inconvénients</h6>
+                <h3>
+                    Inconvénients
+                </h3>
+                <ul>
+                    <li>Impossible de mettre des évènements sur des objets</li>
+                    <li>Relativement minimaliste</li>
+                    <li>Aucune méthode pour réaliser simplement des rotations, collisions ou autre</li>
+                    <li>Impossible de charger autre chose que des objets 3D pour l'instant</li>
+                </ul>
+            </article>
+
+            <article>
+                <h1>
+                    Tutoriaux Three.js
+                </h1>
+            </article>
+
+            <article class="nobackground">
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 1/2
+                </h3>
+                <p>Créer une nouvelle scène</p>
+                <pre>var scene = new THREE.Scene();</pre>
+                <p>Créer une camera (le rendu se fait entre les distances NEAR et FAR pour limiter le nombre de polygone à afficher)</p>
+                <pre>var camera = new THREE.Camera(ANGLE, RATIO, NEAR, FAR);</pre>
+                <p>Créer le moteur de rendu</p>
+                <pre>var renderer = new THREE.WebGLRenderer();
+            // ou var renderer = new THREE.CanvasRenderer();
+            // ou var renderer = new THREE.SVGRenderer();</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 2/2
+                </h3>
+                <p>Insertion du canvas contenant le rendu dans la page</p>
+                <pre>container.appendChild(renderer.domElement);</pre>
+                <p>Rendu de la scène</p>
+                <pre>renderer.render(scene, camera);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Rendu moins brutal 1/3
+                </h3>
+                <p>Dans l'exemple précédent, on fait le rendu une seule fois dans la mesure ou la scène est statique, mais en temps normal, il faut faire le rendu très régulièrement. Il faut atteindre un minimum de 24 FPS (frames (rendu) par seconde).</p>
+                <p>Il est possible de créer une fonction appelée régulièrement, mais elle continuerait de l'être si on va sur un autre onglet du navigateur. Il faut donc utiliser l'API requestAnimationFrame proposée par les navigateurs</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Rendu moins brutal 2/3
+                </h3>
+                <p>On commence par définir la fonction requestAnimationFrame</p>
+                <pre>window.requestAnimationFrame = function() {
+    return window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function( /* function */ callback, /* DOM Element */ element ) {
+        window.setTimeout( callback, 1000 / 60 );
+    };
+}();</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Rendu moins brutal 3/3
+                </h3>
+                <p>Ce qui nous permet pour faire notre render de faire :</p>
+                <pre>requestAnimationFrame( animate );
+render();</pre>
+                <p>Ainsi, le render ne se fera pas si <pre>requestAnimationFrame( animate );</pre> ne termine pas (si la fenêtre contenant l'animation n'est pas active).</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Ajouter des objets 3D 1/2
+                </h3>
+                <p>On crée la forme</p>
+                <pre>var forme = new THREE.Cube(hauteur,largeur,profondeur);</pre>
+                <p>On crée le materiau (texture, couleur...)</p>
+                <pre>var material = new THREE.MeshNormalMaterial();</pre>
+                <p>On uilise les deux pour créer l'objet 3D, le mesh, qui par défaut est placé à l'origine</p>
+                <pre>var mesh = new THREE.mesh(forme, material);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Ajouter des objets 3D 2/2
+                </h3>
+                <p>On ajoute l'objet à la scène. Il sera affiché lors du prochain rendu</p>
+                <pre>scene.addObject(mesh);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Hierarchie
+                </h3>
+                <p>Un objet 3D peut avoir un père et des fils. Par défaut, il n'a ni l'un ni l'autre</p>
+                <p>Il est possible de lui ajouter un fils (pour qui il deviendra le père) :</p>
+                <pre>pere = new THREE.Mesh( geometry, material );
+pere.addChild(fils);</pre>
+                <p>Lors de l'ajout du père à la scène, ses fils sont aussi ajoutés. Tout opération sur le père (position...) impacte aussi les fils</p>                
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Position des objets 3D
+                </h3>
+                <p>Il est possible de changer la position des objets 3D</p>
+                <pre>objet.position = {x:0, y:0, z:0};</pre>
+                <p>Ce qui revient à faire : </p>
+                <pre>objet.position.x = 0;
+objet.position.y = 0
+objet.position.z = 0</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    La camera standard 1/2
+                </h3>
+                <p>C'est un objet 3D, qui a donc une position. Mais elle a en plus une cible appelée <strong>target</strong></p>
+                <pre>camera.target.position = {x:1, y:0, z:0}</pre>
+                <p>On définit également le near (respectivement le far), qui correspond à la plus petite distance (respectivement la plus grande) délimitant le champ visuel.</p>
+                <P>Cela revient à la profondeur maximal du champ visual (far) et la distance minimale du premier polygone visible (near)</p>                
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    La camera standard 2/2
+                </h3>
+                <br><br><br>
+                <div style="text-align:center;"><img src="../img/planes.gif" /></div>
+                <p>On voit-ci dessus la représentation des limites far et near</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Utiliser la camera à la <br> première personne 1/3
+                </h3>
+                <p>Cette camera, aussi appelée QuakeCamera permet une navigation à la première personne simple. Elle se base (hérite) de la camera standard.</p>
+                <p>Dès son instanciation, elle capture les évènements clics souris (clic gauche : avancer et clic droit : reculer), les croix directionnelles et les touches WASD (toujours pour les déplacements), et les mouvements de la souris pour orienter la camera</p>
+                <p>Elle autorise donc le déplacement, mais ne gère pas les collisions.</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Utiliser la camera à la <br> première personne 2/3
+                </h3>
+                <p>Cette camera, est paramétrable</p>
+                <ul>
+                    <li>movement_speed : vitesse de déplacement</li>
+                    <li>look_speed : vitesse de balayage de la caméra</li>
+                    <li>nofly : interdit le vol (axe y)</li>
+                    <li>look_vertical : interdit de balayer verticalement (axe y)</li>
+                    <li>... et les paramètres de la camera standard</li>
+                </ul>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Utiliser la camera à la <br> première personne 3/3
+                </h3>
+                <p>Instanciation</p>
+                <pre>quakeCamera = new THREE.QuakeCamera(
+    {
+        fov:60,
+        aspect:window.innerWidth / window.innerHeight,
+        near:1,
+        far:10000,
+        movement_speed: 1
+    }
+);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 1/3
+                    <br>Ray
+                </h3>
+                <p>Pour gérer les collisions, on se sert de l'objet Ray (rayon), afin de récupérer le tableau des intersections avec ce rayon.</p>
+                <p>Un Ray ce créé à partir d'un Vector3 (point d'origine) et d'un second Vector3 (direction). Cela forme une demi-droite.</p>
+                <p>Classiquement, pour la détection des collisions, on va prendre la camera en point de départ, et la direction de déplacement en direction</p>
+                <pre>var ray = new THREE.Ray(camera.position, direction);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 2/3
+                    <br>Intersections
+                </h3>
+                <p>Puis on récupère les intersections avec la scène (tableau) via la méthode intersectScene</p>
+                <pre>var intersect = ray.intersectScene(scene);</pre>
+                <p>intersect est un tableau d'intersections possedant les attributs suivants :</p>
+                <ul>
+                    <li>distance: Distance à l'origine</li>
+                    <li>face: Face en formant l'intersection avec la demi-droite ray</li>
+                    <li>object: Objet formant l'intersection (THREE.Mesh)</li>
+                    <li>point : le point formant l'intersection (THREE.Vector3)</li>
+                </ul>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 3/3
+                    <br>Evitement
+                </h3>
+                <p>Il suffit ensuite de ne pas déplacer la camera si une intersection dont la distance au point d'origine du ray est inferieure au seuil qu'on se fixe</p>
+            </article>
+            
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Interactions avec les objets
+                </h3>
+                <p>On a vu comment détecter des collisions entre une demi-droite et des objets. Il faut utiliser ce mécanisme pour détecter quels sont les objets qui forment une intersection avec la demi-droite partant de la camera et allant en direction du pointeur.</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Three.js et logiciels 3D 1/5
+                    <br>Introduction
+                </h3>
+                <p>Il est possible d'exporter des objets 3D depuis des logiciels de conception 3D (testé avec blender). Ces objets peuvent alors être récupéré par du code javascript et ajoutés à la scène.</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Three.js et logiciels 3D 2/5
+                    <br>Plugin d'exportation (blender 2.56)
+                </h3>
+                <p>La première étape est d'installer l'add-on d'exportation sous blender. On peut les trouver à l'adresse suivant :</p>
+                <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters" target="_blank">https://github.com/mrdoob/three.js/tree/master/utils/exporters</a>
+                <ol>
+                    <li>Récupérer le dossier correspondant à la version. Dans notre cas, 2.56.</li>
+                    <li>Prendre le dossier io_mesh_threejs situé dans /scripts/op, et le placer dans %APPDATA%\Blender Foundation\Blender\2.56\scripts\op</li>
+                    <li>Démarrer blender et vous pouvez alors exporter en allant dans file > export > three.js</li>
+                </ol>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Three.js et logiciels 3D 3/5
+                    <br>Plugin d'exportation (blender 2.56)
+                </h3>
+                <p>Dans les versions suivantes de blender, vous pouvez importer l'addon (dossier io_mesh_threejs), directement depuis blender en allant dans file > user preferences > addons. Vous pouvez alors l'ajouter manuellement.</p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Three.js et logiciels 3D 4/5
+                    <br>Importation via javascript
+                </h3>
+                <p>Attention : il m'a été impossible de faire fonctionner l'importation avec chrome en local. Mais aucun soucis via un serveur web</p>
+                <p>Etape 1 : créer le une fonction qui prend un objet et l'ajoute à la scène (ou à un autre objet) :</p>
+                <pre>var insert = function(obj){
+    var material = [ new THREE.MeshFaceMaterial(),
+                new THREE.MeshNormalMaterial() ];
+    mesh = THREE.SceneUtils.addMesh( scene, obj, 100, 0, 250,
+                0, 0, 0, 0, material );
+};</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js > Tutoriaux</h6>
+                <h3>
+                    Three.js et logiciels 3D 5/5
+                    <br>Importation via javascript
+                </h3>
+                <p>Etape 2 : créer le loader : </p>
+                <pre>var loader = new THREE.JSONLoader();</pre>
+                <p>Etape 3 : charger le fichier en indiquant au loader le fichier à charger et la fonction qui prendra l'objet (voir étape 1) : </p>
+                <pre>loader.load( { model: "diamond.js", callback: insert } );</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Three.js</h6>
+                <h3>
+                    Documentation
+                </h3>
+                <ul>
+                    <li>API de référence : <a href="https://github.com/mrdoob/three.js/wiki/API-Reference" target="_blank">https://github.com/mrdoob/three.js/wiki/API-Reference</a></li>
+                    <li>Code source: <a href="http://www.staunsholm.dk/THREE/jsdoc/overview-summary.html" target="_blank">http://www.staunsholm.dk/THREE/jsdoc/overview-summary.html</a></li>
+                    <li>Exportateur Three.js pour logiciels 3D : <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters" target="_blank">https://github.com/mrdoob/three.js/tree/master/utils/exporters</a></li>
+                </ul>
+            </article>
+
+            <article>
+                <h1>
+                    Les framework WEBGL :
+                    <br />
+                    Copperlicht
+                </h1>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht</h6>
+                <h3>
+                    Plan
+                </h3>
+                <ol>
+                    <li>Introduction</li>
+                    <li>Avantages/Inconvénients</li>
+                    <li>Tutoriaux</li>
+                    <li>Documentation</li>
+                </ol>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht</h6>
+                <h3>
+                    Introduction
+                </h3>
+                <p>Copperlicht est le deuxième Framework WebGL testé (après Three.js). Ce framework est développé par Ambiera.</p>
+                <p>Il offre des fonctionnalités de plus haut niveau d'abstraction. Par exemple : la gestion des collisions se fait très simplement. Pour autant, il n'est pas plus lourd que Three.js (même plus léger).</p>
+                <p>Il est associé à un logiciel : Coppercube, qui supporte de nombreux formats de fichiers et de nombreuses fonctionnalités (cf slides tutoriaux), et permet d'exporter à la fois en flash et en WebGL.</p>
+                <p>Site web : <a href="http://www.ambiera.com/copperlicht/" target="_blank">www.ambiera.com/copperlicht</a></p>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht > Avantages/Inconvenients</h6>
+                <h3>
+                    Avantages
+                </h3>
+                <ul>
+                    <li>Gratuit</li>
+                    <li>Très complet</li>
+                    <li>Objets animations pour appliquer des animations</li>
+                    <li>Possibilité de charger des objets mais aussi des scènes et des animations (formats variés)</li>
+                    <li>Simplification facultative du développement par un logiciel (CopperCube 3D)</li>
+                    <li>Possibilité de générer du flash et du webGL depuis le logiciel</li>
+                    <li>Interactions riches avec les objets</li>
+                </ul>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht > Avantages/Inconvenients</h6>
+                <h3>
+                    Inconvénients
+                </h3>
+                <ul>
+                    <li>Code source indisponible gratuitement (1900€)</li>
+                    <li>Le logiciel coppercube coûte 99€ en version simple, et 299€ en version professionnelle.</li>
+                </ul>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Introduction
+                </h3>
+                <p>Nous allons aborder les mêmes points que pour Three.js. Cela vous permettra de comparer la complexité des opérations. Il faut noter que dans la plupart des cas, l'utilisation du logiciel évite d'écrire du code. Les étapes abordées sont : </p>
+                <ol>
+                    <li>Créer une scène et l'afficher</li>
+                    <li>Ajouter des objets</li>
+                    <li>Hiérarchie</li>
+                    <li>Position des objets 3D</li>
+                    <li>La camera</li>
+                    <li>Gestion des collisions</li>
+                    <li>Interactions avec les objets</li>
+                </ol>
+            </article>
+            
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 1/5
+                </h3>
+                <p>Créer le moteur de rendu en lui passant l'id du canvas.</p>
+                <pre>var engine = new CL3D.CopperLicht('3darea');</pre>
+                <p>On initialise le moteur de rendu</p>
+                <pre>engine.initRenderer();</pre>
+                <p>Créer une scène et l'ajouter au moteur</p>
+                <pre>var scene = new CL3D.Scene();
+engine.addScene(scene);</pre>
+            </article>
+            
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 2/5
+                </h3>
+                <p>On ajoute une camera à la première personne</p>
+                <pre>var cam = new CL3D.CameraSceneNode();</pre>
+                <p>On détermine l'aspect (le même que celui du canvas)</p>
+                <pre>cam.setAspectRatio(800/480);</pre>
+                <p>On crée l'objet chargé d'animer la caméra, lui donner une direction...</p>
+                <pre>var animator = new CL3D.AnimatorCameraFPS(cam, engine);</pre>
+            </article>
+            
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 3/5
+                </h3>
+                <p>On associe l'objet à la caméra</p>
+                <pre>cam.addAnimator(animator);</pre>
+                <p>On définit la direction/cible de la caméra (target)</p>
+		<pre>animator.lookAt(new CL3D.Vect3d(0,0,0));</pre>
+                <p>On ajoute la caméra à la racine de la scène (revient à l'ajouter à la scène sous Three.js)</p>
+		<pre>scene.getRootSceneNode().addChild(cam);</pre>
+            </article>
+            
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 4/5
+                </h3>
+                <p>On définit la caméra comme active. En effet, il est possible de manipuler
+		<pre>scene.setActiveCamera(cam);</pre>
+                <p>Le rendu se fait tout seul lorsque nécessaire, mais il est possible de choisir quand ce rendu se fait :</p>
+                <pre>scene.setRedrawMode(CL3D.Scene.REDRAW_WHEN_SCENE_CHANGED);
+// OU scene.setRedrawMode(CL3D.Scene.REDRAW_EVERY_FRAME);
+// OU scene.setRedrawMode(CL3D.Scene.REDRAW_WHEN_CAM_MOVED);</pre>
+            </article>
+
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Créer une scène et l'afficher 5/5
+                </h3>
+<p>Il est également possible de rajouter des actions lors du rendu de la scène</p>
+<pre>engine.OnAfterDrawAll = function(){...};</pre>
+            </article>
+			
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Ajouter des objets 1/2
+                </h3>
+                <p>On ajoute un simple cube</p>
+				<pre>var cubenode = new CL3D.CubeSceneNode();</pre>
+		
+				<p>On ajoute ce cube à la scène (à l'élément père de la scène)</p>
+				<pre>scene.getRootSceneNode().addChild(cubenode);</pre>
+		
+				<p>On définit la texture du cube</p>
+				<pre>cubenode.getMaterial(0).Tex1 =
+	engine.getTextureManager().getTexture("texture.gif", true);</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Ajouter des objets 2/2
+                </h3>
+                <p>On ajoute une animation sur le cube</p>
+				<pre>cubenode.addAnimator(
+	new CL3D.AnimatorRotation(
+		new CL3D.Vect3d(0, 1, 0.5)));</pre>
+				<p>Le vecteur indique pour chaque axe, la vitesse de rotation.</p>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Hiérarchie
+                </h3>
+                <p>Comme pour Three.js, il est possible de faire une hiérarchie d'objets. Dans copperlicht, les objets sont appelés <strong>scene node</strong></p>
+				<pre>pere.addChild(fils);</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Position des objets 3D
+                </h3>
+                <p>Vous pouvez changer la position des scene node (objets 3D) :</p>
+				<pre>obj.Pos.X = ??;     obj.Pos.Y = ??;     obj.Pos.Z = ??;
+//ou obj.Pos = new CL3D.Vect3d(??,??,??);</pre>
+				<p>Vous pouvez aussi définir la rotation de l'objet :</p>
+				<pre>obj.Rot.X = ??;     obj.Rot.Y = ??;     obj.Rot.Z = ??;
+//ou obj.Rot = new CL3D.Vect3d(??,??,??);</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    La caméra 1/2
+                </h3>
+                <p>Le framework Copperlicht intègre une caméra (CameraSceneNode), mais deux animateurs de caméras :</p>
+				<ul>
+				<li><strong>AnimatorCameraModelView</strong> : qui est autour d'un pivot, ou sur un cercle</li>
+				<li><strong>AnimatorCameraFPS</strong> : qui laisse la caméra libre et offre beaucoup de fonctionnalités. C'est la quakecamera en plus complet</li>
+				</ul>
+				<p>Nous allons détailler le plus intéressant : AnimatorCameraFPS.</p>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    La caméra 2/2
+                </h3>
+                <p>Par défaut, le AnimatorCameraFPS permet de déplacer la cible avec la souris, de se déplacer avec les flèches, et de sauter avec espace.</p>
+				<a href="http://www.ambiera.com/copperlicht/documentation/index.html">Voir la documentation</a>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 1/3
+                </h3>
+                <p>Il est possible d'associer à la camera un animateur de réponse de collision. La gestion des collisions ne se fait pas manuellement comme en Three.js, mais en quelques lignes :</p>
+				<p>On définit la taille de l'ellipsoïde du joueur : Vect3D</p>
+				<pre>var joueur = new CL3D.Vect3d(20,40,20);</pre>
+				<p>Puis la gravité (en force et direction), qui est aussi un Vect3D</p>
+				<pre>var gravite = new CL3D.Vect3d(0,-10,0),</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 2/3
+                </h3>
+				<p>Et enfin la position du l'œil (caméra) dans l'ellipsoïde (position relative)</p>
+				<pre>var oeil = new CL3D.Vect3d(0,30,0);</pre>
+				<p>Puis on crée l'animateur : </p>
+				<pre>var colanimator =
+    new CL3D.AnimatorCollisionResponse(
+        joueur,
+        gravite,
+        oeil,
+        scene.getCollisionGeometry()
+	);</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Gestion des collisions 3/3
+                </h3>
+				<p>Et enfin, comme on l'a fait pour l'animateur AnimatorCameraFPS, on associe ce AnimatorCollisionResponse à la caméra.</p>
+				<pre>cam.addAnimator(colanimator);</pre>
+            </article>
+			
+			<article>
+                <h6>Frameworks > Copperlicht > Tutoriaux</h6>
+                <h3>
+                    Interactions avec les objets
+                </h3>
+				<p>Contrairement à Three.js où il fallait détecter manuellement les évènements, ici il est possible d'associer un animateur à un objet qui réagit à un évènement.<p>
+				<pre>var animator = new CL3D.AnimatorOnClick(
+	engine.getScene(), engine, functionAction);</pre>
+				<p>Il n'y a plus qu'à associer l'annimator à notre scene node (objet 3D)</p>
+				<pre>yourSceneNode.addAnimator(animator);</pre>
+				<p>Note : il existe d'autres types d'animator</p>
+            </article>
+            <!--
+            <article>
+                <h6>Frameworks > Copperlicht > Tutoriaux > Logiciel Coppercube</h6>
+                <h3>
+                    ???
+                </h3>
+            </article>
+			-->
+			
+			<article>
+                <h6>Frameworks > Copperlicht</h6>
+                <h3>
+                    Documentation
+                </h3>
+                <ul>
+                    <li>API de référence de copperlicht : <a href="http://www.ambiera.com/copperlicht/documentation/" target="_blank">http://www.ambiera.com/copperlicht/documentation/</a></li>
+                </ul>
+            </article>
+			
+			<article>
+                <h1>
+                    Comparaison des frameworks
+                </h1>
+            </article>
+
+            <article>
+                <h6>Comparaison des frameworks</h6>
+                <h3>Plan</h3>
+				<p>Nous intègrerons flash dans le comparatif</p>
+                <ul>
+                    <li>Comparaison du développement</li>
+                    <li>Comparaison des performances</li>
+                    <li>Comparaison de la compatibilité</li>
+                    <li>Bilan</li>
+                </ul>
+            </article>
+			
+			<article class="smaller">
+                <h6>Comparaison des frameworks</h6>
+                <h3>Comparaison des développement</h3>
+                <table>
+				<tr>
+					<th>	</th><th>Souplesse (code source modifiable...)</th><th>facilité d'utilisation</th><th>compatibilité avec les logiciels 3D</th><th>Prix</th>
+				</tr>
+				<tr>
+					<th>Three.js</th><td>+++</td><td>+</td><td>+</td><td>0 €</td>
+				</tr>
+				<tr>
+					<th>Copperlicht</th><td>+ (payant)</td><td>+++</td><td>+++</td><td>de 99 à 299€ pour le logiciel (fortement conseillé), et 1900€ pour le code source (facultatif)</td>
+				</tr>
+				<tr>
+					<th>Flex/Flash (Away3D)</th><td>+++</td><td>++</td><td>+++</td><td>0€</td>
+				</tr>
+			</table>
+			</article>
+			
+			<article>
+                <h6>Comparaison des frameworks</h6>
+                <h3>Comparaison des performances</h3>
+                    <p>Three.js et copperlicht ont des performances similaires. Mais la richesse de copperlicht permet d'avoir un code plus rapide en utilisant les fonctionnalités offertes qu'en les redéveloppant avec Three.js.</p>
+					<p>Flash a cependant une nette avance en terme de performances sur les ordinateurs dépourvus de carte graphique (i.e. possédant un simple chipset embarqué). Il ne faut pas oublier que Flash est mature contrairement à WebGL qui est à l'heure actuel toujours en développement (les spécifications de HTML5 ne sont pas encore fixées).</p>
+            </article>
+			
+			<article>
+                <h6>Comparaison des frameworks</h6>
+                <h3>Comparaison de la compatibilité</h3>
+                    <p>Three.js peut faire un rendu en mode canvas ou svg, et permet donc un rendu sur les ordinateurs ne possédant pas WebGL (mais ils doivent avoir un navigateur qui supporte le canvas)</p>
+					<p>Copperlicht fait un rendu en WebGL uniquement, mais le logiciel Coppercube peut faire une sortie WebGL ET Flash. Cette combinaison est plus intéressante que celle de Three.js dans la mesure ou encore beaucoup de navigateurs ne gèrent pas le canvas comme internet explorer 8 et inferieur.</p>
+					<p>Flash est compatible sur tous les navigateurs dotés du plugin, mais n'est pas disponible sur les iPhone, iPad [...].</p>
+            </article>
+			
+			
+            <article>
+                <h6>Comparaison des frameworks</h6>
+                <h3>Bilan</h3>
+                    <p>Lorsqu'il s'agit de développer une application visant à visiter un environnement 3D et à interagir avec ce dernier, copperlicht semble idéal par les fonctionnalités apportées. Cela évite de devoir réinventer de nombreuses fonctionnalités.<p>
+					<p>Et le fait de pouvoir, grâce à coppercube, réaliser/importer la même scène et la publier en flash et en WebGL, est un atout indéniable</p>
+					<p>Three.js est libre cependant, et peut rapidement évoluer. Il ne faut donc pas hésiter à réevaluer rapidement ce framework lors de futurs développement</p>
+            </article>
+			
+			
+            <article>
+                <h1>
+                    Le projet de démonstration
+                </h1>
+            </article>
+			
+			<article>
+                <h6>Le projet de démonstration</h6>
+                <h3>Plan</h3>
+                <ol>
+                    <li>Objectifs</li>
+					<li>Présentation</li>
+					<li>Planification</li>
+					<li>Moyens</li>
+                </ol>
+            </article>
+			
+			<article>
+                <h6>Le projet de démonstration</h6>
+                <h3>Objectifs</h3>
+                <p>L'objectif est de réaliser une vitrine des possibilitées 3D offertes par l'HTML5 via WebGL. Capgemini a déjà réalisé des prestations de création d'agences virtuelles. Il est donc intéressant de rester proche de cette idée.</p>
+				<p>Il semble également pertinent d'en profiter pour présenter les autres fonctionnalitées offertes par l'HTML5 dans cette même démonstration.</p>
+            </article>
+			
+			<article>
+                <h1>Conclusion</h1>
+            </article>
+			<!--
+			<article>
+					<h3>Conclusion</h3>
+                    <p>Le HTML5, bien qu'encore en phase de spécification, est déjà implémenté dans de nombreux navigateurs, et de nombreux sites s'en servent déjà beaucoup. Cependant, la partie WEBGL de l'HTML5 n'est pas la plus en avance. Encore en phase d'expérimentation, mais le potentiel est là, et s'avère dès aujourd'hui utile sur les mobiles ou tablettes dépourvus de flash.</p>
+					<p>Il</p>
+            </article>
+			-->
+        </section>
+    </body>
+</html>

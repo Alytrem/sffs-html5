@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS -->
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+        <link href="styles/jquery-ui-1.8.15.custom.css" rel="stylesheet" type="text/css">
+
+        <!-- Scripts -->
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Agenda</title>
+    </head>
+    <body>
+        <div id="dialog-form" title="Evènement">
+            <form onsubmit="">
+                <table style="width:100%">
+                    <tr>
+                        <td>Objet : </td>
+                        <td><input type="text" name="subject" id="subject" class="text ui-widget-content ui-corner-all" style="width:100%" placeholder="Objet"/></td>
+                    </tr>
+                    <tr>
+                        <td>Lieu : </td>
+                        <td><input type="text" name="place" id="place" class="text ui-widget-content ui-corner-all" style="width:100%" placeholder="Localisation"/></td>
+                    </tr>
+                    <tr>
+                        <td>Date : </td>
+                        <td><input type="text" name="date" id="date"/></td>
+                    </tr>
+                    <tr>
+                        <td>Heure : </td>
+                        <td><input type="text" name="time" id="time"/></td>
+                    </tr>
+                    <tr>
+                        <td>Durée : </td>
+                        <td><input type="text" name="length" id="length"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="controles" title="Outils">
+            <button id="addEvent" style="width: 100%;">Ajouter un évènement</button>
+            <div id="duration" class="center">
+                <input type='radio' name="duration" id="1day" /><label for="1day">Jour</label>
+                <input type='radio' name="duration" id="3days" checked='checked' style="width: 25%;" /><label for="3days">3 jours</label>
+                <input type='radio' name="duration" id="5days" /><label for="5days">5 jours</label>
+                <input type='radio' name="duration" id="7days" /><label for="7days">Semaine</label>
+            </div>
+            <div id="navigation">
+                <button id="prev">Précedent</button>
+                <button id="today">Aujourd'hui</button>
+                <button id="next">Suivant</button>
+            </div>
+        </div>
+
+        <section>
+            <div id="top"></div>
+            <div id="agenda"></div>
+        </section>
+
+        <script defer>
+            $( "#controles" ).dialog({
+                closeOnEscape: false,
+                width: 380,
+                position: ['right','bottom'],
+                resizable: false
+            });
+            
+            $( "#dialog-form" ).hide();
+            
+            $( "#duration").buttonset();
+            $( "#navigation").buttonset();
+            
+            /* DB Object */
+            {
+                function DB(){
+                    this.db;
+                    this.opened = false;
+                    this.created = false;
+                }
+	
+                DB.prototype = {
+                    open: function(){
+                        this.db = openDatabase("Agenda", "0.1", "Agenda HTML5 (liste d'évènements)", 2*1024*1024);
+                        if(!this.db){
+                            alert("Echec de la connexion");
+                            return;
+                        }
+                        console.log("Connexion à la base réussie");
+                        this.opened = true;
+                    },
+                    
+                    create: function(callback){
+                        if(!this.opened) this.open();
+                        
+                        this.db.transaction(
+                        function(tx) {
+                            tx.executeSql("SELECT * FROM Events",
+                            [],
+                            function(tx, results){
+                                this.created = true;
+                                if(callback) callback();
+                            },
+                            function(tx, error){
+                                tx.executeSql("CREATE TABLE Events (id REAL UNIQUE, subject TEXT, begin TIMESTAMP, end TIMESTAMP, place TEXT)",
+                                [],
+                                function(tx, results){
+                                    this.created = true;
+                                    console.log("Table Event crée");
+                                    if(callback) callback();
+                                },
+                                function(tx, error){
+                                    console.log(error);
+                                });
+                            });
+                        }
+                    )
+                    },
+                    
+                    getEvents: function(resultsHandler){
+                        var th = this;
+                        
+                        var execute = function(){
+                            th.db.transaction(
+                            function(tx) {
+                                tx.executeSql("SELECT * FROM Events",
+                                [],
+                                function(tx, results){
+                                    var events = [];
+                                    var nb = results.rows.length;
+                                    for (var i = 0; i < nb; i++) {
+                                        var obj = results.rows.item(i);
+                                        events.push(new Event(obj.id, new Date(obj.begin*1000), new Date(obj.end*1000), obj.subject));
+                                    }
+                                    if(resultsHandler) resultsHandler(events);
+                                },
+                                function(tx, error){
+                                    console.log(error);
+                                });
+                            }
+                        );
+                        };
+                                                                        
+                        if(!this.created) this.create(execute);
+                        else execute();
+                    },
+                    
+                    
+                    
+                    saveEvent: function(event){
+                        var th = this;
+                        
+                        var execute = function(){
+                            th.db.transaction(
+                            function(tx) {
+                                tx.executeSql("INSERT INTO Events(id, subject, begin, end, place) VALUES(?,?,?,?,?)",
+                                [event.id, event.subject, Math.round(event.begin.getTime()/1000), Math.round(event.end.getTime()/1000), event.place],
+                                function(tx, results){
+                                    console.log("Evènement "+event.id+" enregistré");
+                                },
+                                function(tx, error){
+                                    
+                                    tx.executeSql("UPDATE Events SET subject = ?, begin = ?, end = ?, place = ? WHERE id = ?",
+                                    [event.subject, Math.round(event.begin.getTime()/1000), Math.round(event.end.getTime()/1000), event.place, event.id],
+                                    
+                                    function(result){
+                                        console.log("Evènement "+event.id+" mis à jour");
+                                    },
+                                    function(tx, error){
+                                        console.log(error);
+                                    });
+                                });
+                            }
+                        )
+                        }
+                        
+                        if(!this.created) this.create(execute);
+                        else execute();                   
+                        
+                    },
+                    
+                    removeEvent: function(event){
+                        var th = this;
+                        
+                        var execute = function(){
+                            th.db.transaction(
+                            function(tx) {
+                                tx.executeSql("DELETE FROM Events WHERE id = ?",
+                                [event.id],
+                                function(tx, results){
+                                    console.log("Evènement "+event.id+" effacé");
+                                },
+                                function(tx, error){
+                                    console.log(error);
+                                });
+                            }
+                        )
+                        }
+                        
+                        if(!this.created) this.create(execute);
+                        else execute();                   
+                        
+                    }
+                    
+                }
+            }
+
+            
+            /* Agenda Object */
+            {
+                function Agenda(db){
+                    this.db = db;
+                    
+                    // Contient tous les évènements, visibles ou non
+                    this.events  = [];
+                    
+                    this.firstDay;
+                    this.lastDay;
+                    this.daysDisplayed = 0;
+                    
+                    // On commence au jour courant
+                    this.goToday();
+                    
+                    this.verticalScale = 31;
+                    this.horizontalScale;
+                    
+                    // On dessine l'agenda
+                    var head = $("<div class='day' id='head'></div>");
+                    $("#top").prepend($("<header class='hour head'></header>"));
+                    for(i = 0; i <= 23; i++){
+                        head.append($("<div class='hour head'><p>"+i+":00</p></div>"));
+                    }
+                    $("#agenda").prepend(head);
+                    
+                    this.setDays(3);
+                    
+                    this.refresh();
+                    
+                    if(this.db) this.load();
+                }
+	
+                Agenda.prototype = {
+                    /* PARTIE DATA */
+                    insert: function(event){
+                        this.events.push(event);
+                        event.draw();
+                    },
+                    
+                    insertAll: function(events){
+                        this.events.push(events);
+                        events.forEach(function(ev){
+                            ev.draw();
+                        });
+                    },
+                    
+                    add: function(event){
+                        this.insert(event);
+                        this.db.saveEvent(event);
+                    },
+                    
+                    remove: function(event){
+                        this.db.removeEvent(event);
+                        this.load();
+                    },
+                    
+                    load: function(){
+                        var th = this;
+                        var callback = function(events){
+                            th.events = events;
+                            events.forEach(function(ev){
+                                ev.draw();
+                            });
+                        }
+                        if(this.db) this.db.getEvents(callback);
+                    },
+                    
+                    get: function(id){
+                        return this.events[id.match(/\d+/)[0]];
+                    },
+                    
+                    getFirstUnusedID: function(callback){
+                        var execute = function(events){
+                            var id = 0;
+                            if(events.length == 0)
+                                id = 0;
+                            
+                            else
+                                id = (events.pop()).id + 1;
+                            
+                            if(callback) callback(id);
+                        }
+                        this.db.getEvents(execute);
+                    },
+                    
+                    updateLastDay: function(){
+                        this.lastDay = new Date(this.firstDay);
+                        this.lastDay.setDate(this.lastDay.getDate()+this.daysDisplayed);
+                    },
+                    
+                    goToday: function(){
+                        this.firstDay = new Date();
+                        this.firstDay.setHours(0);
+                        this.firstDay.setMinutes(0);
+                        this.firstDay.setSeconds(0);
+                        
+                        this.updateLastDay();
+                        
+                        this.refresh();
+                        this.updateEvents();
+                    },
+                    
+                    go: function(days){
+                        this.firstDay.setDate(this.firstDay.getDate()+days);
+                        this.updateLastDay();
+                        this.refresh();
+                        this.updateEvents();
+                    },
+                    
+                    /* PARTIE UI */
+                    updateEvents: function(){
+                        
+                        this.events.forEach(function(ev){
+                            ev.refresh();
+                        });
+                    },
+                    
+                    addDay: function(){
+                        var day = $("<div class='day'></div>");
+                        for(i = 0; i <= 23; i++){
+                            day.append($("<div class='hour'></div>"));
+                        }
+                        $("#agenda").append(day);
+                        
+                        // Ajout de la gestion du double clique pour l'ajout'
+                        $("div.hour:not(.head)").dblclick(function(ev){
+
+                        });
+
+                        this.lastDay.setDate(this.lastDay.getDate()+1);
+                        this.daysDisplayed++;
+                    },
+                    
+                    removeDay: function(){
+                        if(this.daysDisplayed > 1){
+                            $("#agenda .day:last-child").remove();
+                            $("#top .hour:last-child").remove();
+                            this.lastDay.setDate(this.lastDay.getDate()-1);
+                            this.daysDisplayed--;
+                        }
+                    },
+                    
+                    setDays: function(nb){                        
+                        while(this.daysDisplayed > nb) this.removeDay();
+                        while(this.daysDisplayed < nb) this.addDay();
+                        
+                        this.refresh();
+                        
+                        // on met aussi à jour l'échelle pour le déplacement'
+                        this.updateEvents();
+                    },
+                    
+                    refresh: function (){
+                        if(this.daysDisplayed < 1) return;
+                        
+                        // on met à jour les en-têtes des jours
+                        {
+                            var currentDate = new Date(this.firstDay);
+                        
+                            $("#top").empty();
+                            $("#top").append($("<header class='hour head'></header>"));
+                        
+                            while(currentDate < this.lastDay){
+                                var title = currentDate.getDate()+"/"+(currentDate.getMonth()+1)+"/"+currentDate.getFullYear();
+                                $("#top").append($("<header class='hour'><h1>"+title+"</h1></header>"));
+                                currentDate.setDate(currentDate.getDate()+1);
+                            }
+                        }
+                        
+                        // on met à jour la largeur d'un jour
+                        var agendaWidth = $("#agenda")[0].clientWidth;
+                        var headWidth = $("#head")[0].clientWidth;
+                        var scrollBarWidth = 12;
+                        var width = Math.round((agendaWidth - headWidth - scrollBarWidth)/((this.lastDay.getTime()-this.firstDay.getTime())/(1000*3600*24)));
+                        // Pour corriger un bug donnant 1px de plus aux en-têtes malgré une définition identique
+                        $(".day:not(#head), article").css("width",width+"px");
+                        $("#top .hour:not(.head)").css("width",width-1+"px");
+                        // on met à jour l'échelle horizontale
+                        this.horizontalScale = $(".day:not(#head)")[0].clientWidth;
+                    }
+                }
+            }
+            
+            /* Event Object */
+            {
+                function Event(id, begin, end, subject, place){
+                    this.id = id;
+                    this.begin = begin;
+                    this.end = end;
+                    this.subject = subject;
+                    this.place = place;
+                }
+	
+                Event.prototype = {
+                    move: function(days, hours, minutes){
+                        console.log("déplacement : jours:"+days+" ,heures:"+hours+" ,minutes:"+minutes);
+                        
+                        var shift = (days*24*60 + hours*60 + minutes)*60*1000;
+                        this.begin = new Date(this.begin.getTime() + shift);
+                        this.end = new Date(this.end.getTime() + shift);
+                    },
+                    
+                    draw: function(e){
+                        // si il est déjà affiché, on arrête
+                        if($("#event"+this.id).length >= 1) return;
+                        
+                        if(this.begin < agenda.firstDay) return;
+                        if(this.begin > agenda.lastDay) return;
+                    
+                        console.log(this);
+                        
+                        var relativeDay = (new Date(this.begin - agenda.firstDay)).getDate()-1;
+                        
+                        var Starthours = this.begin.getHours();
+                        var Startminutes = this.begin.getMinutes();
+                        
+                        var Endhours = this.end.getHours();
+                        var Endminutes = this.end.getMinutes();
+                        
+                        var duration = (this.end - this.begin)/(60*1000);
+        
+                        var event = $("<article id='event"+this.id+"'>\n\
+                                            <div class='event'>\n\
+                                                <h1>"+this.subject+"</h1>\n\
+                                                <h2>\n\
+                                                    "+Starthours+":"+Startminutes+" - "+Endhours+":"+Endminutes+"\n\
+                                                </h2>\n\
+                                            </div>\n\
+                                       </article>");
+        
+                        event.css("top",(Startminutes*30/60)+"px");
+                        event.css("height",duration/(60/agenda.verticalScale)+"px");
+                        
+                        $($("#agenda").children()[relativeDay+1].children[Starthours]).append(event);
+                        
+                        
+                        // bidouille pour maintenir le this dans les callback
+                        var th = this;
+                        
+                        // GESTION DU DOUBLE CLIQUE
+                        event.dblclick(function(ev) {
+                            th.edit();
+                        });
+                                                
+                        // GESTION DU REDIMENSIONNEMENT
+                        event.resizable({ handles: 'n, s', grid: [ agenda.horizontalScale, agenda.verticalScale/4 ], 
+                            stop:  function(event, ui) {
+                                // On prend une granularité de 15 minutes
+                                var duration = Math.round(ui.size.height*(60/agenda.verticalScale)/15)*15*60*1000;
+                                var event = agenda.get(ui.element[0].id);
+                                th.end = new Date(th.begin.getTime() + duration);
+                                
+                                if(ui.position.top != ui.originalPosition.top){
+                                    var minutesChange = Math.round((ui.position.top - ui.originalPosition.top)*(60/agenda.verticalScale)/15)*15;
+
+                                    th.move(0,0,minutesChange);
+                                }
+                                db.saveEvent(th);
+                                th.refresh();
+                            }
+                        });
+                        
+                        // GESTION DU GLISSER DEPOSER
+                        event.draggable({ grid: [ agenda.horizontalScale, agenda.verticalScale/2 ],
+                            distance: 20,
+                            scroll: true,
+                            start: function(ev){
+                                $("#"+this.id).css("top","0px");
+                            },
+                            stop: function(ev){                                
+                                var daysChange = Math.round($("#"+this.id).css("left").match(/(.*?)px/)[1]/agenda.horizontalScale);
+                                var minutesChange = Math.round($("#"+this.id).css("top").match(/(.*?)px/)[1]/(agenda.verticalScale/2))*30;
+                                // Il faut penser à enlever les minutes qu'on avait compté dans le top, et remis à 0 au dragstart'
+                                minutesChange -= th.begin.getMinutes();
+                                                        
+                                th.move(daysChange,0,minutesChange);
+                                
+                                db.saveEvent(th);
+                                
+                                th.refresh();
+                            }
+                        });
+                        
+                    },
+                    
+                    erase: function(){
+                        $("#event"+this.id).remove();
+                    },
+                    
+                    edit: function(){
+                        var th = this;
+                        // On paramètre le formulaire, qui s'ouvre ensuite'
+                        $( "#dialog-form" ).dialog({
+                            autoOpen: true,
+                            height: 300,
+                            width: 400,
+                            modal: true,
+                            buttons: {
+                                "Mettre à jour": function() {
+                                    $( this ).dialog( "close" );
+                                    th.subject = $("#subject").val();
+                                    th.place = $("#place").val();
+                                    
+                                    var date = $("#date").val().split("/");
+                                    var time = $("#time").val().split(":");
+                                    
+                                    
+                                    
+                                    th.begin = new Date(date[2], date[1]-1, date[0], time[0], time[1], 0, 0);
+                                    
+                                    var length = $("#length").val().split(":");
+                                    console.log(time);
+                                    th.end = new Date(date[2], date[1]-1, date[0], parseInt(time[0])+parseInt(length[0]), parseInt(time[1])+parseInt(length[1]), 0, 0);
+                                    
+                                    
+                                    th.place = $("#place").val();
+                                    db.saveEvent(th);
+                                    th.refresh();
+                                },
+                                Effacer: function() {
+                                    agenda.remove(th);
+                                    th.erase();
+                                    $( this ).dialog( "close" );
+                                },
+                                Annuler: function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });
+                        
+                        $("#subject").val(this.subject);
+                        $("#place").val(this.place);
+                        $( "#date" ).datepicker({dateFormat: "dd/mm/yy"});
+                        $("#date").val(this.begin.getDate()+"/"+(this.begin.getMonth()+1)+"/"+this.begin.getFullYear());
+                        $("#time").val(this.begin.getHours()+":"+this.begin.getMinutes());
+                        var duration = (this.end.getTime() - this.begin.getTime())/1000/60;
+                        var hours = Math.floor(duration/60);
+                        var minutes = Math.round(duration - hours*60);
+                        $("#length").val(hours+":"+minutes);
+                    },
+                    
+                    refresh: function(){
+                        this.erase();
+                        this.draw();                        
+                    }
+                }
+            }
+            
+            /* Mise en forme des boutons */
+            $("button").button();
+            $("#prev").button({icons: {
+                    primary: "ui-icon-circle-triangle-w"
+                }});
+            $("#next").button({icons: {
+                    primary: "ui-icon-circle-triangle-e"
+                }});
+            $("#today").button({icons: {
+                    primary: "ui-icon-clock"
+                }});
+            
+            
+            /* MAIN */
+            var db = new DB();
+            var agenda = new Agenda(db);
+            
+            /* association des évènements aux actions */
+            
+            $("#1day").click(function(){agenda.setDays(1)});
+            $("#3days").click(function(){agenda.setDays(3)});
+            $("#5days").click(function(){agenda.setDays(5)});
+            $("#7days").click(function(){agenda.setDays(7)});
+            
+            $("#prev").click(function(){agenda.go(-1)});
+            $("#today").click(function(){agenda.goToday()});
+            $("#next").click(function(){agenda.go(1)});
+
+            $(window).resize(function(){agenda.refresh()});
+            
+            
+            
+            // Ajout d'évènement quand on clique sur le bouton
+            $("#addEvent").click(function(ev){
+                // Si la fenêtre est déjà ouverte, on ne fait rien
+                //if($( "#dialog-form" ).dialog("isOpen")) return;
+
+                $("#subject").val("");
+                
+                // On paramètre le formulaire
+                $( "#dialog-form" ).dialog({
+                    autoOpen: true,
+                    height: 300,
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        "Ajouter": function() {
+                            var save = function(id){
+                                var th = new Object();
+                                $( this ).dialog( "close" );
+                                
+                                th.subject = $("#subject").val();
+                                th.place = $("#place").val();
+                                    
+                                var date = $("#date").val().split("/");
+                                var time = $("#time").val().split(":");
+                                    
+                                    
+                                console.log(date, time);
+                                    
+                                th.begin = new Date(date[2], date[1]-1, date[0], time[0], time[1], 0, 0);
+                                    
+                                var length = $("#length").val().split(":");
+                                th.end = new Date(date[2], date[1]-1, date[0], parseInt(time[0])+parseInt(length[0]), parseInt(time[1])+parseInt(length[1]), 0, 0);
+                                    
+                                th.place = $("#place").val();
+                                    
+                                var event = new Event(id, th.begin, th.end, th.subject, th.place);
+                                db.saveEvent(event);
+                                agenda.insert(event);
+                            
+                                $( "#dialog-form" ).dialog( "close" );
+                            };
+                            agenda.getFirstUnusedID(save);
+                        },
+                        Annuler: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                });
+                $("#time").val("8:0");
+                $("#length").val("2:0");
+                $( "#date" ).datepicker({dateFormat: "dd/mm/yy"});
+            });
+            /*
+            //Unification des préfixes
+            if ( "webkitIndexedDB" in window ) {
+                window.indexedDB      = window.webkitIndexedDB;
+                window.IDBTransaction = window.webkitIDBTransaction;
+                window.IDBKeyRange    = window.webkitIDBKeyRange;
+                // ...
+            } else if ( "moz_indexedDB" in window ) {
+                window.indexedDB = window.moz_indexedDB;
+            }
+            if ( !window.indexedDB ) {
+                console.log("pas supporté");
+            }
+            
+            var dbRequest = window.indexedDB.open(
+            "AddressBook",        // Database ID
+            "All my friends ever" // Database Description
+        );
+
+            dbRequest.onsuccess = function ( e ) {
+                var db = e.target.result;
+                if ( db.version === "" ) {
+                    var versionRequest = db.setVersion( "1.0" );
+                    versionRequest.onsuccess = function ( e ) {
+                        var store = db.createObjectStore(
+                        "contacts",  // The Object Store’s name
+                        "id",        // The name of the property to use as a key
+                        true         // Is the key auto-incrementing?
+                    );
+                        console.log(store);
+                    };
+                } else if ( db.version === "1.0" ) {
+                    //OK
+                }
+            };
+            
+            var testDB = {};
+            testDB.indexedDB = {};
+            testDB.indexedDB.db = null;
+            
+            testDB.indexedDB.open = function() {
+                var request = testDB.open("todos");
+
+                request.onsuccess = function(e) {
+                    testDB.indexedDB.db = e.target.result;
+                    console.log("success");
+                };
+
+                request.onfailure = testDB.indexedDB.onerror;
+            };*/
+           
+        </script>
+    </body>
+</html>
+

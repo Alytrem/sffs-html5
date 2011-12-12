@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.hive.js"></script>
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Evaluation des WebSockets</title>
+        <style type="text/css">
+
+        </style>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <td>Message : </td>
+                    <td><textarea rows="10" cols="60" id="message">Entrez le message</textarea></td>
+                </tr>
+                <tr>
+                    <td>Nombre de clients : </td>
+                    <td><input type="number" id="clients" min="0" max="15" value="5"/></td>
+                </tr>
+                <tr>
+                    <td>Nombre de messages : </td>
+                    <td><input type="number" id="nombre" min="0" max="1000000" value="200"/></td>
+                </tr>
+                <tr>
+                    <td>Echanger avec : </td>
+                    <td>
+                        <button onClick="runOnServlet();">Un Servlet</button>
+                        <button onClick="runOnWebSocket();">Un WebSocket</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Log : </td>
+                    <td>
+                        <textarea rows="10" cols="60" id="log"></textarea>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <script type="text/javascript">
+            var message = "ping";
+            var messagesToExchange = 1000;
+			var clients = 5;
+            
+            var exchangedMessages;
+            var begin, end;
+            
+            function clearStatus(){
+                begin = (new Date()).getTime();
+                exchangedMessages = 0;
+            }
+            
+            function printStatus(status){
+                end = (new Date()).getTime(); 
+                var message = "[Worker n° "+status.worker+"] [time "+((end-begin)/1000)+"s] avancement : "+status.exchangedMessages+"/"+messagesToExchange;
+                console.log(message);
+                $("#log").append(message+"\n");
+            }
+            
+            function updateOptions(){
+                messagesToExchange = parseInt($("#nombre").val());
+                message = $("#message").val();
+                clients = $("#clients").val();
+                console.log("Message : "+message);
+				
+				
+				
+				
+				var vars = new Object();
+				vars.messagesToExchange = messagesToExchange;
+				vars.message = message;
+				vars.worker = 0;
+				
+				var op = new Object();
+				op.op = "init";
+				op.data = vars;
+				
+				return op;
+            }
+            
+            function runOnServlet(){
+                var op = updateOptions();
+				
+                clearStatus();
+				
+				var workers = [];
+				
+				for(i = 0; i < clients; i++){
+					op.data.worker++;
+					
+					var worker = new Worker('js/ServletWorker.js');
+					worker.onmessage = function(event) {
+						var data = JSON.parse(event.data);
+						printStatus(data);
+					};
+					
+					workers.push(worker);
+					
+					worker.postMessage(JSON.stringify(op));
+				}
+            }
+            
+            function runOnWebSocket(){
+                var op = updateOptions();
+				
+                clearStatus();
+				
+				var workers = [];
+				
+				for(i = 0; i < clients; i++){
+					op.data.worker++;
+					
+					var worker = new Worker('js/WebSocketWorker.js');
+					worker.onmessage = function(event) {
+						var data = JSON.parse(event.data);
+						printStatus(data);
+					};
+					
+					workers.push(worker);
+					
+					worker.postMessage(JSON.stringify(op));
+				}
+            }
+        </script>
+    </body>
+</html>

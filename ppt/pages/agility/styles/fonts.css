@@ -1,0 +1,16 @@
+@media screen {
+    @font-face {
+        font-family: 'Droid Sans';
+        font-style: normal;
+        font-weight: normal;
+        src: local('Droid Sans'), local('DroidSans'), url('fonts/DroidSans.woff') format('woff');
+    }
+}
+@media screen {
+    @font-face {
+        font-family: 'Droid Sans Mono';
+        font-style: normal;
+        font-weight: normal;
+        src: local('Droid Sans Mono'), local('DroidSansMono'), url('fonts/DroidSansMono.woff') format('woff');
+    }
+}

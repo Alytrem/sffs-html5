@@ -1,0 +1,88 @@
+		
+		<!-- On importe les fichiers dans lesquels on a posé toutes les fonctions appel�es lors
+			de certains �v�nements dans le jeu -->			
+		<script type="text/javascript" src="js/game/general.js"></script>
+		<script type="text/javascript" src="js/game/salleLocalStorage.js"></script>
+		<script type="text/javascript" src="js/game/salleDocumentation.js"></script>
+		
+		
+		<script type="text/javascript" src="js/game/copperlicht.js"></script>
+		<script type="text/javascript" src="js/game/Stats.js"></script>
+		<script type="text/javascript" src="js/game/Detector.js"></script>
+		
+			<!-- Le canvas dans lequel on dessine l'animation 3D.
+				 Attention, la taille initiale donn�e au canvas conditionne le nombre de 
+				 pixels du rendu. -->
+			<canvas id="3darea" height="785" width="1424" style="background-color:#000000">
+				<!-- En cas de non compatibilit�, c'est ce qu'il y a entre les balises <canvas>
+					 et </canvas> qui est affich�. -->
+				<p>D�sol�, votre navigateur ne supporte pas le canvas. Essayez Google Chrome</p>
+			</canvas>
+			
+			<!-- Le javascript est ex�cut� d�s que le canvas est dans de document -->
+			<script type="text/javascript">				
+				// On va r�cup�rer les variables principales de l'animation
+				var engine;
+			
+				// On fait en sorte que la zone 3D prenne toute la largeur de l'espace allou�
+				$("#3darea").width($(window).width());
+				$("#3darea").height($(window).height()-5);
+				
+				// V�rifier que le navigateur supporte WEBGL
+				if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+				
+				// Mettre en place le DOM d'affichage des FPS
+				var stats = new Stats();
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.top = '0px';
+                $("body").append( stats.domElement );
+				
+				
+				// On cr�� l'animation � partir du fichier
+				engine = startCopperLichtFromFile('3darea', 'data/exterieur.ccbjs');
+				
+				// On associe une fonction mettant � jour les statistiques
+				// lors d'un rendu
+				engine.OnAfterDrawAll = function() 
+				{
+				  stats.update();
+				};
+				
+				// D�s que que le chargement est termin� :
+				engine.OnLoadingComplete = function() 
+				  {
+				  
+				  // on veut param�trer toutes les cam�ras de toutes les sc�nes
+					// On r�cu�re les sc�nes
+					var scenes = engine.getScenes();
+					if (scenes)
+					{
+						for (var i=0; i < scenes.length; i++) {
+							// On r�cu�re les cam�ras de la sc�ne
+							var cams = scenes[i].getAllSceneNodesOfType("camera");
+							if(cams){
+								for (var j=0; j < cams.length; j++) {
+									var cam = cams[j];
+									if(cam){
+										// On change le ratio pour coller au redimensionnement du canvas fait plus t�t
+										cam.setAspectRatio($(window).width()/$(window).height());
+										
+										// On emp�che le zoom pour pouvoir fixer le fov sur autre chose que 180�
+										var animator = cam.getAnimatorOfType("camerafps");
+										if(animator){
+											animator.MayZoom = false;
+										}
+										
+										// On fixe le FOV sur 1 (radian)
+										cam.setFov(1);
+									}
+								}
+							}
+						}
+					}
+					
+					// On affiche le formulaire en popup
+					popup("pages/formulaire.html");
+				  }
+				
+			</script>

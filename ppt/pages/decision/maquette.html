@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/lowpro.jquery.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+        <script type="text/javascript" src="js/jquery.verticalbuttonset.js"></script>
+        <script type="text/javascript" src="js/jquery.json-2.2.min.js"></script>
+
+        <!-- Classes javascript développées -->
+        <script type="text/javascript" src="klass/QueryLoader.js"></script>
+        <script type="text/javascript" src="klass/Query.js"></script>
+        <script type="text/javascript" src="klass/Question.js"></script>
+        <script type="text/javascript" src="klass/Comparator.js"></script>
+        <script type="text/javascript" src="klass/ComparatorLoader.js"></script>
+
+        <!-- Pour compenser l'abscence du forEach parfois -->
+        <script type="text/javascript" src="js/compatibility.js"></script>
+
+        <!-- Style -->
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+        <link href="styles/jquery-ui-1.8.14.custom.css" rel="stylesheet" type="text/css">
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Questions</title>
+    </head>
+    <body>
+        <script type="text/javascript" defer>
+           
+           
+           /*
+            var loader = new QueryLoader("demo.json");
+            var query = loader.load();
+           */
+           
+            $.getJSON("data.json")
+            // If an error occurs
+            .error(function(er) {
+                $.log("JSON read error, code "+er.status+" : "+er.statusText);
+                return false;
+            })
+            // in case of success
+            .success(function(data){
+                var loader = new ComparatorLoader(data);
+                var comparator = loader.load();
+            });
+            
+            
+        </script>
+    </body>
+</html>

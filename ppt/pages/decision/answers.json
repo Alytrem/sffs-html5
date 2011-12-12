@@ -1,0 +1,26 @@
+[
+    {
+        "name":"html5",
+        "value": [true]
+    },
+    {
+        "name":"like",
+        "value": [3]
+    },
+    {
+        "name":"rank",
+        "value": [5]
+    },
+    {
+        "name":"html4",
+        "value": [false]
+    },
+    {
+        "name":"functions-like",
+        "value": ["semantics"]
+    },
+    {
+        "name":"functions-dislike",
+        "value": ["storage","websockets"]
+    }
+]

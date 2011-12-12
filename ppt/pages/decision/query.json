@@ -1,0 +1,169 @@
+{
+    "title": "HTML5 et vous",
+    "submit": "http://www.serlvet-stephane.com/query/?bidule=",
+    "questions":
+    [
+    {
+        "id": 0,
+        "name": "html5",
+        "text": "Connaissiez vous HTML5 ?",
+        "next": [],
+        "type": "radio",  			
+        "answers": [
+
+        {
+            "value":true, 
+            "text":"Oui", 
+            "next":[11,1]
+        },
+
+        {
+            "value":false, 
+            "text":"Non", 
+            "next":[2]
+        }
+        ]
+    },
+    {
+        "id": 1,
+        "name": "like",
+        "text": "Aimez-vous HTML5 ?",
+        "next": [2],
+        "type": "radio",
+        "details": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Curabitur vestibulum ante vel tortor volutpat condimentum. Quisque ultricies, nunc vel vestibulum auctor.</p>",
+        "answers": [
+        {
+            "value":0, 
+            "text":"Pas du tout"
+        },
+
+        {
+            "value":1, 
+            "text":"Un peu"
+        },
+
+        {
+            "value":2, 
+            "text":"Beaucoup"
+        },
+
+        {
+            "value":3, 
+            "text":"Passionnément", 
+            "next": [3,2]
+        },
+
+        {
+            "value":4, 
+            "text":"A la folie", 
+            "next": [3,2]
+        }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "html4",
+        "text": "Connaissiez vous HTML4 ?",
+        "next": [4],
+        "type": "radio",  
+        "answers": [
+        {
+            "value":true, 
+            "text":"Oui"
+        },
+
+        {
+            "value":false, 
+            "text":"Non"
+        }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "rank",
+        "text": "Combien sur 10 ?",
+        "details": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Curabitur vestibulum ante vel tortor volutpat condimentum. Quisque ultricies, nunc vel vestibulum auctor.</p>",
+        "next": [],
+        "type": "slider",                                                   
+        "options": {
+            "min": 0,
+            "max": 10,
+            "step": 2
+        },
+        "answers": [
+        {
+            "value":3, 
+            "next": []
+        },
+
+        {
+            "value":7, 
+            "next": [7]
+        },
+
+        {
+            "value":9, 
+            "next": [42]
+        }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "functions-like",
+        "text": "Quelle est votre fonctionnalité préférée ?",
+        "next": [5],
+        "type": "select", 			
+        "answers": [
+
+        {
+            "value":"CSS3-animation", 
+            "text":"Animations"
+        },
+
+        {
+            "value":"semantics", 
+            "text":"Semantique"
+        },
+
+        {
+            "value":"storage", 
+            "text":"LocalStorage"
+        },
+
+        {
+            "value":"websockets", 
+            "text":"Les Web Socket"
+        }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "functions-dislike",
+        "text": "Quelles sont celles que vous trouvez inutiles ?",
+        "next": [6],
+        "type": "checkbox", 			
+        "answers": [
+
+        {
+            "value":"CSS3-animation", 
+            "text":"Animations"
+        },
+
+        {
+            "value":"semantics", 
+            "text":"Semantique"
+        },
+
+        {
+            "value":"storage", 
+            "text":"LocalStorage"
+        },
+
+        {
+            "value":"websockets", 
+            "text":"Les Web Sockets"
+        }
+        ]
+    }
+    ]
+}

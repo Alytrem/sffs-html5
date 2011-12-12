@@ -1,0 +1,208 @@
+/* Styles de base */
+
+/* rouge : #CF0000
+   vert : #68CF00
+   gris clair : #F0F0F0
+   gris foncé : #DEDEDE
+*/
+
+p, li, ul, td, h1, h2, h3, th{
+    font: normal 80% "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+    color: #202020;
+    font-size: 10pt;
+    text-align: justify;
+    font-weight: bold;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+/* CONTAINER DE L'AGENDA */
+section{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: -webkit-box; -webkit-box-orient: vertical;
+}
+
+footer, section > header{
+    background: -webkit-linear-gradient(top, rgba(245,246,246,1) 0%,rgba(219,220,226,1) 21%,rgba(184,186,198,1) 49%,rgba(221,223,227,1) 80%,rgba(245,246,246,1) 100%);
+    height: 50px;
+    padding: 8px;
+}
+
+section > header{
+    border-bottom: solid 4px #333;
+}
+
+/* titre de l'agenda */
+section > header h1{
+    color: #FFF;
+    font-size: 28pt;
+    text-shadow: rgba(64, 64, 64, 0.5) 2px 2px 3px;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    height: 100%;
+    margin: 10px;
+    margin-left:20px;
+    float: left;
+}
+
+/* les contrôles */
+#controles{
+    float: right;
+}
+
+#controles button{
+    font-size: 12pt;
+}
+
+#dialog-form, .ui-button-text{
+    font-size: 10pt;
+    overflow: hidden;
+}
+
+fieldset{
+    border:none;
+}
+
+footer{
+    border-top: solid 4px #333;
+}
+
+/* En tête de chaque jour */
+#top{
+    height: 35px;
+    background: -webkit-linear-gradient(top, rgba(197,222,234,1) 0%,rgba(138,187,215,1) 31%,rgba(6,109,171,1) 100%);
+    display: -webkit-box; -webkit-box-orient: horizontal;
+    padding-right: 16px;
+    box-shadow: rgba(64, 64, 64, 0.5) 0px 2px 3px;
+}
+
+header.hour h1{
+    color: #FFF;
+    font-size: 13pt;
+    letter-spacing: 3px;
+    font-weight: normal;
+    height: 100%;
+    padding-top: 5px;
+    text-align: center;
+}
+
+#top .hour{
+    border-right: solid 1px #999;
+    background-color: transparent;
+    height: auto;
+}
+
+#top .hour:not(.head){
+    border-right: solid 1px #999;
+    background-color: transparent;
+}
+
+/* Là où sont les jours, heures et évènements */
+#agenda{
+    -webkit-box-flex: 1;
+    display: -webkit-box; -webkit-box-orient: horizontal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: auto;
+}
+
+.day:not(#head){
+    display: -webkit-box; -webkit-box-orient: vertical;
+    height: auto;
+}
+
+.hour{
+    height: 30px;
+    background-color: #FCFCFC;
+    border-bottom: dotted 1px #999;
+    border-right: solid 1px #999;
+    overflow: visible;
+    background-color: transparent;
+    text-align: center;
+}
+
+/* La colonne de gauche de l'agenda */
+#head{
+    background-color: #F2F2F2;
+}
+
+.head{
+    width: 50px !important;
+    background-color: transparent;
+}
+
+.head p{
+    color: #444;
+    vertical-align: top;
+    text-align: right;
+    height: 100%;
+    width: 100%;
+}
+
+/* Evenement */
+
+article{
+    height: 60px;
+    margin-right: -2px;
+    margin-left: -2px;
+}
+
+.event{
+    width: 95%;
+    height:98%;
+    background-color: red;
+    border-radius: 10px;
+    border: solid 2px #333;
+    background: -webkit-linear-gradient(top, rgba(109,179,242,1) 0%,rgba(84,163,238,1) 50%,rgba(54,144,240,1) 51%,rgba(30,105,222,1) 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+article h1, article h2{
+    padding:0px;
+    margin:0px;
+    margin-left: 5px;
+}
+
+article h1{
+    color: #FFF;
+    letter-spacing: 1px;
+    font-weight: bolder;
+    margin-top: 5px;
+    font-size: 12pt;
+}
+article h2{
+    color: #DDD;
+    font-weight: bold;
+}
+
+.center{
+    margin-left:auto;
+    margin-right: auto;
+    text-align:center;
+}
+
+p.ui-state-default{
+    border-radius: 5px;
+}
+.ui-dialog{
+    box-shadow: #666 5px 5px 10px;
+}
+.ui-dialog-titlebar-close{
+    display: none;
+}
+
+.event h1{
+    float: left;
+}
+
+.event h2{
+    float: right;
+    margin-top: 8px;
+    margin-right: 10px;
+}

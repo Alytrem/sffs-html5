@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.15.custom.min.js"></script>
+
+        <link href="css/jquery-ui-1.8.15.custom.css" rel="stylesheet" type="text/css">
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Chat</title>
+        <style type="text/css">
+            #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; overflow: auto; height: 85%;}
+            #sortable p { margin: 0 5px 5px 5px; padding: 5px; font-size: 0.8em; min-height: 1.5em; width: 70%; clear: both;}
+            #sortable p.mine { color: white; float: right; background: -webkit-linear-gradient(top, rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%);}
+            #message, #pseudo{
+                width: 70%; 
+                height: 30px;
+                margin-top: 5px;
+            }
+            #pseudo{
+                width: 100%; 
+            }
+            #send{
+                font-size: 1em;
+                width: 25%;
+                float: right;
+            }
+            .from {
+                background-color: #666;
+                color: white;
+                padding-left: 5px;
+                padding-bottom: 2px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+            p.ui-state-default{
+                border-radius: 5px;
+            }
+            .ui-dialog{
+                box-shadow: #666 5px 5px 10px;
+            }
+            .ui-dialog-titlebar-close{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="connection" title="Connexion">
+            <p>
+                <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+		Veuillez vous connecter sur le chat en entrant votre pseudonyme
+            </p>
+            <form onsubmit="return login()">
+                <input type="text" name="pseudo" id="pseudo" placeholder="Tapez votre pseudonyme"/>
+            </form>
+        </div>
+
+        <div id="dialog" title="Chat">
+            <div id="sortable">
+            </div>
+            <form onsubmit="return send()">
+                <input type="text" name="message" id="message" placeholder="Tapez votre message"/>
+                <input type="submit" name="send" id="send" value="Envoyer"/>
+            </form>
+        </div>
+        <script type="text/javascript" defer>
+			window.webkitNotifications.requestPermission();
+			console.log(window.webkitNotifications);
+			console.log(window.webkitNotifications.requestPermission());
+		
+            var pseudo = "";
+            
+            $( "#dialog" ).dialog({
+                closeOnEscape: false,
+                height: 480,
+                width: 800
+            });
+            
+            $( "#sortable" ).sortable({
+                disabled: true
+            });
+            
+            $( "#send" ).button();
+            
+            function showConnection(){
+                $( "#connection" ).dialog({
+                    modal: true,
+                    buttons: {
+                        "Se connecter": function() {
+                            login();
+                        }
+                    },
+                    height: 280,
+                    width: 320
+                });
+            }
+            showConnection();
+            
+            $("#send").click(send);
+            
+            var ws;
+            
+            function login(){
+                pseudo = $( "#pseudo" ).val().trim();
+                if(pseudo.length != 0){
+                    console.log("pseudonyme enregistré : "+pseudo);
+                    init();
+                }
+                return false;
+            }
+            function init(){
+                var location = "ws://localhost:8080/WebApps/ChatWebSocket";
+                ws=new WebSocket(location);
+                ws.onopen=this.onopen;
+                ws.onmessage=this.onmessage;
+                ws.onclose=this.onclose;
+                $("#connection").dialog( "close" );
+            }
+            
+            function onopen(){
+                ws.send(pseudo+" s'est connecté");
+                console.log("WebSocket ouvert");
+            }
+            
+            function scroll(){
+                var objDiv = document.getElementById("sortable");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            }
+            
+            function send(){
+                var message = $("#message").val();
+                if(message.length != 0){
+                    $("#sortable").append($("<p class='ui-state-default mine'>"+message+"</p>"));
+                    scroll();
+                    ws.send(pseudo+" : "+message);
+                    console.log("Message envoyé : "+message);
+                    $("#message").val("");
+                }
+                return false;
+            }
+            
+            function onmessage(message){
+                var c=message.data.indexOf(':');
+                var from=message.data.substring(0,c).replace('<','&lt;').replace('>','&gt;');
+                var text=message.data.substring(c+1).replace('<','&lt;').replace('>','&gt;');
+                
+                if(from.toLowerCase().trim() == pseudo.toLowerCase().trim()) return;
+                
+                $("#sortable").append($("<p class='ui-state-default'><span class='from'>"+from+"</span>"+text+"</p>"));
+                scroll();
+                
+                showNotification(from, text);
+                
+                console.log("Message reçu : "+text);
+            }
+            
+            function onclose(){
+                this._ws=null;
+                $("#sortable p").remove();
+                showConnection();
+                console.log("WebSocket fermé");
+            }
+            
+            function RequestPermission (callback) {
+                window.webkitNotifications.requestPermission(callback);
+            }
+	
+            function showNotification(pseudo, message){
+                if (window.webkitNotifications.checkPermission() > 0) {
+                    RequestPermission(function(){
+                        showNotification(pseudo, message);
+                    });
+                }
+                else {
+                    var popup = window.webkitNotifications.createNotification("css/cap.gif", pseudo, message);
+                    popup.show(); 
+                    setTimeout(function(){
+                        popup.cancel();
+                    },5000);	
+                }
+            }
+        </script>
+    </body>
+</html>

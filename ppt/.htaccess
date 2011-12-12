@@ -1,0 +1,7 @@
+AddType text/cache-manifest .manifest
+AddType font/opentype .otf
+AddType font/ttf .ttf
+AddType application/font-woff .woff
+
+ExpiresActive On
+ExpiresDefault "access"

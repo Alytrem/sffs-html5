@@ -1,0 +1,114 @@
+/*
+ * Préconditions : 
+ *  * le format est respecté
+ *  * les attributs non facultatifs sont présents
+ *  (les facultatifs sont indiqués. Les next des réponses (answers) sont facultatifs aussi
+ * 
+ * Post-conditions :
+ *  * les questions ne sont posées qu'une fois (même si on les indique plusieurs fois)
+ *  * on peut rediriger vers plusieurs questions qui seront posées successivement
+ *  * si une réponse n'a pas de "next" particulier, alors c'est le next par défaut
+ *    de la question qui est prit en compte
+ *  * si une réponse a un next particulier, alors c'est ce dernier qui est prit
+ *    en compte
+ *  * dans le cas de choix multiples (checkbox), alors c'est l'union des next
+ *    des réponses cochées qui est prit en compte
+ */
+
+}
+// Titre du questionnaire
+"title": "HTML5 et vous",
+// URL à laquelle envoyer les résultats
+"submit": "my_url",
+"questions":
+	[
+                {
+			"id": 0,
+                        "name": "html5",
+			"text": "Connaissiez vous HTML5 ?",
+			"next": [],
+			"type": "radio",  // radio (case à sélectionner (une seule réponse)
+			"answers": [
+				{"value":true, "text":"Oui", "next":[1]},
+				{"value":false, "text":"Non", "next":[2]}
+			]
+		},
+		{
+			"id": 1,
+                        "name": "like",
+			"text": "Aimez-vous HTML5 ?",
+			"next": [2],
+			"type": "radio",
+                        "details": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Curabitur vestibulum ante vel tortor volutpat condimentum. Quisque ultricies, nunc vel vestibulum auctor.</p>",
+			"answers": [
+				{"value":0, "text":"Pas du tout"},
+				{"value":1, "text":"Un peu"},
+				{"value":2, "text":"Beaucoup"},
+				{"value":3, "text":"Passionnément", "next": [3,2]},
+				{"value":4, "text":"A la folie", "next": [3,2]}
+			]
+		},
+                {
+			"id": 2,
+                        "name": "html4",
+			"text": "Connaissiez vous HTML4 ?",
+			"next": [4],
+			"type": "radio",  
+			"answers": [
+				{"value":true, "text":"Oui"},
+				{"value":false, "text":"Non"}
+			]
+		},
+                {
+			"id": 3,
+                        "name": "rank",
+			"text": "Combien sur 10 ?",
+			"details": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Curabitur vestibulum ante vel tortor volutpat condimentum. Quisque ultricies, nunc vel vestibulum auctor.</p>",
+			"next": [],
+			"type": "slider",   // curseur
+                        // Les options sont facultatives
+                        "options": {
+                            "min": 0,
+                            "max": 10,
+                            "step": 2
+                        },
+                        //Seule la vrai valeur sera donnée (entier)
+                        //les infos ci-dessous servent à la redirection
+                        //(value est la valeur la plus proche sans dépasser la réponse donnée) :
+			"answers": [
+                                // entre 0 et 3
+				{"value":3, "next": []},
+                                // entre 4 et 7
+				{"value":7, "next": [7]},
+                                // entre 8 et 9
+				{"value":9, "next": [8]}
+			]
+		},
+                {
+			"id": 4,
+                        "name": "functions-like",
+			"text": "Quelle est votre fonctionnalité préférée ?",
+			"next": [5],
+			"type": "list", // liste déroulante
+			"answers": [
+				{"value":"CSS3-animation", "text":"Animations"},
+				{"value":"semantics", "text":"Semantique"},
+				{"value":"storage", "text":"LocalStorage"},
+				{"value":"websockets", "text":"Les Web Socket"}
+			]
+		},
+                {
+			"id": 5,
+                        "name": "functions-dislike",
+			"text": "Quelles sont celles que vous trouvez inutiles ?",
+			"next": [6],
+			"type": "checkbox", // cases à cocher
+			"answers": [
+				{"value":"CSS3-animation", "text":"Animations"},
+				{"value":"semantics", "text":"Semantique"},
+				{"value":"storage", "text":"LocalStorage"},
+				{"value":"websockets", "text":"Les Web Sockets"}
+			]
+		}
+	]
+}

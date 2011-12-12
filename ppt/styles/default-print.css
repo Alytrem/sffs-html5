@@ -1,0 +1,145 @@
+body {
+    width: auto;
+    height: auto;
+    position: static;
+}
+
+article, article.far-past , article.past, article.current, article.future, article.far-future  {
+    display: block;
+    position: static;
+    margin-left: 20px;
+    left: 0%;
+    top: 0%;
+    margin-top: 30px;
+    background: #FFF;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    width: 900px;
+    height: 636px;
+    page-break-inside: avoid;
+}
+
+article p, article li, article textarea, details {
+    font-size: 20px;
+}
+
+section.middle {
+    line-height: 55px;
+}
+
+figcaption{
+    line-height: 40px;
+}
+
+.presentation {
+    position: static;
+    display: block;
+    overflow: visible;
+    background-color: #FFF;
+}
+
+.slides {
+    position: static;
+    display: block;
+}
+
+#presentation-counter{
+    display: none;
+}
+
+header {
+    position: relative;
+    left: 30px;
+    top: 15px;
+    margin: 0;
+    padding: 0;
+    font-size: 50px;
+    width: 94%;
+}
+
+article .counter {
+    position: relative;
+    left: 25px;
+    bottom: 10px;
+}
+
+section, footer{
+    position: static;
+    margin: 40px 30px 0;
+    overflow: hidden;
+    padding-top: 0px;
+    height: 500px;
+    text-shadow: none;padding-top: 0px !important;
+}
+
+section > p:first-child{
+    margin-top: 0px;
+    padding-top: 0px;
+}
+*{
+    opacity: 1 !important;
+    border-radius: 0px !important;
+    text-shadow: none !important;
+    -webkit-text-shadow: none !important;
+    -moz-text-shadow: none !important;
+    -o-text-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -o-box-shadow: none !important;
+}
+
+header + section.middle{
+    height: 480px;
+    padding-top: 0px !important;
+}
+
+div.css, div.js, div.html{
+    margin-top: 20px;
+}
+
+p.breadcrumb{
+    font-size: 16px;
+    letter-spacing: 0px;
+}
+
+pre{
+    background-color: #EEEEEE;
+    border: solid 2px #CCC;
+}
+
+pre, pre select{
+    font-family: Courier;
+}
+
+.key{
+    font-family: Arial ;
+}
+
+header , section, footer, h2{
+    font-family: Arial, Cambria;
+}
+
+header {
+    font-size: 45px;
+}
+
+.classification .cover, .classification .progress , div.css, div.html, div.js{
+    background: none;
+}
+
+div.css img, div.html img, div.js img{
+    visibility: visible;
+}
+
+.classification img{
+    visibility: visible;
+}
+
+.breadcrumb{
+    font-weight: bold;
+}

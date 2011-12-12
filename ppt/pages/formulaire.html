@@ -1,0 +1,114 @@
+		<!-- Script -->
+        <script>		
+			// variables identité (rempli par le formulaire)
+			var nom, prenom, email, site, pair, impair, date, heure;
+			
+            function valider(){
+				nom = $("#nom").val();
+				prenom = $("#prenom").val();
+				email = $("#email").val();
+				site = $("#site").val();
+				pair = $("#pair").val();
+				impair = $("#impair").val();
+				date = $("#date").val();
+				heure = $("#heure").val();
+				
+				// on vérifie que le stockage local est supporté
+				if(!Modernizr.localstorage){
+					alert("Impossible d'enregistrer les valeurs en local, votre navigateur ne supporte pas le stockage local");
+				}else{
+					localStorage["formulaire.nom"] = nom;
+					localStorage["formulaire.prenom"] = prenom;
+					localStorage["formulaire.email"] = email;
+					localStorage["formulaire.site"] = site;
+					localStorage["formulaire.pair"] = pair;
+					localStorage["formulaire.impair"] = impair;
+					localStorage["formulaire.date"] = date;
+					localStorage["formulaire.heure"] = heure;
+					alert("formulaire enregistré !");
+				}
+				
+				$.nmTop().close();
+			}
+			
+			function charger(){
+				// on vérifie que le stockage local est supporté
+				if(!Modernizr.localstorage){
+					alert("Impossible de restaurer les valeurs, votre navigateur ne supporte pas le stockage local");
+				}else{
+					nom = localStorage["formulaire.nom"];
+					prenom = localStorage["formulaire.prenom"];
+					email = localStorage["formulaire.email"];
+					site = localStorage["formulaire.site"];
+					pair = localStorage["formulaire.pair"];
+					impair = localStorage["formulaire.impair"];
+					date = localStorage["formulaire.date"];
+					heure = localStorage["formulaire.heure"];
+					
+					if(nom) $("#nom").val(nom);
+					if(prenom) $("#prenom").val(prenom);
+					if(email) $("#email").val(email);
+					if(site) $("#site").val(site);
+					if(pair) $("#pair").val(pair);
+					if(impair) $("#impair").val(impair);
+					if(date) $("#date").val(date);
+					if(heure) $("#heure").val(heure);
+				}
+			}
+        </script>
+		<p>Vous pouvez remplir le formulaire suivant, qui fait la démonstration des <strong>nouveaux champs HTML5</strong>.</p>
+		<p>Si un navigateur ne sait pas traiter le champ, il le considère comme un champ texte. Même IE6 affichera de simple champs texte, mais cela ne posera pas de soucis aux visiteurs.<br>Il n'y donc pas de raisons pour ne pas utiliser ces champs dès maintenant</p>
+		<form>
+			<table>
+			<tr>
+				<td>Nom : </td>
+				<td><input type="text" id="nom" autofocus /></td>
+				<td>Ce champ est <strong>autofocus</strong>. <i>Dès le chargement de la page, le focus est donné au champ.</i></td>
+			</tr>
+			<tr>
+				<td>Prénom : </td>
+				<td><input type="text" id="prenom" placeholder="Votre prénom"/></td>
+				<td>Ce champ contient un <strong>placeholder</strong> (texte qui disparait quand on commence à écrire dans le champ).</i></td>
+			</tr>
+			<tr>
+				<td>Adresse email : </td>
+				<td><input type="email" id="email" /></td>
+				<td>Ce champ est un champ <strong>email</strong>. Aucune différence ? Essayez avec un iPhone... Vous verrez que le clavier s'adapte pour faciliter la saisie.</i></td>
+			</tr>
+			<tr>
+				<td>Site web : </td>
+				<td><input type="url" id="site" /></td>
+				<td>Ce champ est un champ <strong>url</strong>. Aucune différence ? Comme le précédent, le clavier d'un iPhone, et d'autres mobiles supportant ce type vont afficher un clavier adapté.</i></td>
+			</tr>
+			<tr>
+				<td>Votre chiffre pair préféré (entre 0 et 10) : </td>
+				<td><input type="number" id="pair" min="0" max="10" step="2" value="4"/></td>
+				<td>Ce champ est un champ <strong>number</strong>. Les navigateurs compatibles ne doivent autoriser que les nombres pairs de 0 à 10. On a en effet spécifié le minimum (0), le maximum (10), le pas (2) et la valeur par défaut (4).</i></td>
+			</tr>
+			<tr>
+				<td>Votre chiffre impair préféré (entre 1 et 9) : </td>
+				<td><input type="range" id="impair" min="1" max="9" step="2" value="7"/></td>
+				<td>Ce champ est un champ <strong>range</strong>. Même chose que précédement, mais avec un slider cette fois.</i></td>
+			</tr>
+			<tr>
+				<td>Votre date de naissance</td>
+				<td><input type="date" id="date"/></td>
+				<td>Ce champ est un champ <strong>date</strong>. Il vous permet de choisir une date. Il existe les variantes date et heure en même temps, date seule, mois, semaine, date & heure locale...</i></td>
+			</tr>
+			<tr>
+				<td>Votre heure de naissance</td>
+				<td><input type="time" id="heure"/></td>
+				<td>Ce champ est un champ <strong>time</strong>. Il vous permet de choisir une heure.</i></td>
+			</tr>
+			
+			<!-- On charge le formulaire si les données ont déjà été saisies -->
+			<script>
+				charger();
+			</script>
+			<tr>
+				<td>Votre pouvez valider</td>
+				<td><input type="button" value="Envoyer" onclick="javascript:valider()"/></td>
+				<td>Ce champ est ... bien connu depuis longtemps et n'a pas changé. Seulement, nous allons enregistrer ses informations dans une base de données locale.</i></td>
+			</tr>
+			</table>
+		</form>

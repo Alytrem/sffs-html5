@@ -1,0 +1,147 @@
+/* Styles de base */
+
+body{
+    background-color: #F5F5F5;
+	margin:0px;
+}
+
+a{
+	color: #FF3300;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+p, li, ul, td, h1, h2, h3, th{
+    font: normal 80% "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+    color: #202020;
+    font-size: 11pt;
+    text-align: justify;
+    line-height: 135%;
+}
+
+p, li, ul{
+	margin-bottom: 5px;
+	margin-top: 3px;
+}
+
+th{
+	font-weight: bold;
+	color: white;
+	background-color: #7998A8;
+}
+
+h1,h2, h3{
+	margin-top:30px;
+	margin-bottom: 10px;
+    font-weight: bolder;
+    color: #FFFFFF;
+	padding-left: 20px;
+}
+
+a h1, a h2, a h3{
+	background-color: #e28b69;
+	border-color: #e28b69;
+	margin-top:10px !important;
+}
+
+a h1:hover, a h2:hover, a h3:hover {
+	background-color: #d14129;
+	border-color: #d14129;
+}
+
+h1{
+    font-size: 18pt;
+    background-color: #7998A8;
+    border: solid 30px #7998A8;
+}
+
+h2{
+	font-size: 15pt;
+	background-color: #99B8C8;
+    border: solid 5px #99B8C8;
+}
+
+h3{
+	font-size: 13pt;
+	background-color: #A0C0E4;
+    border: solid 3px #A0C0E4;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+
+img{
+    border:none;
+}
+
+table{
+	border-collapse:collapse;	
+}
+
+table tr td, table tr th{
+	padding: 5px;
+	text-align: center;
+}
+
+.border td, .border th{
+	border: solid 2px black;
+}
+
+/* CLASSES PERSO */
+#main{
+	margin: 30px;
+	background-color: #FFFFFF;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 20px;
+	border: solid #282828 1px;
+	max-width: 1024px;
+	margin-left:auto;
+	margin-right: auto;
+}
+
+#main h1, #main h2{
+	margin-left: -20px;
+	margin-right: -20px;
+}
+
+.selected{
+	border: solid 5px green !important;
+}
+
+.choice{
+	padding:10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: solid 5px white;
+}
+
+.choice:hover{
+	border: solid 5px #7998A8 !important;
+}
+
+.info, .warning{
+	border: solid 3px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 12pt;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.warning{
+	background-color: #e28b69;
+	border-color: #d14129;
+}
+
+.info{
+	background-color: #8CDD81;
+	border-color: #008000;
+}
+
