@@ -16,13 +16,11 @@
                 this.reset();
                 this.drawShip();
                 this.drawRocks();
-                //this.drawScore();
             },
             reset: function(){
-                this.canvas.width = canvas.width;
+                this.canvas.width = this.canvas.width;
             },
             drawShip: function(){
-                //console.log(this.game.ship.position.x);
                 this.context.beginPath();
                 var rayon = this.game.ship.size;
                 this.context.arc(this.game.ship.position.x, this.game.ship.position.y, rayon, 0, Math.PI * 2, false);
@@ -47,7 +45,7 @@
 
 /*
  * Exercice 1 : faire l'engine
- * Exercice 2 : faire la class Ship avec gestion sur 1 axes
+ * Exercice 2 : faire la class Ship avec gestion sur 1 axe
  * Exercice 3 : passer sur une gestion du vaisseau sur 2 axes
  * Exercice 4 : améliorer l'engine en dessinant une image pour le vaisseau
  * Exercice 5 : afficher le score + gérer le start/stop/resume (game.status)
@@ -55,3 +53,12 @@
  * Exercice 7 (facultatif) : rendre la vitesse du vaisseau et des caillous réglable dans le menu
  * Exercice 8 (facultatif) : rendre l'état du jeu persistant via l'API local storage + sauvegarder et afficher les meilleurs scores
  */
+ 
+ 
+ /*
+  * A FAIRE :
+  * - tester le TP
+  * - modifier le PPT pour adapter
+  * - ajouter plus de trucs sur canvas
+  * - faire le sujet de TP (Quentin)
+  */

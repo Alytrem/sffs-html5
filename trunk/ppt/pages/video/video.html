@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=660">
+        
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Vidéo</title>
+    </head>
+    <body>
+        <p>La vidéo ci dessous est proposée dans les formats mp4, webm, ogv, et si la balise vidéo n'est pas supportée, c'est un lecteur flash standard qui sera utilisé. Enfin, si rien ne fonctionne, un lien pour le téléchargement est donné.</p>
+        <video width="640" height="360" controls="" autoplay="">
+            <!-- MP4 must be first for iPad! -->
+            <source src="media/h264.mp4" type="video/mp4"><!-- Safari / iOS, IE9 -->
+            <source src="media/webm.webm" type="video/webm"><!-- Chrome10+, Ffx4+, Opera10.6+ -->
+            <source src="media/ogv.ogv" type="video/ogg"><!-- Firefox3.6+ / Opera 10.5+ -->
+            <!-- fallback to Flash: -->
+            <object width="640" height="360" type="application/x-shockwave-flash" data="media/player.swf">
+                <!-- Firefox uses the `data` attribute above, IE/Safari uses the param below -->
+                <param name="movie" value="media/player.swf">
+                <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;image=poster.jpg&amp;file=flash.mp4">
+                <!-- fallback -->
+                <p>Vous n'avez aucun moyen de visionner la vidéo. Vous pouvez cependant télécharger le fichier :</p>
+                <a href="media/flash.mp4" alt="video">Télécharger</a>
+            </object>
+        </video>
+        <p style="font-size: 8pt">Crédits pour les vidéos à <a href="http://www.vorwaerts-gmbh.de/">vorwaerts gmbh</a></p>
+    </body>
+</html>

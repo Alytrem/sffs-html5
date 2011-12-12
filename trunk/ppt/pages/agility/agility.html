@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS -->
+        <link href="styles/fonts.css" rel="stylesheet" type="text/css">
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+        <link href="styles/jquery-ui-1.8.15.custom.css" rel="stylesheet" type="text/css">
+
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : Agility</title>
+    </head>
+    <body>
+        <!-- Todo App Interface -->
+
+        <div id="todoapp">
+
+            <div class="title">
+                <h1>Agility</h1>
+            </div>
+            <h2>Nouvelle tâche</h2>
+            <div id="create-todo">
+                <input class="todo-input new-todo-worker" placeholder="Qui ?" type="text" />
+                <input class="todo-input new-todo-content" placeholder="Doit faire quoi ?" type="text" />
+                <input class="todo-input new-todo-comment" placeholder="Un commentaire ?" type="text" />
+                <span class="ui-tooltip-top" style="display:none;">Presser Entrée pour valider</span>
+            </div>
+            <h2>Nouvelle catégorie</h2>
+            <div id="create-category">
+                <input class="new-category" placeholder="Nouvelle categorie" type="text" />
+                <span class="ui-tooltip-top" style="display:none;">Presser Entrée pour valider</span>
+            </div>
+
+            <div id="select"></div>
+            
+            <ul class="todo-list"></ul>
+            
+            <div id="content">
+            </div>
+            
+
+        </div>
+        <ul id="instructions">
+            <li>Double cliquer pour modifier une tache.</li>
+        </ul>
+
+        <!-- Templates -->
+        <script type="text/template" id="category-template">
+            <button class="select-category <%= (selected) ? "ui-state-focus" : "" %>"><%= name %></button>
+            <% if(!mandatory){ %>
+                <button class="delete-category">Effacer</button>
+            <% } %>
+        </script>
+
+        <script type="text/template" id="app-template">
+            
+            <div id="todo-stats">
+                <% if (total) { %>
+                <div id="done-progress" class="progress">
+                    <span class="todo-count">
+                        <span class="number"><%= (done == 0) ? "aucune" : done %></span>
+                        <span class="word"><%= done <= 1 ? 'tache traitée' : 'taches traitées' %></span>
+                    </span>
+                </div>
+                
+                <div id="verified-progress" class="progress">
+                    <span class="todo-count">
+                        <span class="number"><%= (verified == 0) ? "aucune" : verified %></span>
+                        <span class="word"><%= verified <= 1 ? 'tache vérifiée' : 'taches vérifiées' %></span>
+                    </span>
+                </div>
+                <% } %>
+
+                <% if (verified && false) { %>
+                <span class="todo-clear">
+                    <br />
+                    <a href="#">
+                        Effacer <span class="number-done"><%= verified %></span>
+                        <span class="word-done"><%= verified <= 1 ? 'tache terminée et vérfiée' : 'taches terminées et vérifiées' %></span>
+                    </a>
+                </span>
+                <% } %>
+            </div>
+        </script>
+
+        <script type="text/template" id="item-template">
+            <div class="todo 
+                 <%= (status == 0)  ? 'pending' : '' %>
+                 <%= (status == 1)  ? 'inprogress' : '' %>
+                 <%= (status == 2)  ? 'done' : '' %>
+                 <%= (status == 3)  ? 'checked' : '' %>
+                 " id="todo-<%= order %>">
+                <div>
+                    <div class="status">
+                        <button class="pending <%= (status == 0) ? "ui-state-focus" : "" %>">En attente</button>
+                        <button class="inprogress <%= (status == 1) ? "ui-state-focus" : "" %>">En cours</button>
+                        <button class="done <%= (status == 2) ? "ui-state-focus" : "" %>">Terminé</button>
+                        <button class="checked <%= (status == 3) ? "ui-state-focus" : "" %>">Vérifié</button>
+                    </div>
+                    <span class="todo-worker display"><%= worker %></span>
+                    <span class="edit"><input class="todo-input todo-input-worker" type="text" value="" placeholder="Qui ?" /></span>
+                    <span class="todo-content display"><%= content %></span>
+                    <span class="edit"><input class="todo-input todo-input-content" type="text" value="" placeholder="Doit faire quoi ?" /></span>
+                    <span class="display"><br /><span class="todo-comment"><%= comment %> (<%= category %>)</span></span>
+                    <span class="edit"><input class="todo-input todo-input-comment" type="text" value="" placeholder="Un commentaire ?" /></span>
+                    <span class="todo-destroy display"></span><br />
+                    <span class="todo-drag display"></span>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/template" id="stats-template">
+
+        </script>
+
+
+        <!-- Scripts -->
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+        <script type="text/javascript" src="js/underscore-min.js"></script>
+        <script type="text/javascript" src="js/backbone-min.js"></script>
+        <script type="text/javascript" src="js/backbone-localstorage.js"></script>
+        <script type="text/javascript" src="js/jquery.verticalbuttonset.js"></script>
+
+        <!-- Developped Classes -->
+        <script type="text/javascript" src="class/Todo.js"></script>
+        <script type="text/javascript" src="class/TodoView.js"></script>
+        <script type="text/javascript" src="class/TodoList.js"></script>
+        <script type="text/javascript" src="class/Category.js"></script>
+        <script type="text/javascript" src="class/CategoryView.js"></script>
+        <script type="text/javascript" src="class/CategoryList.js"></script>
+        <script type="text/javascript" src="class/AppView.js"></script>
+
+        <script type="text/javascript" src="js/agility.js"></script>
+    </body>
+</html>

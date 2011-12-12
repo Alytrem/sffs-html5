@@ -1,0 +1,53 @@
+/* Styles de base */
+
+body{
+    background-color: #F5F5F5;
+}
+
+body, div, canvas{
+    margin:0px;
+    padding: 0px;
+}
+
+a{
+    color: #FF3300;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+p, li, ul, td, h1, h2, h3, th, input[type="text"]{
+    font: normal 80% "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+    color: #202020;
+    font-size: 8pt;
+    text-align: justify;
+    line-height: 10%;
+    font-weight: bold;
+    padding-left: 4px;
+    padding-right: 2px;
+    vertical-align: middle;
+}
+
+p{
+    font-size: 10pt !important;
+}
+
+.menu{
+    position: absolute;
+    z-index: 1000;
+    margin: 10px;
+}
+
+input[type="color"] {
+    width: 20px;
+    height: 20px;
+}
+
+.slider{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 5px;
+}
+
+table{
+    width: 100%;
+}

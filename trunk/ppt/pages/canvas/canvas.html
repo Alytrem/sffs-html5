@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS -->
+        <link href="styles/canvas.css" rel="stylesheet" type="text/css">
+        <link href="styles/jquery-ui-1.8.14.custom.css" rel="stylesheet" type="text/css">
+
+        <!-- Scripts -->
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+        <!-- Le color picker -->
+        <script type="text/javascript" src="js/colorpicker.js"></script>
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : CANVAS</title>
+    </head>
+    <body>
+
+        <!-- widget choix des paramètres (couleurs, épaisseur des traits...) -->
+        <div id="fill" class="ui-widget-header menu draggable" style="top: 150px;">
+            <p>Remplissage</p>
+            <div class="ui-widget-content">
+                <table>
+                    <tr>
+                        <!-- Choix du type de remplissage -->
+                        <td class="choice">
+                            <input type="radio" id="vide" name="fill" checked="checked"/><label for="vide">Vide</label>
+                            <input type="radio" id="plein" name="fill" /><label for="plein">Plein</label>
+                            <input type="radio" id="degrade" name="fill" /><label for="degrade">Degradé</label>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>Contours :</td><td width="55%"><input id="couleurContours" type="color" value="#000" data-hex="true" data-text="hidden"/></td>
+                    </tr>
+                    <tr>
+                        <td>Epaisseur :</td><td><div class="slider" id="epaisseurContours"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Remplissage :</td><td><input id="couleurRemplissage" type="color" value="#000" data-hex="true" data-text="hidden"/></td>
+                    </tr>
+                    <tr>
+                        <td>Dégradé :</td>
+                        <td>
+                            <input type="color" id="couleurDegrade1"  value="#000" data-hex="true" data-text="hidden"/>
+                            <input type="color" id="couleurDegrade2"  value="#000" data-hex="true" data-text="hidden"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- widget choix des outils + effacer + télécharger -->
+        <div class="ui-widget-header menu draggable" style="top: 0px;">
+            <p>Outils</p>
+            <div class="ui-widget-content">
+                <table>
+                    <tr>
+                        <!-- Choix du type de remplissage -->
+                        <td class="choice" id="tool">
+                            <input type="radio" id="pencil" name="tool" checked="checked"/><label for="pencil">Pinceau</label>
+                            <input type="radio" id="line" name="tool" /><label for="line">Trait</label>
+                            <input type="radio" id="rectangle" name="tool" /><label for="rectangle">Rectangle</label>
+                            <input type="radio" id="circle" name="tool" /><label for="circle">Cercle</label>
+                            <input type="radio" id="text" name="tool" /><label for="text">Texte</label>
+                            <input type="radio" id="image" name="tool" /><label for="image">Image</label>
+                        </td>
+                        <td><button id="reset">Effacer</button></td>
+                        <td><a href="#" id="download" target='_blank' ><button>Télécharger</button></a></td>
+                    </tr>
+                </table>
+                <table  id="image-options" style='width:100%;'>
+                    <tr>
+                        <td class="choice" id="dessins">
+                            <input type="radio" id="coin" name="dessins" checked="checked" /><label for="coin"><img src="clipart/Coin.min.png" alt="coin" /></label>
+                            <input type="radio" id="dollar" name="dessins" /><label for="dollar"><img src="clipart/Dollar.min.png" alt="dollar" /></label>
+                            <input type="radio" id="thief" name="dessins" /><label for="thief"><img src="clipart/Thief.min.png" alt="thief" /></label>
+                        </td>
+                        <td style='text-align: right;'>
+                            <input type="checkbox" id="proportions" name="proportions" /><label for="proportions">Conserver les proportions</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- widget pour le texte -->
+        <div id="font" class="ui-widget-header menu draggable" style="top: 330px;">
+            <p>Options Texte</p>
+            <div class="ui-widget-content">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="font-size">Taille : </label><input type="number" id="font-size" name="font" size="2" step="2" />
+                        </td>
+                        <td class="choice">
+                            <input type="checkbox" id="bold" name="font-style" /><label for="bold">B</label>
+                            <input type="checkbox" id="italic" name="font-style" /><label for="italic">I</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Le canvas contenant le dessin final -->
+        <canvas id="canvas" style="position: absolute; background-color: beige;"></canvas>
+
+        <!-- permet d'afficher un aperçu d'un tracé, et d'effacer à chaque changement. On ne met dans le canvas que quand c'est définitif (mouseup) -->
+        <canvas id="overlay" style="position: absolute; z-order:1"></canvas>
+
+        <!-- Activation des fonctions jquery sur les elements définis plus haut -->
+        <script>
+            // pour permettre au widget d'être deplaçables
+            $( ".draggable" ).draggable({ containment: "parent", delay: 100});
+            // Pour donner le style aux boutons
+            $( "button" ).button();
+            $( "#proportions" ).button();
+            // Pour donner le style aux choix
+            $( ".choice" ).buttonset();
+            // Pour donner le style au slider
+            $( ".slider" ).slider({ min: 1, max: 10 });
+            // Pour cacher le menu texte et l'image selector
+            $( "#font, #image-options" ).hide();
+            // On défini la taille de police par défaut
+            $("#font-size").val(20);
+        </script>
+
+        <script type="text/javascript">
+            // *** CLASSE COORDONNEE **//
+            {
+                function Coordonnee() { 
+                    this.x = 0; 
+                    this.y = 0;
+                }
+	
+                Coordonnee.prototype = {
+                    update: function(event){
+                        this.x = event.pageX - $("#canvas").position().left + 0.5;
+                        this.y = event.pageY - $("#canvas").position().top + 0.5;
+                    }
+                }
+            }
+	
+            // *** CLASSE PENCIL ***//
+            {
+                function Pencil(){
+                    this.drawing = false;
+                }
+	
+                Pencil.prototype = {
+                    mousedown: function(event){
+                        this.drawing  = true;
+                        p1.update(event);
+                        p2.update(event);
+                    },
+                    mousemove: function(event){
+                        if(this.drawing){
+                            p2.update(event);
+                            this.dessiner(canvas);
+                            p1.update(event);
+                        }
+			
+                    },
+                    mouseup: function(event){
+                        this.mousemove(event);
+                        this.drawing = false;
+                    },
+                    dessiner: function(destination){
+                        destination.beginPath();
+                        destination.moveTo(p1.x,p1.y);
+                        destination.lineTo(p2.x,p2.y);
+                        destination.stroke();
+                    }
+                }
+            }
+	
+            // *** CLASSE LINE ***//
+            {
+                function Line(){
+                    this.drawing = false;
+                }
+		
+                Line.prototype = {
+                    mousedown: function(event){
+                        this.drawing = true;
+                        p1.update(event);
+                        p2.update(event);
+                    },
+                    mousemove: function(event){
+                        // On affiche une version temporaire dans l'overlay
+                        if(this.drawing){
+                            clear("overlay");
+                            p2.update(event);
+                            this.dessiner(overlay);
+                        }
+                    },
+                    mouseup: function(event){
+                        this.drawing = false;
+                        clear("overlay");
+                        // On affiche définitivement dans le canvas
+                        this.dessiner(canvas);
+                        
+                    },
+                    dessiner: function(destination){
+                        destination.beginPath();
+                        destination.moveTo(p1.x,p1.y);
+                        destination.lineTo(p2.x,p2.y);
+                        destination.stroke();
+                    }
+                }
+            }
+	
+            // *** CLASSE RECTANGLE ***//
+            {
+                function Rectangle(){
+                    this.drawing = false;
+                }
+		
+                Rectangle.prototype = {
+                    mousedown: function(event){
+                        this.drawing = true;
+                        p1.update(event);
+                        p2.update(event);
+                    },
+                    mousemove: function(event){
+                        if(this.drawing){
+                            p2.update(event);
+                            clear("overlay");
+                            this.dessiner(overlay);
+                        }
+                    },
+                    mouseup: function(event){
+                        this.drawing = false;
+                        this.dessiner(canvas);
+                        clear("overlay");
+                    },
+                    dessiner: function(destination){
+                        if(gradient) updateGradient(p1.x, p1.y, p2.x, p2.y);
+                        if(fill || gradient) destination.fillRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
+                        destination.strokeRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
+                    }
+                }
+            }
+	
+            // *** CLASSE CIRCLE ***//
+            {
+                function Circle(){
+                    this.drawing = false;
+                }
+		
+                Circle.prototype = {
+                    mousedown: function(event){
+                        this.drawing = true;
+                        p1.update(event);
+                        p2.update(event);
+                    },
+                    mousemove: function(event){
+                        if(this.drawing){
+                            p2.update(event);
+                            clear("overlay");
+                            this.dessiner(overlay);
+                        }
+                    },
+                    mouseup: function(event){
+                        this.drawing = false;
+                        this.dessiner(canvas);
+                        clear("overlay");
+                    },
+                    dessiner: function(destination){
+                        destination.beginPath();
+                        var rayon = Math.sqrt(Math.pow((p2.x - p1.x),2) + Math.pow((p2.y - p1.y),2));
+                        destination.arc(p1.x, p1.y, rayon, 0, Math.PI * 2, false);
+                        destination.closePath();
+                        if(gradient) updateGradient(p1.x - rayon, 0, p1.x + rayon, 0);
+                        if(fill || gradient) destination.fill();
+                        destination.stroke();
+                    }           
+                }
+            }
+            
+            // *** CLASSE TEXT ***//
+            {
+                function Text(){
+                    this.drawing = false;
+                    this.text = "";
+                    // On affiche le panneau d'options de texte
+                    $("#font").show("fold");
+                }
+		
+                Text.prototype = {
+                    keypress: function(event){
+                        if(this.drawing){
+                            if(event.charCode == 13) this.valider(event);
+                            else{
+                                this.text += String.fromCharCode(event.charCode);
+                                clear("overlay");
+                                this.dessiner(overlay);
+                                
+                                // On bloque l'utilisation de l'évènement par le navigateur'
+                                return false;
+                            }
+                        }
+                    },
+                    
+                    // permet de récupérer certaines touches comme backspace
+                    keydown: function(event){
+                        if(this.drawing){
+                            if(event.which == 8){
+                                // On enlève le dernier caractère
+                                if(this.text.length > 0) this.text = this.text.substring(0,this.text.length-1);
+                                
+                                // On raffraichit la représentation
+                                clear("overlay");
+                                this.dessiner(overlay);
+                                    
+                                // On bloque l'utilisation de l'évènement par le navigateur
+                                // On bloque aussi l'évènement keypress
+                                return false;
+                            }
+                        }
+                    },
+                    
+                    click: function(event){
+                        if(this.drawing){
+                            this.valider();
+                        }else{
+                            p1.update(event);
+                            this.drawing = true;
+                            this.text = "";
+                        }
+                    },
+                    
+                    dessiner: function(destination){
+                        destination.textBaseline = "bottom";
+                        
+                        // On détermine le style en regardant les options choisies
+                        destination.font = 
+                            ($("#bold").attr('checked') ? "bold " : "")+
+                            ($("#italic").attr('checked') ? "italic " : "")+
+                            $("#font-size").val()+"px Verdana";
+                        
+                        destination.textAlign = "left";
+                        if(gradient) updateGradient(p1.x, 0, p1.x+this.text.length*$("#font-size").val()*0.6, 0);
+                        destination.strokeText(this.text, p1.x, p1.y);
+                        if(fill || gradient) destination.fillText(this.text, p1.x, p1.y);
+                    },
+                    
+                    valider: function(event){
+                        if(this.drawing){
+                            this.drawing = false;
+                            this.dessiner(canvas);
+                            clear("overlay");
+                        }
+                    }, 
+                    
+                    quitter: function(){
+                        this.valider();
+                        
+                        // On masque le panneau d'options de texte
+                        $("#font").hide("fold");
+                    }
+                }
+            }
+            
+            
+            // *** CLASSE IMG ***//
+            {
+                function Img(){
+                    this.drawing = false;
+                    this.image = new Image();
+                    this.loaded = false;
+                    // On affiche le panneau d'options de texte
+                    $("#image-options").show("blind");
+                }
+		
+                Img.prototype = {
+                    mousedown: function(event){
+                        if ($("#coin").attr('checked'))
+                            this.image.src = 'clipart/Coin.png';
+                        if ($("#dollar").attr('checked'))
+                            this.image.src = 'clipart/Dollar.png';
+                        if ($("#thief").attr('checked'))
+                            this.image.src = 'clipart/Thief.png';
+                        
+                        this.image.onload = function(){
+                            this.loaded = true;
+                        }
+                        this.drawing = true;
+                        p1.update(event);
+                        p2.update(event);
+                    },
+                        
+                    mousemove: function(event){
+                        if(this.drawing){
+                            p2.update(event);
+                            clear("overlay");
+                            this.dessiner(overlay);
+                        }
+                    },
+                    mouseup: function(event){
+                        if(this.drawing){
+                            this.drawing = false;
+                            this.dessiner(canvas);
+                            clear("overlay");
+                        }
+                    },
+                    
+                    dessiner: function(destination){                        
+                        var width = p2.x - p1.x;
+                        var height = p2.y - p1.y;
+                        
+                        if($("#proportions").attr('checked')){
+                            var ratio = this.image.width / this.image.height;
+                            // On inverse le signe si la hauteur était négative
+                            // Pour pouvoir dessiner dans les 4 directions
+                            height = ((height<0)?(-1):1) * Math.abs(width) / ratio;
+                        }
+                        
+                        // Conservation des proportions
+                        destination.drawImage(this.image, p1.x, p1.y, width, height);
+                    },
+                    
+                    valider: function(event){
+                        
+                    }, 
+                    
+                    quitter: function(){
+                        this.valider();
+                        
+                        // On masque le panneau d'options de texte
+                        $("#image-options").hide("blind");
+                    }
+                }
+            }
+            
+	
+            // permet d'effacer un canvas dont on passe l'id
+            function clear(id){
+                // redimensionner efface le canvas
+                var c = document.getElementById(id);
+                c.width = c.width;
+                // mais cela réinitialie aussi le contexte. Il faut donc le remettre :		
+                if(fill) updateFill();
+                updateStroke();
+            }
+	
+            // permet de mettre à jour le style de dégradé
+            function updateGradient(x1, y1, x2, y2){
+                if(gradient){
+                    if($("#couleurDegrade1").val().match(/^#?(([a-fA-F0-9]){3}){1,2}$/) && $("#couleurDegrade2").val().match(/^#?(([a-fA-F0-9]){3}){1,2}$/)){
+                        // on crée les dégradés de la taille du canvas
+                        // pour l'instant, on ne gère qu'un seul sens
+                        var my_gradient = canvas.createLinearGradient(x1, y1, x2, y2);
+				
+                        // On fait ici un dégradé à deux couleurs
+                        // On définit la première :
+                        my_gradient.addColorStop(0,$("#couleurDegrade1").val());
+                        // Et la seconde
+                        my_gradient.addColorStop(1,$("#couleurDegrade2").val());
+			
+                        // On applique le gradient sur les canvas
+                        canvas.fillStyle = my_gradient;
+                        overlay.fillStyle = my_gradient;
+                    }
+                }else if(fill){
+                    updateFill();
+                }
+            }
+	
+            // permet de mettre à jour le style de remplissage
+            function updateFill(){
+                if($("#couleurRemplissage").val().match(/^#?(([a-fA-F0-9]){3}){1,2}$/)){
+                    canvas.fillStyle = $("#couleurRemplissage").val();
+                    overlay.fillStyle = $("#couleurRemplissage").val();
+                }
+            }
+	
+            // permet de mettre à jour le style du trait
+            function updateStroke(){
+                if($("#couleurContours").val().match(/^#?(([a-fA-F0-9]){3}){1,2}$/)){
+                    canvas.strokeStyle = $("#couleurContours").val();
+                    overlay.strokeStyle = $("#couleurContours").val();
+                }
+                canvas.lineWidth  = $("#epaisseurContours").slider("value");
+                overlay.lineWidth  = $("#epaisseurContours").slider("value");
+            }
+	
+            // On associe les évènements à ceux définis dans l'outil courant
+            // Si ils existent
+            $("#overlay").mousedown(function(event){
+                updateStroke();
+                if(fill) updateFill();
+                if(current.mousedown) current.mousedown(event);
+            });
+            $("#overlay").mousemove(function(event){
+                if(current.mousemove) current.mousemove(event);
+            });
+            $("#overlay").mouseup(function(event){
+                if(current.mouseup) current.mouseup(event);
+            });
+            $("#overlay").click(function(event){
+                if(current.click) current.click(event);
+            });
+            // C'est document qui intercepte les frappes clavier
+            $(document).keypress(function(event){
+                if(current.keypress) return current.keypress(event);
+                return true;
+            });
+            $(document).keydown(function(event){
+                if(current.keydown) return current.keydown(event);
+                return true;
+            });
+            
+            // On gère les évènement sur les boutons pour le changement d'outils
+            $("#tool input").click(function(event){
+                if(current.quitter) current.quitter(event);
+                
+                var tool = event.srcElement.id;
+                if(tool == "pencil")    current = new Pencil();
+                if(tool == "line")      current = new Line();
+                if(tool == "rectangle") current = new Rectangle();
+                if(tool == "circle")    current = new Circle();
+                if(tool == "text")      current = new Text();
+                if(tool == "image")      current = new Img();
+            });
+            
+            // On gère les évènement sur les boutons pour le de remplissage
+            $("#vide").click(function(event){
+                fill = false;
+                gradient = false;
+            });
+            $("#plein").click(function(event){
+                fill = true;
+                gradient = false;
+            });
+            $("#degrade").click(function(event){
+                fill = false;
+                gradient = true;
+            });
+	
+            // On gère le téléchargement
+            $("#download").click(function(event){
+                var canvas = document.getElementById("canvas");
+                var img     = canvas.toDataURL("image/png");
+                $("#download").attr("href",img);
+            });
+	
+            // On gère la remise à zéro du canvas
+            $("#reset").click(function(event){
+                clear("canvas");
+                clear("overlay");
+            });
+	
+	
+            // taille dans le dom
+            $("#canvas").width($(window).width());
+            $("#canvas").height($(window).height());
+            $("#overlay").width($(window).width());
+            $("#overlay").height($(window).height());
+	
+            // résolution
+            document.getElementById("canvas").width = $(window).width();
+            document.getElementById("canvas").height = $(window).height();
+            document.getElementById("overlay").width = $(window).width();
+            document.getElementById("overlay").height = $(window).height();
+
+            // On récupère le canvase du canvas
+            var canvas = document.getElementById("canvas").getContext('2d');
+            var overlay = document.getElementById("overlay").getContext('2d');
+	
+            // contient les coordonnées (début et fin des outils qui l'utilisent)
+            var p1 = new Coordonnee();
+            var p2 = new Coordonnee();
+            var fill = false; // indique si on rempli les formes
+            var gradient = false; // pas de dégradé par défaut non plus
+	
+            // on prend le pencil par défaut
+            var current = new Pencil();
+            
+
+
+        </script>
+    </body>
+</html>

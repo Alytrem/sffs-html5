@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html manifest="./cache.manifest"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS -->
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="styles/nyroModal.css" type="text/css" media="screen" />
+        <!-- <link rel="icon" type="image/png" href="/img/favicon.png"> -->
+
+        <!-- Scripts -->
+        <!-- surcouche javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <!-- bibliothèque de tests navigateur, pour vérifier la compatibilité HTML5, CSS3 ... -->
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <!-- bibliothèque d'affichage de fenêtres javascript sur la page -->
+        <script type="text/javascript" src="js/jquery.nyroModal.custom.min.js"></script>
+        <!--[if IE 6]>
+            <script type="text/javascript" src="js/jquery.nyroModal-ie6.min.js"></script>
+	<![endif]-->
+
+        <!-- Titre -->
+        <title>Démonstration HTML5</title>
+
+        <script type="text/javascript">
+		
+            function load(page){
+                $("body").load(page, function(response, status, xhr) {
+                    if (status == "error") {
+                        $('#log').html("<p class='warning'>Impossible de charger cette version : seule la version HTML est disponible hors connexion !</p>");
+                    }else{
+                        flash = !!(page.match(/flash/i));
+                        webgl = !!(page.match(/webgl/i));
+                    }
+                });
+            }
+		
+            // On utilise deux variables pour savoir à tout moment si on utilise du flash ou du webgl (ou ni l'un ni l'autre)
+            var flash = false;
+            var webgl = false;		
+            $(document).ready(function(){
+                // Si le navigateur est connecté
+                // Si le navigateur supporte canvas et webgl :
+                if(Modernizr.canvas && Modernizr.webgl){
+                    // On conseille la version WebGL
+                    $("#webgl").addClass("selected");
+                }
+                // Si le navigateur ne supporte pas canvas et webgl, on affiche la version flash
+                else{
+                    // On conseille la version Flash
+                    $("#flash").addClass("selected");
+                }
+			
+                // Vérification de la connectivité afin de conseiller éventuellement la version HTML
+                // On essaye de charger une page située hors du cache
+                $("#connectivite").load("pages/online.html", function(response, status, xhr) {
+                    if (status == "error") {
+                        // on affiche la page offline qui elle est en cache
+                        $('#connectivite').load("pages/offline.html");
+				
+                        // on conseille la version html
+                        $("#webgl").removeClass("selected");
+                        $("#flash").removeClass("selected");
+                        $("#html").addClass("selected");
+                    }
+                });
+			
+            });		
+        </script>
+    </head>
+
+    <body>
+        <div id="main">
+            <h1>Bienvenue sur la démonstration HTML5 Capgemini</h1>
+            <div id="connectivite"></div>
+            <p>Cette démonstration a pour objet l'évaluation de la technologie HTML5 et l'étude de ses champs d'applications par des démonstrations.</p>
+            <p>Vous pouvez consulter le rapport technique et informel de l'étude en cliquant sur la version HTML, sous forme d'un power point HTML5.</p>
+            <p>N'hésitez pas à consulter également l'environnement 3D créé à des fin de démonstrations grace à la technologie WebGL. Seules quelques showrooms sont présents dans cette démonstration 3D, aussin, pour plus d'informations, n'oubliez pas de consulter la version HTML.</p>
+            <p> Notez que selon les capacités de votre ordinateur, de l'état de votre connection internet, une version alternative en flash ou en HTML peut vous être proposée.</p>
+            <p><strong>La détection va vous proposer la version la plus adaptée pour votre ordinateur. Aussi, il est recommandé de choisir cette version indiquée par un cadre vert, mais n'oubliez pas dans tous les cas de consulter la version HTML pour découvrir les nombreuses fonctionnalités autres que 3D.</strong></p>
+            <p><em>Note : seule la version HTML est accessible de façon déconnectée</em></p>
+            <table align="center">
+                <tr>
+                    <td><div id="webgl" class="choice"><a href="#" onclick="load('pages/webgl.html');"><img src="img/webgl.png" alt="Version WebGL" /></a></div></td>
+                    <td><div id="flash" class="choice"><a href="#" onclick="load('pages/flash.html');"><img src="img/flash.png" alt="Version Flash" /></a></div></td>
+                    <td><div id="html" class="choice"><a href="html5.html" target="_blank"><img src="img/html-logo.png" alt="Version HTML" /></a></div></td>
+                </tr>
+            </table>
+            <div id="log"></div>
+        </div>
+    </body>
+</html>

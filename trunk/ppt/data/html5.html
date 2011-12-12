@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications 1 : Chrome DevRel Team (chrome-devrel@googlegroups.com)
+					Alex Russell (slightlyoff@chromium.org)
+					Brad Neuberg
+  Modifications 2 : Quentin Decré for Capgemini (quentin.decre@gmail.com)
+-->
+<html manifest="cache.appcache">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+
+        <title>Présentation HTML5</title>
+
+        <!-- Polices au cas où non présentes sur le système -->
+        <link href="styles/fonts.css" rel="stylesheet" type="text/css" />
+
+        <!-- Mise en forme du code -->
+        <link id="prettify-link" href="js/prettify/prettify.css" rel="stylesheet" />
+
+        <!-- Style -->
+        <link href="styles/default.css" rel="stylesheet" media="all" type="text/css"/>
+        <link href="styles/jquery-ui-1.8.14.custom.css" rel="stylesheet" media="all" type="text/css">
+        <link href="styles/nyroModal.css" rel="stylesheet" media="screen" type="text/css"/>
+
+        <!-- Le style pour l'impression -->
+        <link href="styles/default-print.css" rel="stylesheet" media="print" type="text/css"/> 
+
+        <!-- Scripts -->
+        <!-- surcouche javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <!-- bibliothèque de tests navigateur, pour vérifier la compatibilité HTML5, CSS3 ... -->
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <!-- bibliothèque d'affichage de fenêtres javascript sur la page -->
+        <script type="text/javascript" src="js/jquery.nyroModal.custom.min.js"></script>
+        <!--[if IE 6]>
+            <script type="text/javascript" src="js/jquery.nyroModal-ie6.min.js"></script>
+	<![endif]-->
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+
+
+
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="./favicon.png"> 
+    </head>
+    <body>
+
+        <div class="presentation">
+            <!-- Indication pendant le chargement -->
+            <div id="presentation-counter">
+                <p>Chargement...</p>
+                <p style="font-size: 30px; display: none;" id="instructions">Déselectionnez les éléments à masquer, puis lancez la présentation.</p>
+                <table align="center" id="selection" style="display:none;">
+                    <tr>
+                        <td class="choice">
+                            <input type="checkbox" id="details" name="options" checked /><label for="details">Détails</label>
+                            <input type="checkbox" id="technique" name="options" checked /><label for="technique">Technique</label>
+                            <input type="checkbox" id="demonstration" name="options" checked /><label for="demonstration">Démonstration</label>
+                            <input type="checkbox" id="evaluation" name="options" checked /><label for="evaluation">Evaluations</label>
+                        </td>
+                        <td>
+                            <button>Lancer la présentation</button>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <div class="slides">
+
+                <article id="landing-slide">
+                    <section class="middle">
+                        <img src="img/logo-html5.png" alt="logo HTML5" />
+                    </section>
+                </article>
+
+                <article class="slide" id="technologie">
+                    <style>
+                        #technologie p {
+                            font-size: 35px;
+                        }
+                    </style>
+                    <section class="middle">
+                        <p>Cette présentation est un site HTML5 !</p>
+                        <p class="details">Utilisez la touche <span id="left-init-key" class="key">&rarr;</span> pour avancer.</p>
+                    </section>
+                </article>
+
+
+                <article id="controles" class="details">
+                    <style>
+                        #controles li, #controles p {
+                            font-size: 35px;
+                        }
+                    </style>
+                    <section>
+                        <p>Les contrôles :</p>
+                        <ul>
+                            <li><span class="key">&larr;</span> et <span class="key">&rarr;</span> pour se déplacer</li>
+                            <li><span class="key">Ctrl</span> et <span class="key">+</span> ou <span class="key">-</span> pour ajuster la taille des slides si nécessaire.</li>
+                            <li><span class="key">H</span> Pour changer la coloration du code (standard ou mise en valeur des mots clés HTML5 (par défaut)).</li>
+                        </ul>
+                    </section>
+                </article>
+
+
+                <article id="titre">
+                    <style>
+                        #titre h1, #title-slide h2 {
+                            color: black;
+                        }
+                        #titre h1 {
+                            letter-spacing: -2px;
+                            font-size: 96px;
+                        }
+                        #titre h2 {
+                            margin-top: -5px;
+                            font-size: 40px;
+                            letter-spacing: -1px;
+                        }
+                        .logo{
+                            background-color: white;
+                            border: solid 7px #444;
+                            border-radius: 8px;
+                            vertical-align: middle;
+                            width: 700px;
+                            height: 200px;
+                            margin-left: 100px;
+                        }
+                    </style>
+                    <section class="middle">
+                        <hgroup>
+                            <h1 class="no-index">
+                                HTML5
+                            </h1>
+                            <h2 class="no-index">
+                                Présentation, démonstration et évaluation
+                            </h2>
+                        </hgroup>
+                        <p>Quentin Decré - quentin.decre@gmail.com</p>
+                        <div class="logo"><img src="img/logo-big.png" alt="Capgemini" /></div>
+                    </section>
+                </article>
+
+
+                <article id="introduction">
+                    <header><h1>Introduction</h1></header>
+                    <section>
+                        <ul>
+                            <li>HTML5 : le successeur de HTML4 et XHTML1</li>
+                            <li>Fruit du travail du <strong>W3C</strong> <em>(World Wide Web Consortium)</em> et du <strong>WHATWG</strong> <em>(Web Hypertext Application Technology Working Group)</em>.</li>
+                            <li>Les objectifs :
+                                <ol>
+                                    <li><strong>Unification du comportement entre les navigateurs</strong></li>
+                                    <li><strong>Normalisation</strong></li>
+                                    <li>Développement de nouvelles <strong>fonctionnalités </strong>HTML, CSS et javascript</li>
+                                </ol>
+                            </li>
+                            <li>HTML5 est encore une ébauche, mais déjà supportée par beaucoup de navigateurs.</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article id="HTML4">
+                    <header><h2>HTML4 : bilan</h2></header>
+                    <section>
+                        <p>HTML4 permet déjà de faire beaucoup de choses. Les applications web n'ont pas attendu HTML5 pour naitre. Les webmails ou éditeurs de documents en ligne (office web apps, google docs...) deviennent très évolués, le chargement dynamique avec Ajax devient usuel, les API comme Jquery fleurissent et rendent le developpement plus rapide et robuste.</p>
+                        <div>
+                            <img src="img/gmail.png" alt="gmail" height="280px"/>
+                            <img src="img/office.jpg" alt="office" width="380px"/>
+                        </div>
+                        <p>HTML5 n'est donc pas une récolution, mais une belle évolution.</p>
+                    </section>
+                </article>
+
+                <article id="formule-HTML5">
+                    <header><h2>HTML5 : plus que de l'HTML </h2></header>
+                    <section class="middle formula">
+                        HTML5 ~=
+                        <span>HTML5</span>
+                        +
+                        <span>CSS3</span>
+                        +
+                        <span>JS</span>
+                    </section>
+                </article>
+
+
+                <article id="timeline">
+                    <header><h2>La timeline HTML5</h2></header>
+                    <section>
+                        <ul>
+                            <li><strong>Mai 2011</strong> : Last Call (dernier appel à commentaires avant de figer les spécifications.</li>
+                            <li><strong>2014</strong> : fin de la définition du standard (tous les objectifs de compatibilité seront alors atteints</li>
+                            <li><em>Mais rien n'empêche son utilisation dès maintenant. Il faut seulement prendre les précautions nécessaires.</em></li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article id="objectifs">
+                    <header><h2>Les objectifs de la présentation</h2></header>
+                    <style>
+                        #objectifs li{
+                            padding: 5px;
+                        }
+                    </style>
+                    <section>
+                        <ul>
+                            <li>Présenter les nouveautés HTML5, et faire un retour d'expérience</li>
+                            <li>Evaluer les nouveautés HTML5 sur différents critères :
+                                <ul>
+                                    <li><strong>Maturité</strong><span class="details"> : indique le dégré d'évolution possible avant 2014. Plus c'est mature, moins c'est susceptible de changer.</span></li>
+                                    <li><strong>Intérêt</strong><span class="details"> : mesure l'apport en terme de fonctionnalités (subjectif)</span></li>
+                                    <li><strong>Sécurité</strong><span class="details"> : mesure des possibles problèmes de sécurité (données accessibles en local par un tiers, données en clair sur le réseau, données accessibles par un autre site, donne un accès au système).</span></li>
+                                    <li><strong>Compatibilité </strong><span class="details">(Mobile, IE, Firefox, Chrome, Safari) : la note est maximale si les 3 dernières versions majeures le supporte, puis perd 25% par versions ne le supportant pas, et tombe à 0 si la prochaine version ne le supportera pas non plus.</span></li>
+                                </ul></li>
+                            <li>Présenter les démonstrations de chaque fonctionnalités</li>
+                            <li>Faire un point sur l'aspect technique de la mise en oeuvre des fonctionnalités</li>
+                        </ul>
+                    </section>
+                </article>
+
+
+                <article id="sommaire">
+                    <header class="no-breadcrumb"><h1 class="no-index">Points abordés dans cette présentation</h1></header>
+                    <style>
+                        #toc-list > li {
+                            font-size: 26px;
+                            opacity: 0.80;
+                            padding: 3px;
+                            cursor: pointer;
+                        }
+                        #toc-list > li:hover {
+                            opacity: 1;
+                        }
+                        #toc-list a {
+                            border-bottom: 0;
+                        }
+                        #toc-list img {
+                            vertical-align: middle;
+                            margin-right: 20px;
+                        }
+                    </style>
+                    <section>
+                        <ul id="toc-list">
+                        </ul>
+                    </section>
+                </article>
+
+
+                <article class="transitionSlide" id="titre-semantique">
+                    <section class="middle">
+                        <h1>Balises et sémantique</h1>
+                        <div><img src="img/HTML5_Semantics_256.png" title="HTML5 Sémantique" alt="HTML5 Sémentique"></div>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="sommaire-semantique">
+                    <header><h1 class="no-index">Nouvelles balises et sémantique</h1></header>
+                    <section class="sommaire">
+                    </section>
+                </article>
+
+
+                <article class="html semantics technique" id="sample-HTML4">
+                    <header><h2>Documents : HTML4 vs HTML5</h2></header>
+                    <section>
+                        <p>HTML 4 :</p>
+                        <pre>&lt;!DOCTYPE HTML PUBLIC  &quot;-//W3C//DTD HTML 4.01//EN&quot;
+&quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;Titre&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;Contenu&lt;/body&gt;
+&lt;/html&gt;</pre>
+                        <p>HTML 5 :</p>
+                        <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;Titre&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;Contenu&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </section>
+                </article>
+
+                <article class="html semantics technique" id="sample-HTML5">
+                    <header><h2>Observations</h2></header>
+                    <section>
+                        <p class="details">Le doctype HTML5 est très simplifié par rapport au versions précédentes.
+                            Il en va de même pour la balise HTML et la déclaration de l'encodage de caractères.</p>
+                        <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;Titre&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;Contenu&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouvelles-balises">
+                    <header><h2>Nouvelles balises</h2></header>
+                    <section>
+                        <p>On peut classer les nouvelles balises en 3 groupes.</p>
+                        <ul>
+                            <li>Les balises ayant pour but d'enrichir la sémantique.</li>
+                            <li>Les balises ajoutant des fonctionnalités</li>
+                            <li>Les nouveaux inputs (champs de formulaires)</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouvelles-balises-semantique">
+                    <header><h3>Enrichissement de la sémantique</h3></header>
+                    <section>
+                        <pre>&lt;div id=&quot;header&quot;&gt;
+&lt;div class=&quot;article&quot;&gt;
+...</pre>
+                        <p>Voici le genre de choses que l'on peut voir fréquemment. Seulement, un div ne veut rien dire. Arrivent donc de nouvelles balises porteuses de sens.</p>
+                        <p>L'autre nouveauté est que HTML5 ne fonctionne pas avec une hierarchie de titre (de h1 à h6) comme HTML4, mais avec une imbrication de sections, chaque section faisant repartir les titres à 1 en son sein.</p>
+                        <p><em>Note : vous pouvez cependant toujours continuer à utiliser du code comme ci-dessus.</em></p>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouvelles-balises-semantique-suite">
+                    <style>
+                        #nouvelles-balises-semantique-suite li{
+                            padding: 5px;
+                        }
+                    </style>
+                    <header><h4>Les balises</h4></header>
+                    <section>
+                        <p>On trouve ainsi les balises :</p>
+                        <ul>
+                            <li><strong>header/footer</strong> : une en-tête/pied d'une section ou d'un document.</li>
+                            <li><strong>hgroup</strong> : sorte de wrapper pour un ou plusieurs titres (h?) en lien (comme un titre et un sous-titre).</li>
+                            <li><strong>section</strong> : définition d'une nouvelle section.</li>
+                            <li><strong>article</strong> : similaire à section, mais plus riche sémantiquement.</li>
+                            <li><strong>nav </strong>: indique un menu</li>
+                            <li><strong>aside </strong>: indique une sidebar</li>
+                            <li><strong>figure </strong></li>
+                            <li><strong>figcaption </strong></li>
+                            <li><strong>time </strong>: indique une date de deux façons; pour l'ordinateur et pour l'homme</li>
+                            <li><strong>mark </strong> : met en <mark>valeur</mark> du texte</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="html semantics technique" id="nouvelles-balises-semantique-exemple">
+                    <header><h4>Exemple</h4></header>
+                    <section>
+                        <pre>&lt;h2&gt;Les articles&lt;/h2&gt;
+&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Accueil&lt;/li&gt;
+        &lt;li&gt;D&eacute;tails&lt;/li&gt;
+        &lt;li&gt;Contacts&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+&lt;article&gt;
+    &lt;header&gt;
+        &lt;hgroup&gt;
+            &lt;h1&gt;Capgemini et HTML5&lt;/h1&gt;
+            &lt;h2&gt;Une perc&eacute;e prometteuse ?&lt;/h2&gt;
+        &lt;/hgroup&gt;
+    &lt;/header&gt;
+    &lt;time datetime=&quot;2011-07-07&quot;&gt;aujourd'hui&lt;/time&gt;
+    &lt;p&gt;Blah blah blah&lt;/p&gt;
+&lt;/article&gt;</pre>
+                    </section>
+                </article>
+
+
+
+                <article class="html semantics" id="nouvelles-balises-semantique-exemple-suite">
+                    <header><h4>Exemple suite</h4></header>
+                    <section class="middle">
+                        <figure>
+                            <figcaption>Version HTML5</figcaption>
+                            <img src="img/structure-html5.gif" alt="html5"/>
+                        </figure>
+                        <figure>
+                            <figcaption>Version avec div</figcaption>
+                            <img src="img/structure-div.gif" alt="div"/>
+                        </figure>
+                    </section>
+                </article>
+
+                <article class="html semantics evaluation" id="nouvelles-balises-semantique-evaluation">
+                    <header><h4>Balises sémantiques : Evaluation</h4></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>20%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>95%</span>(iOS 4 et + / Android 2.1 et +)</li>
+                                <li>IE : <span>50%</span> (9 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>85%</span> (4 et +)</li>
+                                <li>Safari : <span>70%</span>(5 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">Cela ne constitue pas une révolution, mais rend une page HTML plus parlante sémantiquement, et apporte une plus grande unité.
+                            A part IE 8 et inferieur, tous vont gérer cette fonctionnalité, même si firefox 3.6 et safari 4 et inferieur n'appliqueront pas le style par défaut.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouvelles-balises-fonctions">
+                    <header><h3>Ajout de fonctionnalités</h3></header>
+                    <section>
+                        <p>Toutes les nouvelles balises ne se contentent pas d'être plus riches sémantiquement :</p>
+                        <ul>
+                            <li><strong>datalist </strong>: permet de définir une liste pour l'auto-completion dans un champ texte.</li>
+                            <li><strong>menu </strong>: permet de créer un menu contectuel ou une barre d'outils selon le type indiqué.</li>
+                            <li><strong>details </strong>: permet d'indiquer des informations supplémentaires qui s'affichent à la demande</li>
+                            <li><strong>meter </strong>: permet d'afficher une jauge plus ou moins remplie</li>
+                            <li><strong>progress </strong>: permet d'afficher une barre de progression</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="html semantics technique" id="nouvelles-balises-fonctions-datalist">
+                    <header><h4>Exemple : DataList</h4></header>
+                    <section>
+                        <p>Services Capgemini : <input list="services"/>
+                            <datalist id="services">
+                                <option value="consulting"></option>
+                                <option value="technology"></option>
+                                <option value="outsourcing"></option>
+                            </datalist></p>
+                        <pre>&lt;input list=&quot;services&quot;/&gt;
+&lt;datalist id=&quot;services&quot;&gt;
+    &lt;option value=&quot;consulting&quot;/&gt;
+    &lt;option value=&quot;technology&quot;/&gt;
+    &lt;option value=&quot;outsourcing&quot;/&gt;
+&lt;/datalist&gt;</pre>
+                    </section>
+                </article>
+
+
+                <article class="html semantics technique" id="nouvelles-balises-fonctions-menu">
+                    <header><h4>Exemple : Menu</h4></header>
+                    <section>
+                        <p>Il y a plusieurs types (list, context, et toolbar), mais seul list est supporté pour l'instant.</p>
+                        <menu type="list">
+                            <input type="button" value="consulting"/>
+                            <input type="button" value="technology"/>
+                            <input type="button" value="outsourcing"/>
+                        </menu>
+
+                        <pre>&lt;menu type=&quot;list&quot;&gt;
+    &lt;input type=&quot;button&quot; value=&quot;consulting&quot;/&gt;
+    &lt;input type=&quot;button&quot; value=&quot;technology&quot;/&gt;
+    &lt;input type=&quot;button&quot; value=&quot;outsourcing&quot;/&gt;
+&lt;/menu&gt;</pre>
+                    </section>
+                </article>                
+
+                <article class="html semantics technique" id="nouvelles-balises-fonctions-details">
+                    <header><h4>Exemple : Details</h4></header>
+                    <section>
+                        <details>
+                            <summary>Capgemini</summary>
+                            C'est 3 principaux services : consulting, technology et outsourcing.
+                        </details>
+
+                        <pre>&lt;details&gt;
+    &lt;summary&gt;Capgemini&lt;/summary&gt;
+    C'est 3 principaux services : consulting, technology et outsourcing.
+&lt;/details&gt;</pre>
+                    </section>
+                </article>
+
+                <article class="html semantics technique" id="nouvelles-balises-fonctions-meter">
+                    <header><h4>Exemple : Meter et Progress</h4></header>
+                    <section>
+                        <pre><meter min="0" max="100" low="40" high="90" optimum="100" value="90">A+</meter>
+&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;40&quot; high=&quot;90&quot; optimum=&quot;100&quot; value=&quot;90&quot;&gt;A+&lt;/meter&gt;
+
+<meter min="0" max="100" low="40" high="95" optimum="100" value="90">A+</meter>
+&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;40&quot; high=&quot;95&quot; optimum=&quot;100&quot; value=&quot;90&quot;&gt;A+&lt;/meter&gt;
+
+<meter min="0" max="100" low="40" high="90" optimum="100" value="50">C+</meter>
+&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;40&quot; high=&quot;90&quot; optimum=&quot;100&quot; value=&quot;50&quot;&gt;C+&lt;/meter&gt;
+
+<meter min="0" max="100" low="40" high="90" optimum="100" value="30">D+</meter>
+&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;40&quot; high=&quot;90&quot; optimum=&quot;100&quot; value=&quot;30&quot;&gt;D+&lt;/meter&gt;
+
+<meter min="0" max="100" low="10" high="90" optimum="100" value="30">D+</meter>
+&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;10&quot; high=&quot;90&quot; optimum=&quot;100&quot; value=&quot;30&quot;&gt;D+&lt;/meter&gt;
+
+<progress value="75" max="100">3/4 terminé</progress>
+&lt;progress value=&quot;75&quot; max=&quot;100&quot;&gt;3/4 termin&eacute;&lt;/progress&gt;
+
+<progress value="25" max="100">3/4 terminé</progress>
+&lt;progress value=&quot;25&quot; max=&quot;100&quot;&gt;1/4 termin&eacute;&lt;/progress&gt;
+                        </pre>
+                    </section>
+                </article>
+
+                <article class="html semantics evaluation" id="nouvelles-balises-fonctions-evaluation">
+                    <header><h4>Balises fonctions : Evaluation</h4></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>40%</span></li>
+                                <li>Intérêt : <span>40%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>0%</span></li>
+                                <li>IE : <span>10%</span></li>
+                                <li>Chrome : <span>30%</span></li>
+                                <li>Firefox : <span>20%</span></li>
+                                <li>Safari : <span>10%</span></li>
+                            </ul>
+                        </div>
+                        <p class="details">Ces fonctionnalités sont encore en développement. Prudence donc, d'autant que la compatibilité est catastrophique pour le moment.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouveaux-formulaires-types">
+                    <header><h3>Nouveaux inputs</h3></header>
+                    <section>
+                        <p class="details">Parmis les nouvelles balises, on a de nouveaux types pour les inputs (champs de formulaires). On gagne là en sémantique d'une part, et en fonctionnalité d'autre part.</p>
+                        <p>Les nouveaux types sont les suivants : </p>
+                        <ul>
+                            <li><strong>Email</strong></li>
+                            <li><strong>URL</strong></li>
+                            <li><strong>Number</strong></li>
+                            <li><strong>Range</strong></li>
+                            <li><strong>Date / datetime / month / week / time</strong></li>
+                            <li><strong>Search</strong></li>
+                            <li><strong>Color</strong></li>
+                            <li><strong>Range</strong></li>
+                        </ul>
+                    </section>
+                </article>
+
+
+                <article class="html semantics" id="nouveaux-formulaires-attributs">
+                    <header><h3 class="no-index">Nouveaux inputs</h3></header>
+                    <section>
+                        <p>Arrivent également de nouveaux attributs / options</p>
+                        <ul>
+                            <li><strong>autocomplete </strong>: pour autoriser ou non l'auto-completion par le navigateur</li>
+                            <li><strong>autofocus </strong>: pour placer le curseur dans ce champ au chargement</li>
+                            <li><strong>list </strong>: pour lier à une datalist pour l'auto-completion</li>
+                            <li><strong>placeholder </strong>: pour afficher un texte qui se retire lors du focus</li>
+                            <li><strong>pattern </strong>: pour assurer que le contenu respecte un pattern</li>
+                            <li><strong>required</strong> : pour que le champ soit obligatoire</li>
+                        </ul>
+                        <p class="details">Tout ceci permet au navigateur (particulièrement mobiles) d'offrir un comportement plus adaptés au type de champ.
+                            Cela permet aussi une uniformisation du comportement en le déleguant au navigateur plutôt qu'au développeur.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics demonstration" id="nouveaux-formulaires-exemple">
+                    <header><h4>Nouveaux inputs : Démonstration</h4></header>
+                    <section class="middle">
+                        <p>Cliquez sur le bouton ci dessous pour ouvrir la démonstration d'un formulaire exploitant HTML5.</p>
+                        <button onclick="$.nmManual('./pages/formulaire.html')">Afficher</button>
+                    </section>
+                </article>
+
+
+                <article class="html semantics" id="nouveaux-formulaires-exemple-images">
+                    <header><h4>Nouveaux inputs : Captures</h4></header>
+                    <section>
+                        <style type="text/css" media="screen">
+                            #nouveaux-formulaires-exemple-images div:not(.html) {
+                                float: left;
+                                width: 200px;
+                                text-align: center;
+                                padding:0px;
+                                margin:0px;
+                            }
+                            #nouveaux-formulaires-exemple-images figure {
+                                margin:10px;
+                            }
+                            #nouveaux-formulaires-exemple-images figcaption {
+                                margin:10px;
+                            }
+                            #nouveaux-formulaires-exemple-images img {
+                                width: 95%;
+                                -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 6px 9px;
+                            }
+                        </style>
+                        <div>
+                            <figure>
+                                <img src="img/android-form-text.png" alt="android keyboard on input type text">
+                                <figcaption>Android : text</figcaption>
+                            </figure>
+                        </div>
+                        <div>
+                            <figure>
+                                <img src="img/android-form-number.png" alt="android keyboard on input type number">
+                                <figcaption>Android : number</figcaption>
+                            </figure>
+                        </div>
+                        <div> <figure>
+                                <img src="img/iphone-form-email.png" alt="iphone keyboard on input type email">
+                                <figcaption>iPhone : email</figcaption>
+                            </figure>
+                        </div>
+                        <div><figure>
+                                <img src="img/iphone-form-tel.png" alt="iphone keyboard on input type tel">
+                                <figcaption>iPhone : tel</figcaption>
+                            </figure>
+                        </div>
+                        <p style="clear:left;">Ceci démontre clairement la capacité d'adaptation du mobile que permet ces nouveaux types.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics evaluation" id="nouveaux-formulaires-evaluation">
+                    <header><h4>Nouveaux inputs : Evaluation</h4></header>
+                    <section>
+
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>70%</span></li>
+                                <!--<li>Intérêt : <span>40%</span></li>-->
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>30%</span>(partiel sur iOS 4 et +)</li>
+                                <li>IE : <span>10%</span> (partiel sur IE 10)</li>
+                                <li>Chrome : <span>70%</span> (partiel sur 10 et +)</li>
+                                <li>Firefox : <span>65%</span> (partiel sur 4 et +)</li>
+                                <li>Safari : <span>65%</span> (partiel sur 4 et +)</li>
+                            </ul>
+                        </div>
+
+                        <p class="details"><strong>Important : </strong>Si un navigateur ne sait pas traiter un nouveau type de champ, il le considère comme un champ texte. Même IE6 affichera de simple champs texte, mais cela ne posera pas de soucis aux visiteurs.<br />Il n'y donc pas de raisons pour ne pas utiliser ces champs dès maintenant.</p>
+                        <p class="details">L'interêt de ces nouveaux types et options, est essentiellement sur les mobiles, où le clavier est réduit. Sinon, c'est une simple amélioration de la sémantique et simplification du développement.</p>
+                        <p class="details">Mention spéciale à Opéra, qui est le navigateur supportant le mieux ces nouveaux champs et attributs.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="nouvelles-relations">
+                    <header><h2>Nouvelles relations</h2></header>
+                    <section>
+                        <p>On retrouve de nouvelles valeur pour l'attribut rel (relation), des balises a et link. En voici une liste non-exhaustive.</p>
+                        <ul>
+                            <li><strong>archives</strong> : collection d'archives</li>
+                            <li><strong>author</strong> : indique plus d'informations sur l'auteur</li>
+                            <li><strong>external </strong>: lien externe (vers un autre site)</li>
+                            <li><strong>license</strong> : un lien vers les termes de la licence sous laquelle est publié le document</li>
+                        </ul>
+                        <p><strong>Pourquoi ?</strong> C'est tout simplement dans le but de standardiser ces valeurs d'attributs. En effet, il est possible pour chacun d'utiliser ses propres valeurs, mais il est toujours préférable de proposer les principales valeurs comme référence.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics" id="microdata">
+                    <header><h2>Microdata</h2></header>
+                    <section>
+                        <p class="details">Les microdatas permettent <strong>d'annoter le DOM</strong> (Document Object Model : les objets décrits par les balises), avec des paires nom/valeur issues d'un vocabulaire personnalisé.</p>
+                        <p><strong>Problème </strong>: on peut représenter du texte, tableaux..., mais pas des personnes, factures ou autre.</p>
+                        <p><strong>Solution </strong>: utiliser les micro-datas et du vocabulaire personnalisé pour permettre cette représentation</p>
+                        <p><strong>Pourquoi </strong>: pour améliorer l'interaction avec les navigateurs (pouvoir enregistrer un contact en vCard, un évènement...), ou avec les moteurs de recherche.</p>
+                    </section>
+                </article>
+
+                <article class="html semantics technique" id="microdata-modeemploi">
+                    <header><h3>Mode d'emploi</h3></header>
+                    <section>
+                        <ol>
+                            <li>Trouver le vocabulaire qui nous intéresse sur <a href="http://www.data-vocabulary.org" target="_blank">www.data-vocabulary.org</a> si il a déjà été défini (Person, Event...) ou définir son propre vocabulaire.</li>
+                            <li>Déclarer le type et le scope (portée) du vocabulaire. Exemple : <pre style="font-size:12pt">&lt;section itemscope itemtype=&quot;http://data-vocabulary.org/Person&quot;&gt;</pre></li>
+                            <li>Pour chaque valeur, indiquer son nom : <pre style="font-size:12pt">&lt;h1 itemprop=&quot;name&quot;&gt;Quentin Decr&eacute;&lt;/h1&gt;</pre></li>
+                        </ol>
+                    </section>
+                </article>
+
+                <article class="html semantics demonstration" id="microdata-exemple">
+                    <header><h3>Un exemple complet</h3></header>
+                    <section>
+                        <pre>&lt;section itemscope itemtype=&quot;http://www.data-vocabulary.org/Person/&quot;&gt;<br/>	&lt;h1 itemprop=&quot;name&quot;&gt;Quentin Decr&eacute;&lt;/h1&gt;<br/>	&lt;h2 itemprop=&quot;title&quot;&gt;Etudiant ing&eacute;nieur INSA&lt;/h2&gt;<br/>	&lt;a itemprop=&quot;url&quot; href=&quot;www.quentin-decre.fr&quot;&gt;Mon site&lt;/a&gt;<br/>	&lt;p itemprop=&quot;address&quot;<br/>		itemscope itemtype=&quot;http://data-vocabulary.org/Address&quot;&gt;<br/>		&lt;span itemprop=&quot;locality&quot;&gt;Cesson-S&eacute;vign&eacute;&lt;/span&gt;,<br/>		&lt;span itemprop=&quot;postal-code&quot;&gt;35510&lt;/span&gt;<br/>		&lt;span itemprop=&quot;country-name&quot;&gt;France&lt;/span&gt;<br/>	&lt;/p&gt;<br/>&lt;/section&gt;</pre>
+                        <p><strong>Note : </strong>La propriété "adress" d'une personne est en une propriété complexe décrite par une autre micro-data.</p> 
+                    </section>
+                </article>
+
+                <article class="html semantics evaluation" id="evaluation-microdata">
+                    <header><h3>Micro-data : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>80%</span></li>
+                                <li>Intérêt : <span>20%</span></li>
+                                <li>Fiabilité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <ul>
+                            <li class="details"><strong>Important</strong> : Il n'y a aucune raison de ne pas utiliser les micro-data. Les navigateurs ne les gérant pas vont simplement les ignorer.</li>
+                        </ul>
+                    </section>
+                </article>
+
+
+                <article class="transitionSlide" id="titre-CSS3">
+                    <section class="middle">
+                        <h1>CSS3</h1>
+                        <div><img src="img/HTML5_Styling_256.png" title="HTML5 CSS3" alt="HTML5 CSS3"></div>
+                    </section>
+                </article>
+
+                <article class="css styling" id="sommaire-css">
+                    <header><h1 class="no-index">Sommaire CSS3</h1></header>
+                    <section class="sommaire">
+                    </section>
+                </article>
+
+                <article class="css styling" id="css-nouveaux-selecteurs">
+                    <header><h2>Les nouveaux sélecteurs</h2></header>
+                    <section>
+                        <p class="details">Les styles CSS permettent de selectionner des éléments et leur appliquer un style. Avec CSS3, beaucoup de nouveaux sélecteurs font leur apparition.</p>
+                        <p>Nous ne présenterons que quelques selecteurs seulement. Pour avoir le détails de l'intégralité de ces derniers, rendez-vous sur la page suivante :</p>
+                        <p style="text-align:center;"><a href="http://www.w3.org/TR/css3-selectors/#selectors" target="_blank"><button>Afficher</button></a></p>
+                    </section>
+                </article>
+
+
+                <article class="css styling technique demonstration" id="css-nouveaux-selecteurs-exemples">
+                    <header><h3>Exemples</h3></header>
+                    <style>
+                        .row {
+                            padding: 4px;
+                        }
+                        .row:nth-child(even) {
+                            background: #bbb;
+                            color: white;
+                        }
+                        .row:nth-child(5) {
+                            background: red;
+                            color: white;
+                        }
+                        #css-nouveaux-selecteurs-exemples section{
+                            -webkit-column-count: 2;
+                        }
+                        .row:not(.special) {
+                            border: solid 2px black;
+                        }
+                    </style>
+                    <section>
+                        <pre>.row:<b>nth-child(even)</b> {
+  background: #dde;
+}
+.row:<b>nth-child(odd)</b> {
+  background: white;
+}
+.row:<b>nth-child(5)</b> {
+  background: red;
+}
+.row:<b>not(.special)</b> {
+  border: solid 2px black;
+}</pre>
+                        <br />
+                        <div class="example"> 
+                            <div class="row">Row 1</div> 
+                            <div class="row special">classe "special"</div> 
+                            <div class="row">Row 3</div> 
+                            <div class="row">Row 4</div> 
+                            <div class="row">Row 5</div> 
+                            <div class="row">Row 6</div> 
+                        </div>
+                    </section>
+                </article>
+
+                <article class="css styling evaluation" id="nouveaux-selecteurs-evaluation">
+                    <header><h3>Nouveaux sélecteurs : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>50%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span>(iOS 3.2, Android 2.1 et +)</li>
+                                <li>IE : <span>50%</span> (IE 9 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">La compatibilité est excellente. A l'exception bien sur d'internet explorer. L'utilisation de ces sélecteurs entrainera "seulement" un style moins riche sur les versions non compatibles d'internet explorer.</p>
+                        <p class="details">Ces nouveaux styles simplifient le travail du développeur en évitant le recours à des astuces plus ou moins propres.</p>
+                    </section>
+                </article>
+
+
+                <article class="css styling" id="css-webfont">
+                    <header><h2>Webfonts</h2></header>
+                    <style>
+                        #font-exemple {
+                            font-family: 'LeagueGothicRegular';
+                            font-size: 22pt;
+                            text-align: center;
+                        }
+                    </style>
+                    <section>
+                        <p class="details">Peut-être avez vous déjà été obligé de transformer un texte en image pour pallier à une police potentiellement manquante chez le visiteur.</p>
+                        <p>Il est desormais possible d'inclure des polices avec son site : <b>les Webfonts</b></p>
+                        <pre>@font-face {
+  font-family: 'LeagueGothic';
+  src: url(LeagueGothic.otf);
+}
+
+#font-exemple {
+  font-family: 'LeagueGothic';
+}</pre>
+                        <p class="exemple" id="font-exemple">Police LeagueGothic sans remplacement par une image.</p>
+                    </section>
+                </article>
+
+                <article class="css styling evaluation" id="webfonts-evaluation">
+                    <header><h3>Webfonts : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>50%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (partiel sur Android et iOS 4.1 et -, complet sur iOS 4.2 et +)</li>
+                                <li>IE : <span>60%</span> (Partiel sur 7 et 8 (EOT seulement), et complet  sur IE 9 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">La compatibilité est excellente. Et ceci permet de limiter le recours aux images qui complique les modifications et alourdissent plus le site qu'une police.</p>
+                    </section>
+                </article>
+
+
+
+                <article class="styling css" id="text-wrapping">
+                    <style>
+                        div#wrapping {width: 95%}
+                        #overflow-hidden { font-size: 25px; height: 1.1em; overflow: hidden; }
+                        #no-wrap { font-size: 25px; height: 1.1em; white-space: nowrap; overflow: hidden; }
+                        #ellipsis { font-size: 25px; text-overflow: ellipsis; white-space: nowrap; height: 1.1em; overflow: hidden; }
+                    </style>
+                    <header><h2>Text wrapping</h2></header>
+                    <section>
+                        <div id="wrapping">
+                            <pre>overflow: hidden; // couramment utilisé</pre>
+                            <div id="overflow-hidden" class="example warpping">
+                                Notre plus grande gloire n'est point de tomber, mais de savoir nous relever chaque fois que nous tombons. - Confucius
+                            </div>
+                            <pre>overflow: nowrap; //par defaut</pre>
+                            <div id="no-wrap" class="example warpping">
+                                Notre plus grande gloire n'est point de tomber, mais de savoir nous relever chaque fois que nous tombons. - Confucius
+                            </div>
+                            <pre>overflow: ellipsis; // nouveau</pre>
+                            <div id="ellipsis" class="example warpping">
+                                Notre plus grande gloire n'est point de tomber, mais de savoir nous relever chaque fois que nous tombons. - Confucius
+                            </div>
+                        </div>
+                        <input type="range" min="0" max="100" value="95" onchange="changeWrapping(event)">
+                        <p class="center">
+                            Utilisez le slider pour changer la largeur des exemples.
+                        </p>
+                    </section>
+
+                    <script>
+                        function changeWrapping(event) {
+                            $(".warpping").css("width",event.target.value + '%');
+                        }
+                    </script>
+                </article>
+
+                <article class="css styling evaluation" id="text-wrapping-evaluation">
+                    <header><h3>Text Wrapping : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>20%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>100%</span> (IE 7 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>0%</span> (prévu sur la version 7)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">La compatibilité est excellente. Cependant, ceci reste une fonctionnalité mineure. Pour pallier le problème de firefox, il est possible de définir l'overflow en hidden, puis en ellipsis.</p>
+                    </section>
+                </article>
+
+
+
+                <article class="styling css" id="css-colonnes">
+                    <style>
+                        #columns-no-example {
+                            -webkit-column-count: 2;
+                            -webkit-column-rule: 1px solid #bbb;
+                            -webkit-column-gap: 2em;
+                            -moz-column-count: 2;
+                            -moz-column-rule: 1px solid #bbb;
+                            -moz-column-gap: 2em;
+                            column-count: 2;
+                            column-rule: 1px solid #bbb;
+                            column-gap: 2em;
+                        }
+                        #columns-no-example p {
+                            font-size: 15px;
+                        }
+                    </style>
+                    <header><h2>Colonnes</h2></header>
+                    <section>
+                        <pre>-webkit-<b>column-count</b>: <span id="columns-no-value">2</span>; <input type="range" min="1" max="6" value="2" onchange="changeColumnNoSlider(event)">
+-webkit-<b>column-rule</b>: 1px solid #bbb;
+-webkit-<b>column-gap</b>: 2em;</pre>
+
+                        <div id="columns-no-example" class="example">
+                            <p>Excogitatum est super his, ut homines quidam ignoti, vilitate ipsa parum cavendi ad colligendos rumores per Antiochiae latera cuncta destinarentur relaturi quae audirent. hi peragranter et dissimulanter honoratorum circulis adsistendo pervadendoque divites domus egentium habitu quicquid noscere poterant vel audire latenter intromissi per posticas in regiam nuntiabant, id observantes conspiratione concordi.
+                            </p>
+                            <p>Nec sane haec sola pernicies orientem diversis cladibus adfligebat. Namque et Isauri, quibus est usitatum saepe pacari saepeque inopinis excursibus cuncta miscere, ex latrociniis occultis et raris, alente inpunitate adulescentem in peius audaciam ad bella gravia proruperunt, diu quidem perduelles spiritus inrequietis motibus erigentes, hac tamen indignitate perciti vehementer, ut iactitabant.
+                            </p>
+
+                            <p>Haec et huius modi quaedam innumerabilia ultrix facinorum impiorum bonorumque praemiatrix aliquotiens operatur Adrastia atque utinam semper quam vocabulo duplici etiam Nemesim appellamus: ius quoddam sublime numinis efficacis, humanarum mentium opinione lunari circulo superpositum, vel ut definiunt alii, substantialis tutela generali potentia partilibus praesidens fatis, quam theologi veteres fingentes Iustitiae filiam ex abdita quadam aeternitate tradunt omnia despectare terrena.
+                            </p>
+                            <p>Latius iam disseminata licentia onerosus bonis omnibus Caesar nullum post haec adhibens modum orientis latera cuncta vexabat nec honoratis parcens nec urbium primatibus nec plebeiis.
+                            </p>
+                        </div>
+                    </section>
+
+                    <script>
+                        function changeColumnNoSlider(event) {
+                            var val = event.target.value;
+                            document.getElementById('columns-no-value').textContent = val;
+                            var el = document.getElementById('columns-no-example');
+                            el.style.webkitColumnCount = val;
+                            el.style.MozColumnCount = val;
+                        }
+                    </script>
+                </article>
+
+                <article class="css styling evaluation" id="colonnes-evaluation">
+                    <header><h3>Colonnes : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>80%</span></li>
+                                <li>Intérêt : <span>25%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>0%</span> (prévu sur la version 10)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">On remarque qu'il fallait ajouter webkit- avant l'attribut CSS. De la même façon, il faut ajouter moz- pour firefox. Ces préfix disparaiteront à terme.</p>
+                        <p class="details">Cette fonctionnalité évite les astuces surchargeant le code pour avoir plusieurs colonnes.</p>
+                    </section>
+                </article>
+
+
+                <article class="styling css" id="css-stroke">
+                    <style>
+                        #text-stroke-example { 
+                            font-size: 85px;
+                            padding: 20px 0;
+                            text-align: center;
+                            -webkit-text-stroke-color: red;
+                            -webkit-text-fill-color: black;
+                        }
+                    </style>
+                    <header><h2>Contour du texte</h2></header>
+                    <section>
+                        <pre>div {
+  -webkit-<b>text-fill-color</b>: black;
+  -webkit-<b>text-stroke-color</b>: red;
+  -webkit-<b>text-stroke-width</b>: <span id="text-stroke-value">0.00</span>px; <input id="text-stroke" type="range" min="0" max="50" value="0" onchange="changeTextStroke()">
+}</pre>
+                        <div id="text-stroke-example" class="example">
+                            Exemple de texte avec contour.
+                        </div>
+
+                        <script defer>
+                            function changeTextStroke() {
+                                var width = (document.getElementById('text-stroke').value * 0.25).toFixed(2);
+                                document.getElementById('text-stroke-example').style.webkitTextStrokeWidth = width + 'px';
+                                document.getElementById('text-stroke-value').textContent = width;
+                            }
+                        </script>
+                    </section>
+                </article>
+
+
+                <article class="css styling evaluation" id="stroke-evaluation">
+                    <header><h3>Contours de texte : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>80%</span></li>
+                                <li>Intérêt : <span>25%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>50%</span> (iOS 3.2 et +)</li>
+                                <li>IE : <span>0%</span> (prévu sur la version 10)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>25%</span> (prévu sur la version 6)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                    </section>
+                </article>
+
+
+                <article class="css styling technique demonstration" id="css-border-radius-exemple">
+                    <header><h2>Arrondis</h2></header>
+                    <section>
+                        <pre class="two-column">
+    border-top-left-radius: <input type="range" value="20" min="0" max="200" step="10" name="border" id="border-top-left" onchange="updateBorder(event)"/> px;  
+    border-radius: <input type="range" value="20" min="0" max="200" step="10" name="border" id="border" onchange="updateBorder(event)"/> px;
+                        </pre>
+                        <p class="details">Ajustez l'arrondi des bordures du slide.</p>
+                        <p class="details"><i>On note qu'il est possible de définir l'arrondi de chaque coin indépendamment.</i></p>
+                        <script type="text/javascript">
+                            function updateBorder(event){
+                                $("#css-border-radius-exemple").css("border-radius",$("#border").val()+"px");
+                                $("#css-border-radius-exemple").css("border-top-left-radius",$("#border-top-left").val()+"px");
+                            }
+                        </script>
+                    </section>
+                </article>
+
+                <article class="css styling evaluation" id="border-radius-evaluation">
+                    <header><h3>Contours de texte : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>30%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>50%</span> (iOS 3.2 et +)</li>
+                                <li>IE : <span>50%</span> (IE 9 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>100%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                    </section>
+                </article>
+
+                <article class="css styling" id="degrade-css">
+                    <header><h2>Les dégradés</h2></header>
+                    <style>
+                        #degrade-css .example{
+                            border: 0;
+                            margin: 10px;
+                            height: 200px;
+                            width: 107px;
+                            float: left;
+                        }
+                        #gradients-exemple1 {
+                            background: -webkit-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */
+                        }
+                        #gradients-exemple2 {
+                            background: -webkit-linear-gradient(top, #6db3f2 0%,#54a3ee 50%,#3690f0 51%,#1e69de 100%); /* Chrome10+,Safari5.1+ */
+                        }
+                        #gradients-exemple3 {
+                            background: -webkit-linear-gradient(top, #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%); /* Chrome10+,Safari5.1+ */
+                        }
+                        #gradients-exemple4 {
+                            background: -webkit-linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* Chrome10+,Safari5.1+ */
+                        }
+                        #gradients-exemple5 {
+                            background: -webkit-linear-gradient(left, #d8e0de 0%,#aebfbc 22%,#99afab 33%,#8ea6a2 50%,#829d98 67%,#4e5c5a 82%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
+                        }
+                    </style>
+                    <section>
+                        <p class="details">Il est désormais possible de définir des dégradés, même relativement complexes depuis le CSS. Cela évite l'utilisation d'image qui alourdi le site et complexifie le développement et la maintenance.</p>
+                        <p>Le fond de chaque slide est un unique dégradé. Cela donne, avec les exemples suivant, une idée des possibilités.</p>
+                        <div id="gradients-exemple1" class="example"></div> 
+                        <div id="gradients-exemple2" class="example"></div> 
+                        <div id="gradients-exemple3" class="example"></div> 
+                        <div id="gradients-exemple4" class="example"></div> 
+                        <div id="gradients-exemple5" class="example"></div> 
+                    </section>
+                </article>
+
+                <article class="css styling technique" id="degrade-css-demonstration">
+                    <header><h3>Fonctionnement</h3></header>
+                    <style>
+                        #gradients-example6 {
+                            height: 80px;
+                            background: -webkit-linear-gradient(left, rgba(226,185,0,1) 0%,rgba(255,255,255,1) 50%,rgba(255,0,0,1) 100%);
+                        }
+                        #gradients-example7 {
+                            height: 80px;
+                            background: -webkit-radial-gradient(rgba(226,185,0,1) 0%,rgba(255,0,0,1) 100%);
+                        }
+                    </style>
+                    <section>
+                        <pre>background: -webkit-linear-gradient(left,
+        rgba(226,185,0,1) 0%,
+        rgba(255,255,255,1) 50%,
+        rgba(255,0,0,1) 100%);</pre> 
+
+                        <div id="gradients-example6" class="example"></div> 
+                        <br>
+                        <pre>background: -webkit-radial-gradient(
+    rgba(226,185,0,1) 0%,
+    rgba(255,0,0,1) 100%);</pre> 
+                        <div id="gradients-example7" class="example"></div> 
+
+                    </section>
+                </article>
+
+                <article class="css styling evaluation" id="css-degrade-evaluation">
+                    <header><h3>Dégradés : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>80%</span></li>
+                                <li>Intérêt : <span>70%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>25%</span> prévu sur IE 10</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>75%</span> (4 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">La syntaxe a évolué réçemment, et par conséquent, certains navigateurs ne supportent pas la nouvelle syntaxe. Mais il est possible de définir le background une première fois avec l'ancienne syntaxe, puis une seconde avec la nouvelle.</p>
+                        <p class="details">C'est une excellente nouveauté. Pratique pour le développement de sites web, c'est une réelle nécessité pour le développement d'applications WEB.</p>
+                        <p class="details"><b>Note</b> : il est possible via les filtres IE <i>(filter: progid:DXImageTransform.Microsoft.gradient)</i>, de créer un dégradé simple pour IE 6 à 9.</p>
+                    </section>
+                </article>
+
+                <article class="css styling" id="ombres-CSS">
+                    <header><h2>Ombres</h2></header>
+                    <style> 
+                        #shadow-example {
+                            font-size: 75px;
+                            margin: 10px 10px 30px 10px;
+                            padding: 20px;
+                            text-align: center;
+                        }
+                    </style> 
+                    <section>
+                        <p>On a deux types d'ombre :</p>
+                        <ul>
+                            <li>Ombre pour le texte</li>
+                            <li>Ombre pour une boite (div, article, section...)</li>
+                        </ul>
+                        <div class="demonstration">
+                            <pre class="two-column"><b>text-shadow</b>: 
+              rgba(64, 64, 64, 0.7) 
+              <span id="shadows-text-x-value">0</span>px <input id="shadows-text-x" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)" /> 
+              <span id="shadows-text-y-value">0</span>px <input id="shadows-text-y" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)" /> 
+              <span id="shadows-text-size-value">0</span>px; <input id="shadows-text-size" type="range" min="0" max="9" value="0" onchange="changeShadow(event)" /> 
+            <br/><b>box-shadow</b>: 
+              rgba(0, 0, 128, 0.25) 
+              <span id="shadows-box-x-value">0</span>px <input id="shadows-box-x" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)" /> 
+              <span id="shadows-box-y-value">0</span>px <input id="shadows-box-y" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)" /> 
+              <span id="shadows-box-size-value">0</span>px; <input id="shadows-box-size" type="range" min="0" max="9" value="0" onchange="changeShadow(event)" /></pre> 
+
+                            <div id="shadow-example" class="example"> 
+                                Démonstration
+                            </div> 
+
+                            <script> 
+                                function changeShadow() {
+                                    var el = document.getElementById('shadow-example');
+ 
+                                    var textXVal = document.getElementById('shadows-text-x').value;
+                                    var textYVal = document.getElementById('shadows-text-y').value;
+                                    var textSizeVal = document.getElementById('shadows-text-size').value;
+ 
+                                    document.getElementById('shadows-text-x-value').textContent = textXVal;
+                                    document.getElementById('shadows-text-y-value').textContent = textYVal;
+                                    document.getElementById('shadows-text-size-value').textContent = textSizeVal;
+ 
+                                    var boxXVal = document.getElementById('shadows-box-x').value;
+                                    var boxYVal = document.getElementById('shadows-box-y').value;
+                                    var boxSizeVal = document.getElementById('shadows-box-size').value;
+ 
+                                    document.getElementById('shadows-box-x-value').textContent = boxXVal;
+                                    document.getElementById('shadows-box-y-value').textContent = boxYVal;
+                                    document.getElementById('shadows-box-size-value').textContent = boxSizeVal;
+ 
+                                    el.style.textShadow = 'rgba(64, 64, 64, 0.7) ' + textXVal + 'px ' + textYVal + 'px ' + textSizeVal + 'px';
+                                    el.style.webkitBoxShadow = 'rgba(0, 0, 128, 0.25) ' + boxXVal + 'px ' + boxYVal + 'px ' + boxSizeVal + 'px';
+                                    el.style.MozBoxShadow = 'rgba(0, 0, 128, 0.25) ' + boxXVal + 'px ' + boxYVal + 'px ' + boxSizeVal + 'px';
+                                }
+                            </script>
+                        </div>
+                </article>
+
+                <article class="css styling evaluation" id="css-ombre-evaluation">
+                    <header><h3>Ombres : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>65%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>25%</span> (IE 9 et + pour box-shadow)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>75%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">C'est une bonne nouveauté, qui comme les dégradés, évite le recours aux images. Cela accélère le développement et la stabilité en évitant les astuces liées au remplacement par une image. On gagne aussi énormément en maintenance (texte à changer...)</p>
+                    </section>
+                </article>
+
+                <article class="css styling" id="css-box">
+                    <style>
+                        #box-orient-example {
+                            height: 260px;
+                            display: -webkit-box; -webkit-box-orient: horizontal;
+                            display: -moz-box; -moz-box-orient: horizontal;
+                        }
+                        #box-orient-example div:nth-child(1) {
+                            background: white; padding: 10px; -webkit-box-flex: 1; 
+                            -moz-box-flex: 1; text-align: center;
+                        }
+                        #box-orient-example div:nth-child(2) {
+                            background: #ddd; padding: 10px; -webkit-box-flex: 1; 
+                            -moz-box-flex: 1; text-align: center;
+                        }
+                        #box-orient-example div:nth-child(3) {
+                            background: white; padding: 10px; -webkit-box-flex: 3; 
+                            -moz-box-flex: 3; text-align: center;
+                        }
+                    </style>
+                    <header><h2>Display : BOX</h2></header>
+                    <section>
+                        <pre>.box {
+  display: -webkit-<b>box</b>;
+  -webkit-<b>box-orient</b>: <select onchange='changeBoxOrient(event)'> 
+      <option>horizontal</option> 
+      <option>vertical</option> 
+    </select>;
+}
+.box .un, .box .deux {
+  -webkit-<b>box-flex</b>: 1;
+}
+.box .trois {
+  -webkit-<b>box-flex</b>: 3;
+}
+                        </pre> 
+
+                        <div id="box-orient-example" class="example">
+                            <div>
+                                Première
+                            </div> 
+                            <div>
+                                Deuxième
+                            </div> 
+                            <div>
+                                Troisième
+                            </div> 
+                        </div>
+
+                        <script> 
+                            function changeBoxOrient(event) {
+                                var el = document.getElementById('box-orient-example');
+                                el.style.webkitBoxOrient = event.target.value;
+                                el.style.MozBoxOrient = event.target.value; 
+                            }
+                        </script> 
+                    </section> 
+                </article>
+
+
+                <article class="css styling" id="css-box-positionnement">
+                    <style>
+                        #box-orient-example-2 {
+                            height: 200px; 
+                            display: -moz-box; 
+                            -moz-box-pack: center;
+                            -moz-box-align: center; 
+                            -moz-box-orient: horizontal;
+
+                            display: -webkit-box; 
+                            -webkit-box-pack: center;
+                            -webkit-box-align: center; 
+                            -webkit-box-orient: horizontal;
+                        }
+                        #box-orient-example-2 div, #box-orient-example-2 textarea {
+                            background: #ddd; padding: 10px; width: 200px; font-size: 14px;
+                        }
+                    </style>
+                    <header><h2>Positionnement</h2></header>
+                    <section> 
+                        <pre class="lang-css">.box {
+    display: -webkit-<b>box</b>;
+    -webkit-<b>box-pack</b>: <select onchange='changeBoxPack(event)'> 
+        <option>center</option> 
+        <option>start</option> 
+        <option>end</option> 
+      </select>;
+    -webkit-<b>box-align</b>: <select onchange='changeBoxAlign(event)'> 
+        <option>center</option> 
+        <option>start</option> 
+        <option>end</option> 
+        <option>stretch</option> 
+      </select>;
+  }
+                        </pre> 
+
+                        <div id="box-orient-example-2" class="example">
+                            <textarea>Textarea redimensionnable</textarea> 
+                        </div>
+
+                        <script> 
+                            function changeBoxPack(event) {
+                                var el = document.getElementById('box-orient-example-2');
+                                el.style.webkitBoxPack = event.target.value;
+                                el.style.MozBoxPack = event.target.value; 
+                            }
+                            function changeBoxAlign(event) {
+                                var el = document.getElementById('box-orient-example-2');
+                                el.style.webkitBoxAlign = event.target.value;
+                                el.style.MozBoxAlign = event.target.value; 
+                            }
+                        </script> 
+
+                    </section> 
+                </article>
+
+                <article class="css styling evaluation" id="css-box-evaluation">
+                    <header><h3>Ombres : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>65%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>25%</span> (IE 9 et + pour box-shadow)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.6 et +)</li>
+                                <li>Safari : <span>75%</span> (3.2 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">C'est une bonne nouveauté, qui comme les dégradés, évite le recours aux images. Cela accélère le développement et la stabilité en évitant les astuces liées au remplacement par une image. On gagne aussi énormément en maintenance (texte à changer...)</p>
+                    </section>
+                </article>
+
+
+                <article class="css styling" id="CSS3-effets">
+                    <header><h2>Effets CSS3</h2></header>
+                    <section>
+                        <p>CSS3 apporte le support de plusieurs effets dynamiques :</p>
+                        <ul>
+                            <li>Les transitions</li>
+                            <li>Les transformations</li>
+                            <li>Les animations</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="css styling technique" id="transitions">
+                    <header><h3>Transitions</h3></header>
+                    <section>
+                        <pre>selecteur {
+    -webkit-transition: attribut duree mode;
+}
+                        </pre>
+                        <p>Il y a différents effets de transitions</p>
+                        <ul>
+                            <li><b>ease</b></li>
+                            <li><b>ease-in</b></li>
+                            <li><b>ease-out</b></li>
+                            <li><b>ease-in-out</b></li>
+                            <li><b>linear</b></li>
+                            <li><b>custom</b></li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="css styling demonstration" id="transitions-demo">
+                    <style>
+                        #timings_demo {
+                            width:500px;
+                            height:400px;
+                            margin:20px auto 10px;
+                            border:1px #aaa solid;
+                            padding:10px;
+                        }
+
+                        .test_box {
+                            width:50px;
+                            height:50px;
+                            margin-bottom:10px;
+                            background-color:#ccc;
+                        }
+
+                        .test_box p{
+                            font-size: 10pt;
+                        }
+
+                        #ease.test_box {
+                            -webkit-transition: all 5s ease;
+                            -moz-transition: all 5s ease;
+                            -o-transition: all 5s ease;
+                            -ms-transition: all 5s ease;
+                            transition: all 5s ease;
+                            border:1px #f00 solid;
+                        }
+
+                        #ease-in.test_box {
+                            -webkit-transition: all 5s ease-in;
+                            -moz-transition: all 5s ease-in;
+                            -o-transition: all 5s ease-in;
+                            -ms-transition: all 5s ease-in;
+                            transition: all 5s ease-in;
+                            border:1px #0f0 solid;
+                        }
+
+                        #ease-out.test_box {
+                            -webkit-transition: all 5s ease-out;
+                            -moz-transition: all 5s ease-out;
+                            -o-transition: all 5s ease-out;
+                            -ms-transition: all 5s ease-out;
+                            transition: all 5s ease-out;
+                            border:1px #00f solid;
+                        }
+
+                        #ease-in-out.test_box {
+                            -webkit-transition: all 5s ease-in-out;
+                            -moz-transition: all 5s ease-in-out;
+                            -o-transition: all 5s ease-in-out;
+                            -ms-transition: all 5s ease-in-out;
+                            transition: all 5s ease-in-out;
+                            border:1px #ff0 solid;
+                        }
+
+                        #linear.test_box {
+                            -webkit-transition: all 5s linear;
+                            -moz-transition: all 5s linear;
+                            -o-transition: all 5s linear;
+                            -ms-transition: all 5s linear;
+                            transition: all 5s linear;
+                            border:1px #f0f solid;
+                        }
+
+                        #custom.test_box {
+                            -webkit-transition: all 5s cubic-bezier(1.000, 0.835, 0.000, 0.945);
+                            -moz-transition: all 5s cubic-bezier(1.000, 0.835, 0.000, 0.945);
+                            -o-transition: all 5s cubic-bezier(1.000, 0.835, 0.000, 0.945);
+                            -ms-transition: all 5s cubic-bezier(1.000, 0.835, 0.000, 0.945);
+                            transition: all 5s cubic-bezier(1.000, 0.835, 0.000, 0.945);
+                            border:1px #0ff solid;
+                        }
+
+                        #timings_demo:hover .test_box, #timings_demo.hover_effect .test_box {
+                            margin-left:440px;
+                            -webkit-border-radius:25px;
+                            -moz-border-radius:25px;
+                            -o-border-radius:25px;
+                            border-radius:25px;
+
+                            -webkit-transform: rotate(360deg);
+                            -moz-transform: rotate(360deg);
+                            -o-transform: rotate(360deg);
+                            -ms-transform: rotate(360deg);
+                            transform: rotate(360deg);
+
+                            background-color:#fff;
+                        }
+                    </style>
+                    <header><h4>Démonstration</h4></header>
+                    <section>
+                        <div id="timings_demo" class="shadow hover example">
+                            <div id="ease" class="test_box"><p class="center">Ease</p></div>
+                            <div id="ease-in" class="test_box"><p class="center">Ease In</p></div>
+                            <div id="ease-out" class="test_box"><p class="center">Ease Out</p></div>
+                            <div id="ease-in-out" class="test_box"><p class="center">Ease In Out</p></div>
+                            <div id="linear" class="test_box"><p class="center">Linear</p></div>
+                            <div id="custom" class="test_box"><p class="center">Custom</p></div>	
+                            <p class="center">Survolez moi</p>
+                        </div>
+                    </section>
+                </article>
+
+                <article class="css styling" id="transformations">
+                    <header><h3>Transformation</h3></header>
+                    <style> 
+                        #threed-example, #threed-example2 {
+                            margin: 20px 0px 50px 0px;
+                            -webkit-transition: -webkit-transform 2s ease-in-out;
+                            -moz-transition: -moz-transform 2s ease-in-out;
+                            -o-transition: -o-transform 2s ease-in-out;
+                            transition: transform 2s ease-in-out;
+                        }
+                        #threed-example:hover {
+                            -webkit-transform: rotateZ(-5deg);
+                            -moz-transform: rotateZ(-5deg);
+                            -o-transform: rotateZ(-5deg);
+                            transform: rotateZ(-5deg);
+                        }
+                        #threed-example2:hover {
+                            -webkit-transform: scaleY(2);
+                        }
+
+                    </style> 
+                    <section> 
+                        <p class="center"> 
+                            Survolez les blocs :
+                        </p> 
+                        <div class='example' id="threed-example">
+                            <pre class="technique">-webkit-transform: rotateZ(-15deg);</pre> 
+                        </div>
+                        <div class='example' id="threed-example2">
+                            <pre class="technique">-webkit-transform: scaleY(2);</pre> 
+                        </div>
+                        <p>Il existe également des transformations "perspective" et "translate3D", mais elles ne sont pas encore supportées</p>
+                    </section>
+                </article>
+
+                <article class="css styling" id="animations">
+                    <header><h3>Animations</h3></header>
+                    <style> 
+                        #animation-example {
+                            font-family: Arial;
+                            text-align: center;
+                            line-height: 100px;
+                        }
+                        #animation-note { 
+                            font-size: 10px;
+                        }
+                        /* presently webkit-only */
+                        @-webkit-keyframes pulse {
+                            from {
+                            opacity: 0.0;
+                            font-size: 50px;
+                        }
+                        to {
+                            opacity: 1.0;
+                            font-size: 100px;
+                        }
+                        }
+
+                        #animation-example {
+                            -webkit-animation: pulse 2s ease-in-out;
+                            -webkit-animation-iteration-count: infinite;
+                            -webkit-animation-direction: alternate;
+                        }
+                    </style> 
+                    <section> 
+
+                        <pre class="technique">@-webkit-<b>keyframes</b> <em>pulse</em> {
+ <b>from</b> {
+   opacity: 0.0;
+   font-size: 100%;
+ }
+ <b>to</b> {
+   opacity: 1.0;
+   font-size: 200%;
+ }
+}
+ 
+div {
+  -webkit-animation: pulse 2s ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+                        </pre> 
+                        <div id="animation-example" class="example demonstration"> 
+                            Pulse!
+                        </div> 
+                    </section> 
+                </article>
+
+                <article class="css styling evaluation" id="css-effets-evaluation">
+                    <header><h3>Effets CSS3 : Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>60%</span></li>
+                                <li>Intérêt : <span>75%</span></li>
+                                <li>Sécurité : <span>100%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>70%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>5%</span> (IE 9 et +, IE 10 et + pour les animations</li>
+                                <li>Chrome : <span>70%</span> (10 et +)</li>
+                                <li>Firefox : <span>35%</span> (3.5 et +, 5 et + pour les animations)</li>
+                                <li>Safari : <span>55%</span> (3.2 et +, 4 et + pour les animations)</li>
+                            </ul>
+                        </div>
+                        <p class="details">Malgré un assez bon support, les notes ne sont pas toujours maximales car toutes les tranformations ne sont pas gérées encore.</p>
+                        <p class="details">Cette nouveauté permet de décharger le javascript de la gestion des animations, et de ce fait, améliore la clareté du code, et potentiellement la rapidité d'éxecution en laissant l'optimisation aux soins du navigateur.</p>
+                    </section>
+                </article>
+
+
+                <article class="css styling" id="autres-CSS">
+                    <header><h2>Autres nouveautés</h2></header>
+                    <section>
+                        <ul>
+                            <li>Deux nouveaux formats pour spécifier une couleur : 
+                                <ul>
+                                    <li>RBGA : comme RGB mais avec la transparence.</li>
+                                    <li>HSLA : Teinte, Luminance, Saturation.</li>
+                                </ul>
+                            </li>
+                            <li>Il est maintenant possible de définir plusieurs background qui se superposent</li>
+                            <li>Il est possible de redimensionner les background pour qu'ils s'adaptent au cadre : 
+                                <ul>
+                                    <li>Soit apparaitre entièrement dans le cadre</li>
+                                    <li>Soit couvrir 100% du cadre</li>
+                                </ul></li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="transitionSlide" id="titre-offline-storage">
+                    <section class="middle">
+                        <h1>Offline Storage</h1>
+                        <div><img src="img/HTML5_Offline_Storage_256.png" title="HTML5 Offline &amp; Storage" alt="HTML5 Offline &amp; Storage"></div>
+                    </section>
+                </article>
+
+                <article class="semantics" id="sommaire-offline-storage">
+                    <header><h1 class="no-index">Offline Storage</h1></header>
+                    <section class="sommaire">
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript" id="web-storage">
+                    <header><h2>Web Storage</h2></header>
+                    <section>
+                        <p class="details"><b>Local Storage</b> et <b>Session Storage</b> sont deux espaces de stockage associatif (clé-valeur) mis à disposition par le navigateur. Un espace unique est présent pour chaque domaine.</p>
+                        <ul>
+                            <li><b>Local Storage</b> : persistant</li>
+                            <li><b>Session Storage</b> : ne dure que le temps d'une session</li>
+                        </ul>
+                        <p class="details">On retrouve la fonctionnalité offerte par les cookies, en plus simple à utiliser, et supportant de plus grosses quantités de données, mais attention : les entrées ne sont pas accessibles par le serveur.</p>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript" id="web-storage-capture">
+                    <header><h3>Capture</h3></header>
+                    <section class="middle">
+                        <figure class="center">
+                            <figcaption>Local Storage</figcaption>
+                            <img src="img/localstorage.png" alt="local storage"/>
+                        </figure>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript technique" id="web-storage-technique">
+                    <header><h3>Lire et écrire des entrées</h3></header>
+                    <section>
+                        <p>Pour lire :</p>
+                        <pre>var valeurLue = localStorage["cle"];</pre>
+                        <p>Pour ecrire :</p>
+                        <pre>localStorage["cle"] = valeur;</pre>
+                    </section>
+                </article>	
+
+                <article class="offline-storage javascript demonstration" id="web-storage-demo">
+                    <header><h3>Démonstration</h3></header>
+                    <section class="middle">
+                        <p>Cliquez sur le bouton ci dessous pour ouvrir la démonstration d'une fonction d'enregistrement de mémos.</p>
+                        <button onclick="$.nmManual('./pages/formulaireMemo.html')">Afficher</button>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript evaluation" id="web-storage-evaluation">
+                    <header><h3>Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>90%</span></li>
+                                <li>Intérêt : <span>80%</span></li>
+                                <li>Sécurité : <span>50%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>75%</span> (IE 8 et +)</li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>100%</span> (3.5 et +)</li>
+                                <li>Safari : <span>100%</span> (4 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details">Il est évident qu'il ne faut pas stocker de données sensibles. Elles sont visibles et modifiables en clair par l'utilisateur, et donc potentiellement par n'importe quel programme ayant le contrôle de l'ordinateur.</p> 
+                        <p class="details">La compatibilité est excellente. C'est une fonction qui a atteint une bonne maturité. Attention cependant, même si la compatibilité est excellente pour une fonctionnalité HTML5, IE7 et inferieur ne sont pas compatibles.</p>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript" id="web-sql">
+                    <header><h2>Base WebSQL</h2></header>
+                    <section>
+                        <p class="details">Une <b>base de données relationnelle SQL</b> est mise à disposition par le navigateur.</p>
+                        <p>La base de données SQL est :</p>
+                        <ul>
+                            <li>Locale</li>
+                            <li>Associée à un domaine (pas d'accès cross-domain)</li>
+                            <li>Persistante</li>
+                            <li>Basée sur SQL Lite</li>
+                        </ul>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript" id="web-sql-capture">
+                    <header><h3>Capture</h3></header>
+                    <section class="middle">
+                        <figure class="center">
+                            <figcaption>Web SQL</figcaption>
+                            <img src="img/websql.png" alt="web sql"/>
+                        </figure>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript technique" id="web-sql-technique0">
+                    <header><h3>Manipuler la base</h3></header>
+                    <section>
+                        <p>Créer la base de données</p>
+                        <pre>database = openDatabase("nom", "wersion", "description", taille en o);</pre>
+
+                        <p>Executer des requêtes</p>
+                        <pre>this.db.transaction(
+    function(tx) {
+        tx.executeSql(query, ["values","to","replace","?","in","query"],
+        function(tx, results){
+            // SUCCESS
+        },
+        function(tx, error){
+            // ERROR
+        });
+    }
+)</pre>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript technique" id="web-sql-technique1">
+                    <header><h3>Exemple debut</h3></header>
+                    <section>
+                        <p>Créer la base de données</p>
+                        <pre>this.db = openDatabase("Agenda", "0.1", "Agenda HTML5", 2*1024*1024);</pre>
+                        <p>Créer une table</p>
+                        <pre>this.db.transaction(
+    function(tx) {
+        tx.executeSql("CREATE TABLE Events (id REAL UNIQUE,subject TEXT,...)", [],
+        function(tx, results){ insertEvent(); },
+        function(tx, error){console.log(error); });
+    }
+)</pre>
+                    </section>
+                </article>
+
+                <article class="offline-storage javascript technique" id="web-sql-technique2">
+                    <header><h3>Exemple fin</h3></header>
+                    <section>
+                        <p>Ajouter un évènement</p>
+                        <pre>th.db.transaction(
+    function(tx) {
+        tx.executeSql("INSERT INTO Events(id, subject, begin, end) values(?,?,?,?)",
+        [event.id, event.subject, event.begin, event.end],
+        function(tx, results){ console.log("success");  },
+        function(tx, error){   console.log(error);      });
+    }
+);</pre>
+                    </section>
+                </article>
+                
+                
+                
+                <article class="offline-storage javascript demonstration" id="web-sql-demo">
+                    <header><h3>Démonstration</h3></header>
+                    <section>
+                        <p>Cliquez sur le bouton ci dessous pour ouvrir la démonstration d'une application web agenda local, démontrant l'utilisation des bases webSQL, et d'une interface intuitive.</p>
+                        <div class="center"><a href="./pages/agenda/agenda.html" target="_blank"><button>Afficher</button></a></div>
+                    </section>
+                </article>
+                
+                
+                <article class="offline-storage javascript evaluation" id="web-sql-evaluation">
+                    <header><h3>Evaluation</h3></header>
+                    <section>
+                        <div class="note">
+                            <ul>
+                                <li>Maturité : <span>0%</span></li>
+                                <li>Intérêt : <span>60%</span></li>
+                                <li>Sécurité : <span>50%</span></li>
+                            </ul>
+                        </div>
+                        <div class="note">
+                            <ul>
+                                <li>Mobile : <span>100%</span> (iOS 3.2 et +, Android 2.1 et +)</li>
+                                <li>IE : <span>0%</span> aucun </li>
+                                <li>Chrome : <span>100%</span> (10 et +)</li>
+                                <li>Firefox : <span>0%</span> aucun </li>
+                                <li>Safari : <span>100%</span> (4 et +)</li>
+                            </ul>
+                        </div>
+                        <p class="details"><b>Attention : </b>cette fonctionnalité n'est plus maintenue et risque de disparaitre.</p>
+                   </section>
+                </article>
+                
+
+                <article class="transitionSlide" id="titre-acces-materiel">
+                    <section class="middle">
+                        <h1>Accès au materiel et fichiers</h1>
+                        <div><img src="img/HTML5_Device_Access_256.png" title="HTML5 accès au système" alt="HTML5 accès au système"></div>
+                    </section>
+                </article>
+
+                <article class="transitionSlide" id="titre-connectivité">
+                    <section class="middle">
+                        <h1>Connectivité</h1>
+                        <div><img src="img/HTML5_Connectivity_256.png" title="HTML5 Connectivité" alt="HTML5 Connectivité"></div>
+                    </section>
+                </article>
+
+                <article class="transitionSlide" id="titre-multimedia">
+                    <section class="middle">
+                        <h1>Multimedia</h1>
+                        <div><img src="img/HTML5_3D_Effects_256.png" title="HTML5 Multimedia" alt="HTML5 Multimedia"></div>
+                    </section>
+                </article>
+
+                <article class="transitionSlide" id="titre-outils">
+                    <section class="middle">
+                        <h1>Les outils</h1>
+                        <div><img src="img/HTML5_Performance_256.png" title="HTML5 Outils" alt="HTML5 Outils"></div>
+                    </section>
+                </article>
+
+
+            </div> <!-- slides -->
+            <style> 
+                #speaker-note {
+                    position:absolute;
+                    left: 0;
+                    top: 80%;
+                    width: 100%;
+                    height: 20%;
+                    z-index: 50;
+                    opacity: 0.75;
+                    background-color: white;
+                    overflow: auto;
+                    padding: 2px 20px;
+                    -webkit-transition: top 0.5s ease-in-out;
+                    -moz-transition: top 0.5s ease-in-out;
+                    -o-transition: top 0.5s ease-in-out;
+                    transition: top 0.5s ease-in-out;
+                }
+                #speaker-note.invisible {
+                    top: 101%;
+                }
+            </style> 
+            <div id="speaker-note" class="invisible" style="display: none;"></div>
+
+        </div> <!-- presentation -->
+
+        <!--[if lt IE 9]>
+        <script 
+          src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+        </script>
+        <script>CFInstall.check({ mode: "overlay" });</script>
+        <![endif]-->
+
+        <script src="js/prettify/prettify.js" defer onload="console.log('main OK');"></script>
+        <script src="js/prettify/lang-css.js" defer onload="console.log('css OK');  prettyPrint();"></script>
+
+        <script src="js/utils.js"></script>
+
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+        <script>
+            $( "button" ).button();
+            $( ".choice" ).buttonset();
+            
+            $( "button" ).click(function(event){
+                if(!$("#details").attr('checked')) hide.push("details");
+                if(!$("#technique").attr('checked')) hide.push("technique");
+                if(!$("#demonstration").attr('checked')) hide.push("demonstration");
+                if(!$("#evaluation").attr('checked')) hide.push("evaluation");
+                start();
+            })
+        </script>
+        <script>           
+            
+            /* 
+             * Les catégories masquables sont :
+             * - technique : tout ce qui est code...
+             * - details : à masquer pour une présentation orale
+             * - demonstration
+             * - evaluation
+             */
+            var hide = [];
+            
+            // Si il y a un hash, on démarre sans rien cacher
+            if(window.location.hash){
+                start();
+            }else{
+                // On affiche le menu de sélection
+                $("#selection, #instructions").fadeIn("slow");
+            }
+            
+        </script>
+    </body>
+</html>

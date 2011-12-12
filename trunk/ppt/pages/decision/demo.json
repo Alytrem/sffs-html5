@@ -1,0 +1,142 @@
+{
+    "title": "HTML5 et vous",
+    "submit": "http://www.serlvet-stephane.com/query/?bidule=",
+    "questions":
+    [
+    {
+        "id": 0,
+        "name": "ouinon",
+        "text": "Oui ou Non",
+        "next": [1],
+        "type": "radio",  
+        "details": "<p>Un espace permettant d'ajouter d'indiquer des détails/explications.</p>",
+        "answers": [
+        {
+            "value":true, 
+            "text":"Oui"
+        },
+
+        {
+            "value":false, 
+            "text":"Non"
+        }
+        ]
+    },
+    {
+        "id": 1,
+        "name": "radio",
+        "text": "Bouton radio",
+        "next": [2],
+        "type": "radio",
+        "details": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Curabitur vestibulum ante vel tortor volutpat condimentum. Quisque ultricies, nunc vel vestibulum auctor.</p>",
+        "answers": [
+        {
+            "value":0, 
+            "text":"Pas du tout"
+        },
+        {
+            "value":1, 
+            "text":"Un peu"
+        },
+        {
+            "value":2, 
+            "text":"Beaucoup"
+        },
+
+        {
+            "value":3, 
+            "text":"Passionnément"
+        },
+        {
+            "value":4, 
+            "text":"A la folie"
+        }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "select",
+        "text": "Liste déroulante",
+        "next": [3],
+        "type": "select",  
+        "answers": [
+        {
+            "value":"a", 
+            "text":"Produit A"
+        },
+        {
+            "value":"b", 
+            "text":"Produit B"
+        },
+        {
+            "value":"c", 
+            "text":"Produit C"
+        },
+        {
+            "value":"d", 
+            "text":"Produit D"
+        }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "checkbox",
+        "text": "Checkbox (choix multiples)",
+        "next": [4],
+        "type": "checkbox",  
+        "answers": [
+        {
+            "value":"a", 
+            "text":"Produit A"
+        },
+        {
+            "value":"b", 
+            "text":"Produit B"
+        },
+        {
+            "value":"c", 
+            "text":"Produit C"
+        },
+        {
+            "value":"d", 
+            "text":"Produit D"
+        }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "slider",
+        "text": "Curseur",
+        "next": [5],
+        "type": "slider",
+        "details":"est paramétrable (minimum, maximum, pas, valeur courante)"
+    },
+    {
+        "id": 5,
+        "name": "checkbox2",
+        "text": "Checkbox avec pré-sélections",
+        "next": [6],
+        "type": "checkbox",  
+        "answers": [
+        {
+            "value":"a", 
+            "text":"Produit A",
+            "checked": true
+        },
+        {
+            "value":"b", 
+            "text":"Produit B"
+        },
+        {
+            "value":"c", 
+            "text":"Produit C"
+        },
+        {
+            "value":"d", 
+            "text":"Produit D",
+            "checked": true
+        }
+        ]
+    }
+    ]
+}

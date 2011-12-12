@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- surcouches javascript pour faciliter le développement -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.timers.js"></script>
+        <script type="text/javascript" src="js/lowpro.jquery.js"></script>
+
+        <!-- Titre -->
+        <title>Démonstration HTML5 : SNAKE</title>
+        <style type="text/css">
+            body{
+                background: -webkit-linear-gradient(top, rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%);
+            }
+            #plateau{
+                margin: 20px;
+                border-radius: 15px;
+                border: solid 4px #666;
+                background-color: beige;
+                padding: 5px;
+            }
+            #infos{
+                height: 40px;
+                margin: 10px 20px 10px 20px ;
+                padding: 5px;
+            }
+            .bloc{
+                position: absolute;
+                border: solid 1px #666;
+                box-shadow: #666 2px 2px 2px;
+                height: 20px;
+                width: 20px;
+                margin: 1px;
+            }
+            .snake{
+                border-radius: 4px;
+                background: -webkit-linear-gradient(top, rgba(255,48,25,1) 0%,rgba(207,4,4,1) 100%);
+                z-index: 1;
+            }
+            .apple{
+                border-radius: 10px;
+                background: -webkit-linear-gradient(top, rgba(255,217,114,1) 0%,rgba(254,191,4,1) 100%);
+            }
+            .head{
+                background: -webkit-linear-gradient(top, rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="infos"></div>
+        <div id="plateau"></div>
+        <script type="text/javascript" defer>
+                        
+            // *** CLASSE COORDONNEE **//
+            Coordonnee = $.klass({
+                initialize: function(copy) {
+                    if(copy == undefined){
+                        this.x = 0; 
+                        this.y = 0;
+                    }else{
+                        this.x = copy.x;
+                        this.y = copy.y;
+                    }
+                },
+                equals: function(c){
+                    return c.x == this.x && c.y == this.y;
+                },
+                toString: function(){
+                    return "("+this.x+","+this.y+")";
+                }
+            });
+            
+            
+
+            // *** CLASSE BLOC ***//
+            Bloc = $.klass({
+                initialize: function(size,dom) {
+                    // Les mouvements à réaliser
+                    this.moves = [];
+                    
+                    this.position = new Coordonnee();
+                  
+                    // Le dom du bloc
+                    this.dom = dom;
+                    this.dom.addClass("bloc");
+                    
+                    this.size = size;
+                    
+                    // On dimensionne le bloc et on enlève 2 pour la marge
+                    this.dom.height(this.size-2);
+                    this.dom.width(this.size-2);
+                },
+                toString: function(){
+                    return "Bloc:"+this.position.toString();
+                },
+                move: function(){
+                    if(this.moves.length > 0){
+                        var movement = this.moves.pop();
+                        movement();
+                    }
+                },
+                    
+                nextPosition: function(x,y){
+                    var pos = new Coordonnee(this.position);
+                    pos.x += x;
+                    pos.y += y;
+                    return pos;
+                },
+                    
+                addMovement: function(c){
+                    var bloc = this;
+                        
+                    var fn = function(){
+                        bloc.place(c);                            
+                    };
+                        
+                    this.moves.push(fn);
+                },
+                    
+                place: function(c){
+                    if(c != undefined) this.position = new Coordonnee(c);
+                    this.dom.css("margin-left",this.position.x * this.size + "px");
+                    this.dom.css("margin-top",this.position.y * this.size + "px");                  
+                }
+            });
+            
+            // *** CLASSE BODY ***//
+            // une partie du corps du serpent
+            // hérite de bloc
+            Body = $.klass(Bloc, {
+                initialize: function($super,size) {
+                    $super(size, $("<div class='snake'></div>"));
+                },
+                toString: function(){
+                    return "Body"+this.position.toString();
+                }
+            });
+            
+            // *** CLASSE HEAD ***//
+            // La tête du serpent
+            // hérite de body
+            Head = $.klass(Body, {
+                initialize: function($super,size) {
+                    $super(size);
+                    this.dom.addClass("head");
+                },
+                toString: function(){
+                    return "Head"+this.position.toString();
+                }
+            });
+            
+            // *** CLASSE APPLE ***//
+            // Une pomme
+            // hérite de bloc
+            Apple = $.klass(Bloc, {
+                initialize: function($super,size) {
+                    $super(size, $("<div class='apple'></div>"));
+                },
+                toString: function(){
+                    return "Apple"+this.position.toString();
+                }
+            });
+            
+            
+            // *** CLASSE SNAKE ***//
+            Snake = $.klass({
+                initialize: function(game) {
+                    this.game = game;
+                    
+                    // Les carrés du snake
+                    this.body = [];
+                   
+                    // Nombre de carrés à ajouter
+                    this.toAdd = 0;
+                    
+                    // Direction du serpent
+                    this.direction = new Coordonnee();
+                    this.direction.y = 1;
+                    
+                    // Direction du dernier mouvement réalisé
+                    // Pour éviter un demi tour
+                    this.heading = new Coordonnee();
+                    this.heading.y = 1;
+                    
+                    // On créé le premier bloc (tête)
+                    this.addBody(new Coordonnee(), new Head(this.game.scale));
+                },
+                toString: function(){
+                    return "Snake:"+(this.body[0]) ? this.body[0].position : "dead";
+                },
+                goUp: function(){
+                    if(this.heading.y != 1){
+                        console.log("up");
+                        this.direction.y = -1;
+                        this.direction.x = 0;
+                    }
+                },
+                goDown: function(){
+                    if(this.heading.y != -1){
+                        console.log("down");
+                        this.direction.y = 1;
+                        this.direction.x = 0;
+                    }
+                },
+                goLeft: function(){
+                    if(this.heading.x != 1){
+                        console.log("left")
+                        this.direction.y = 0;
+                        this.direction.x = -1;
+                    }
+                },
+                goRight: function(){
+                    if(this.heading.x != -1){
+                        console.log("right");
+                        this.direction.y = 0;
+                        this.direction.x = 1;
+                    }
+                },
+                move: function(){
+                    if(this.body.length == 0) return;
+                    if(this.collide()) return;
+                        
+                    this.eat();
+                        
+                    // Si on ajoute un bloc, il faudra l'ajouter à l'ancienne position du dernier
+                    var oldPosition = new Coordonnee(this.body[this.body.length - 1].position);
+                        
+                    // On déplace le premier dans la direction choisie
+                    this.body[0].addMovement(this.body[0].nextPosition(this.direction.x, this.direction.y));
+                        
+                    // On avance les autres à la place du précédent
+                    for(i = 1; i < this.body.length; i++){
+                        this.body[i].addMovement(this.body[i-1].position);
+                    }
+                        
+                    // On applique les déplacements
+                    this.body.forEach(function(body){
+                        body.move();
+                    });
+                        
+                    // Si on doit ajouter des bloc
+                    if(this.toAdd > 0){
+                        this.addBody(oldPosition);
+                        this.toAdd--;
+                    }
+                        
+                    // On met à jour la direction du dernier mouvement
+                    this.heading = new Coordonnee(this.direction);
+                },
+                addBody: function(position, bodyBloc){
+                    if(bodyBloc == undefined){
+                        bodyBloc = new Body(this.game.scale);
+                    }
+                    if(position != undefined){
+                        bodyBloc.place(position);
+                    }
+                    this.game.dom.append(bodyBloc.dom);
+                    this.body.push(bodyBloc);
+                },
+                collide: function(){
+                    var position = this.getNextPosition();
+                    var collide = false;
+                        
+                    // Collision avec le monde
+                    collide |= (position.x >= this.game.width);
+                    collide |= (position.y >= this.game.height);
+                    collide |= (position.x < 0);
+                    collide |= (position.y < 0);
+                        
+                    // Collision avec le serpent
+                    for(i = 1; i < this.body.length; i++){
+                        collide |= (this.body[i].position.equals(position));
+                    }
+                        
+                    if(collide) this.dead();
+                    return collide;
+                },
+                eat: function(){
+                    var apple = this.game.getApple(this.getPosition());
+                       
+                    if(apple != null){
+                        this.game.removeApple(this.getPosition());
+                        this.toAdd++;
+                        console.log("Miam! une pomme");
+                    }
+                },
+                dead: function(){
+                    this.body = [];
+                    this.game.stop();
+                },
+                getPosition: function(){
+                    if(this.body.length > 0)
+                        return this.body[0].position;
+                    else
+                        return new Coordonnee();
+                },
+                getNextPosition: function(){
+                    if(this.body.length > 0)
+                        return this.body[0].nextPosition(this.direction.x, this.direction.y);
+                    else
+                        return new Coordonnee();
+                }
+            });
+            
+            // *** CLASSE GAME **//
+            Game = $.klass({
+                initialize: function(dom, infos, options){
+                    if(options == undefined) options = {};
+                    
+                    // Taille des cubes du jeu
+                    this.scale = options.scale || 24;
+                    
+                    // Nombre de cubes constituant le jeu
+                    this.height = options.height || Math.floor($(window).height()*0.8/this.scale);
+                    this.width = options.width || Math.floor(dom.width()/this.scale);
+                    
+                    // Temps en secondes entre chaque changement
+                    this.time = options.time || 0.3;
+                    
+                    // Fréquence d'appartition des pommes
+                    this.appleFreq = options.appleFreq || 1/25;
+                    
+                    // La fenêtre du jeu
+                    this.dom = dom;
+                    
+                    // La fenêtre d'infosdu jeu
+                    this.infos = infos;
+                    
+                    // On défini la taille du jeu
+                    this.dom.css("width",this.width*this.scale+"px");
+                    this.dom.css("height",this.height*this.scale+"px");
+                    
+                    var th = this;
+                    
+                    $(document).keypress(function(event){
+                        // HAUT (Z)
+                        if(event.which == 122) th.snake.goUp();
+                        // BAS (S)                            
+                        else if(event.which == 115) th.snake.goDown();
+                        // GAUCHE (Q)
+                        else if(event.which == 113) th.snake.goLeft();
+                        // DROITE (D)
+                        else if(event.which == 100) th.snake.goRight();
+                    });
+                    
+                    this.start();
+                },
+                start: function(){
+                    this.dom.empty();
+                        
+                    // Le serpent
+                    this.snake = new Snake(this);
+                    
+                    // les pommes
+                    this.apples = [];
+                                        
+                    $(this).everyTime(this.time*1000, this.execute);
+                    console.log("Jeu initialisé");
+                },
+                stop: function(){
+                    console.log("Game over");
+                    $(this).stopTime();
+                },
+                execute: function(){
+                    // Déplacer le serpent
+                    this.snake.move();
+                        
+                    // 1 fois sur 20 : ajouter une pomme
+                    if(Math.floor(Math.random()/this.appleFreq) == 0)
+                        this.addApple();
+                },
+                    
+                addApple: function(){
+                    var apple = new Apple(this.scale);
+                    do{
+                        apple.position.x = Math.floor(Math.random()*this.width);
+                        apple.position.y = Math.floor(Math.random()*this.height);
+                    }while(this.getApple(apple.position) != null);
+                    this.apples.push(apple);
+                    apple.place();
+                    this.dom.append(apple.dom);
+                },
+                    
+                getApple: function(position){
+                    var ret = null;
+                    this.apples.forEach(function(apple){
+                        if(apple.position.x == position.x && apple.position.y == position.y){
+                            ret = apple;
+                        }
+                    });
+                    return ret;
+                },
+                removeApple: function(position){
+                    var newApples = [];
+                    this.apples.forEach(function(apple){
+                        if(apple.position.x == position.x && apple.position.y == position.y){
+                            apple.dom.remove();
+                        }else{
+                            newApples.push(apple);
+                        }
+                    });
+                    this.apples = newApples;                        
+                }
+            });
+            
+            var game = new Game($("#plateau"),$("#infos"),{scale: 12, time: 0.1});
+        </script>
+    </body>
+</html>
